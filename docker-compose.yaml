@@ -1,0 +1,27 @@
+# start all containers: docker-compose -f docker-compose.yaml up
+# stop all containers: docker-compose -f docker-compose.yaml down
+services:
+  elasticsearch:
+    image: elasticsearch:8.7.1
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+    networks:
+      - infini-network
+
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    networks:
+      - infini-network
+
+networks:
+  infini-network:
+    driver: bridge
+
