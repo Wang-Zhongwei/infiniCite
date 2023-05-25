@@ -15,7 +15,7 @@ with open(outfile, "w") as filename:
         recursiveData = newResponse.json()['citations']
         for item in recursiveData:
             recursiveId = item['paperId']
-            recursiveNewResponse = requests.get("http://api.semanticscholar.org/graph/v1/paper/" + str(id) + "?fields=title,citations,authors,year,abstract")
+            recursiveNewResponse = requests.get("http://api.semanticscholar.org/graph/v1/paper/" + str(recursiveId) + "?fields=title,citations,authors,year,abstract")
             print(filename.write(json.dumps(recursiveNewResponse.json()) + "\n"))
         
     
