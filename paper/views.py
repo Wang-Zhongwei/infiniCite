@@ -4,7 +4,10 @@ from django.shortcuts import render, redirect
 from .forms import SearchForm
 import requests
 
-# get called when client requests /search
+def index(request):
+    return render(request, 'index.html')
+
+# get called when client requests paper/search
 def search(request):
     if request.method == "GET":
         form = SearchForm(request.GET)
@@ -15,9 +18,9 @@ def search(request):
     else:
         form = SearchForm()
 
-    return render(request, 'search.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
 
-# get called when client requests /results
+# get called when client requests paper/results
 def results(request):
     search_input = request.session.get('search_input')
     if search_input:
@@ -26,4 +29,4 @@ def results(request):
         # Render the results in another page
         return render(request, 'results.html', {'data': response.json()})
     else:
-        return redirect('search')
+        return redirect('paper')
