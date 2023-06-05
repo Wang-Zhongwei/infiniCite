@@ -4,29 +4,33 @@ from django.shortcuts import render, redirect
 from .forms import SearchForm
 import requests
 
+BASE_URL = 'http://api.semanticscholar.org/graph/v1/paper'
 def index(request):
-    return render(request, 'index.html')
+    form = SearchForm()
+    return render(request, 'index.html', {'form': form})
 
-# get called when client requests paper/search
 def search(request):
     if request.method == "GET":
         form = SearchForm(request.GET)
         if form.is_valid():
             # Store the search input in session
-            request.session['search_input'] = form.cleaned_data['search_input']
-            return redirect('results')
-    else:
-        form = SearchForm()
+            request.session['query'] = form.cleaned_data['query']
+            return redirect('results')  # redirect to results view
+        else:
+            return render(request, 'index.html', {'form': form})
+    return redirect('index')  # redirect to index view
 
-    return render(request, 'index.html', {'form': form})
-
-# get called when client requests paper/results
 def results(request):
-    search_input = request.session.get('search_input')
-    if search_input:
+    query = request.session.get('query')
+    if query:
+        request.session['query'] = None
         # Call the API with the search input
-        response = requests.get(f'http://api.crossref.org/works?query={search_input}')
+        params = {
+            'query': query,
+            'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy'
+        }
+        response = requests.get(f'{BASE_URL}/search', params=params)
         # Render the results in another page
-        return render(request, 'results.html', {'data': response.json()})
+        return render(request, 'results.html', {'papers': response.json()})
     else:
-        return redirect('paper')
+        return redirect('index')  # redirect to index view

@@ -5,17 +5,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/css/style.css">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
   <title>InfiniCite</title>
 </head>
 
 <body>
   <div class="container">
     <h1>InfiniCite</h1>
-    <form action="paper/search" method="get" class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search...">
+    <form action="{% url 'search' %}" method="get" class="search-bar">
+      <input type="text" name="query" id="query-field" placeholder="Search..." value="{{ form.query.value|default_if_none:'' }}">
       <button class="search-button" type="submit">
-        <img src="../static/images/search.png" alt="search-icon">
+        <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
       </button>
     </form>
   </div>
