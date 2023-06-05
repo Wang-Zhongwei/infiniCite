@@ -15,21 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-<<<<<<< HEAD
-from django.urls import path
-from paper import views
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
-    path('paper/search', views.search, name='search'),
-    path('paper/result', views.results, name='results'),
-=======
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('paper.urls')),
     path('paper/', include('paper.urls'))
->>>>>>> fe57344 (Host paper search page)
 ]

@@ -5,36 +5,30 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-  <title>InfiniCite</title>
+  <title>Research Paper Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .paper {
+      margin-bottom: 2em;
+      padding: 1em;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .paper h2 {
+      margin-top: 0;
+    }
+
+    .paper p {
+      margin: 0.5em 0;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="search-results"></div>
-
-  <script>
-    // Retrieve the search query from the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const query = urlParams.get('q');
-
-    // Display the search query on the page
-    const searchResultsDiv = document.getElementById('search-results');
-    searchResultsDiv.textContent = `Search Results for: ${query}`;
-
-    fetch(`https://api.agify.io/?name=${query}`)
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response data
-        console.log(data);
-        var jsonString = JSON.stringify(data, null, 2);
-        document.getElementById('search-results').textContent = jsonString
-      })
-      .catch(error => {
-        // Handle any errors that occurred during the request
-        console.log('Error:', error);
-      });
-  </script>
-=======
   <title>Research Paper Results</title>
   <style>
     body {
@@ -73,7 +67,5 @@
   {% empty %}
   <p>No papers found.</p>
   {% endfor %}
->>>>>>> fe57344 (Host paper search page)
 </body>
-
 </html>
