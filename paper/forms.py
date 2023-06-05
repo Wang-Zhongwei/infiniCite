@@ -1,4 +1,6 @@
+from typing import Any, Mapping, Optional, Type, Union
 from django import forms
+from django.forms.utils import ErrorList
 
 class SearchForm(forms.Form):
-    search_input = forms.CharField(max_length=200)
+    query = forms.CharField(max_length=200)
