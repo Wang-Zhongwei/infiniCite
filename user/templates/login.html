@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
+  <title>InfiniCite</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>InfiniCite</h1>
+    <div class="container">
+      <h2>Log-in</h1>
+      <p>Please, use the following form to log-in:</p>
+      <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Log in"></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
