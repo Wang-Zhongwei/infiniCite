@@ -15,7 +15,7 @@
     <h1>InfiniCite</h1>
     <div class="container">
       <h2>Log-in</h1>
-      <p>Please, use the following form to log-in:</p>
+      <p>Please, use the following form to log-in. If you don't have anaccount <a href="{% url "register" %}">register here</a></p>
       <form method="post">
         {{ form.as_p }}
         {% csrf_token %}
