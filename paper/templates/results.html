@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'paper/css/style_resultPage.css'%}">
   <title>Research Paper Results</title>
   <style>
     body {
@@ -56,13 +58,11 @@
   <h1>Research Paper Results</h1>
   {% for paper in papers.data %}
   <div class="paper">
-    <h2>{{ paper.title }}</h2>
+    <h2>{{ paper.title }}
+      <a href="{{ paper.url }}">Read More</a>
+    </h2>
     <p>Abstract: {{ paper.abstract }}</p>
-    <p>Year: {{ paper.year }}</p>
-    <p>References: {{ paper.referenceCount }}</p>
-    <p>Citations: {{ paper.citationCount }}</p>
-    <p>Fields of Study: {{ paper.fieldsOfStudy }}</p>
-    <a href="{{ paper.url }}">Read More</a>
+    <p1>Year: {{ paper.year }}  References: {{ paper.referenceCount }}  Citations: {{ paper.citationCount }}  Fields of Study: {{ paper.fieldsOfStudy }}</p1>
   </div>
   {% empty %}
   <p>No papers found.</p>
