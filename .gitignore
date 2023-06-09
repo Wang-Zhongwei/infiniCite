@@ -1,3 +1,8 @@
 *cache*
 config
 .venv
+bin
+include
+lib
+share
+pyvenv.cfg
