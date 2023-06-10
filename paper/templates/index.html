@@ -14,11 +14,42 @@
   <div class="container">
     <h1>InfiniCite</h1>
     <form action="{% url 'search' %}" method="get" class="search-bar">
-      <input type="text" name="query" id="query-field" placeholder="Search..." value="{{ form.query.value|default_if_none:'' }}">
+      <input type="text" name="query" id="query-field" placeholder="Search..."
+        value="{{ form.query.value|default_if_none:'' }}">
       <button class="search-button" type="submit">
         <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
       </button>
     </form>
   </div>
+  <script>
+    const debounce = (callback, delay) => {
+      let timerId;
+
+      return (...args) => {
+        clearTimeout(timerId);
+        timerId = setTimeout(() => {
+          callback.apply(this, args);
+        }, delay);
+      };
+    };
+
+    const inputField = document.querySelector('#query-field');
+
+    const debounceAutocomplete = debounce((event) => {
+      const query = event.target.value;
+      fetch(`/autocomplete?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        });
+
+      // Call your autocomplete API here with the query
+      console.log(`Calling autocomplete API with query: ${query}`);
+    }, 500);
+
+    inputField.addEventListener('input', debounceAutocomplete);
+
+  </script>
 </body>
+
 </html>

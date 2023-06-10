@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from .forms import SearchForm
 import requests
+from django.http import JsonResponse
 
 BASE_URL = 'http://api.semanticscholar.org/graph/v1/paper'
 def index(request):
@@ -34,3 +35,15 @@ def results(request):
         return render(request, 'results.html', {'papers': response.json()})
     else:
         return redirect('index')  # redirect to index view
+
+def autocomplete(request):
+    query = request.GET.get('query', '')
+    print('query', query)
+    if query:
+        # Call the API with the search input
+        params = {
+            'query': query,
+        }
+        response = requests.get(f'{BASE_URL}/autocomplete', params=params)
+        # Return the results as a JSON response
+        return JsonResponse(response.json(), safe=False)
