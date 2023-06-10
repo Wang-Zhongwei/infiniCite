@@ -8,50 +8,12 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'paper/css/style_resultPage.css'%}">
   <title>Research Paper Results</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
 
-    .paper {
-      margin-bottom: 2em;
-      padding: 1em;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    .paper h2 {
-      margin-top: 0;
-    }
-
-    .paper p {
-      margin: 0.5em 0;
-    }
-  </style>
 </head>
 
 <body>
   <title>Research Paper Results</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
 
-    .paper {
-      margin-bottom: 2em;
-      padding: 1em;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    .paper h2 {
-      margin-top: 0;
-    }
-
-    .paper p {
-      margin: 0.5em 0;
-    }
-  </style>
 </head>
 
 <body>
@@ -62,7 +24,17 @@
       <a href="{{ paper.url }}">Read More</a>
     </h2>
     <p>Abstract: {{ paper.abstract }}</p>
-    <p1>Year: {{ paper.year }}  References: {{ paper.referenceCount }}  Citations: {{ paper.citationCount }}  Fields of Study: {{ paper.fieldsOfStudy }}</p1>
+    
+    <p1>
+      <span class="sub-title-icon">&#128197;</span>
+      Year: {{ paper.year }}
+      <span class="sub-title-icon">&#128218;</span>
+      References: {{ paper.referenceCount }}
+      <span class="sub-title-icon">&#128203;</span>
+      Citations: {{ paper.citationCount }}
+      <span class="sub-title-icon">&#127891;</span>
+      Fields of Study: {{ paper.fieldsOfStudy }}
+    </p1>
   </div>
   {% empty %}
   <p>No papers found.</p>
