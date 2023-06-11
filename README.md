@@ -37,7 +37,7 @@ DATABASES = {
 to `config/db_config.py`. 
 
 ### Django
-Copy 
+Copy
 ```
 SECRET_KEY = '<your-secret-key>'
 ```

@@ -11,28 +11,38 @@
 </head>
 
 <body>
-  <title>Research Paper Results</title>
-</head>
-
-<body>
   <h1>Research Paper Results</h1>
   {% for paper in papers.data %}
-  <div class="paper">
-    <h2>{{ paper.title }}
-      <a href="{{ paper.url }}">Read More</a>
-    </h2>
-    <p>Abstract: {{ paper.abstract }}</p>
+  <div class="paper" style="display: flex; justify-content: space-between;">
+    <div class="paper-left">
+      <h2>{{ paper.title }}
+        <a href="{{ paper.url }}">Read More</a>
+      </h2>
+      <p>Abstract: {{ paper.abstract }}</p>
+    </div>
     
-    <p1>
-      <span class="sub-title-icon">&#128197;</span>
-      Year: {{ paper.year }}
-      <span class="sub-title-icon">&#128218;</span>
-      References: {{ paper.referenceCount }}
-      <span class="sub-title-icon">&#128203;</span>
-      Citations: {{ paper.citationCount }}
-      <span class="sub-title-icon">&#127891;</span>
-      Fields of Study: {{ paper.fieldsOfStudy }}
-    </p1>
+    <div class="paper-right">
+      <p>
+        <span class="sub-title-icon">&#128197;</span>
+        Year: {{ paper.year }}
+      </p>
+      <p>
+        <span class="sub-title-icon">&#128218;</span>
+        References: {{ paper.referenceCount }}
+      </p>
+      <p>
+        <span class="sub-title-icon">&#128203;</span>
+        Citations: {{ paper.citationCount }}
+      </p>
+      <p>
+        <span class="sub-title-icon">&#127891;</span>
+        Fields of Study: <br>
+        {% for field in paper.fieldsOfStudy %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="field-of-study">{{ field }}</span><br>
+        {% endfor %}
+      </p>
+    </div>  
   </div>
   {% empty %}
   <p>No papers found.</p>
