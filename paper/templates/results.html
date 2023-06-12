@@ -18,6 +18,11 @@
       <h2>{{ paper.title }}
         <a href="{{ paper.url }}">Read More</a>
       </h2>
+      <p>Authors:
+        {% for author in paper.authors %}
+            {{ author.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        </p>        
       <p>Abstract: {{ paper.abstract }}</p>
     </div>
     
@@ -38,8 +43,7 @@
         <span class="sub-title-icon">&#127891;</span>
         Fields of Study: <br>
         {% for field in paper.fieldsOfStudy %}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="field-of-study">{{ field }}</span><br>
+        <div class="field-of-study">{{ field }}</div><br>
         {% endfor %}
       </p>
     </div>  
@@ -47,5 +51,45 @@
   {% empty %}
   <p>No papers found.</p>
   {% endfor %}
+  <script>
+    window.onload = function() {
+      var colorMap = {
+    a: '#FF0000',
+    b: '#8aabe5',
+    c: '#00FFFF',
+    d: '#00008B',
+    e: '#FFD700',
+    f: '#228B22',
+    g: '#808080',
+    h: '#FF69B4',
+    i: '#4B0082',
+    j: '#F0E68C',
+    k: '#ADD8E6',
+    l: '#00FF00',
+    m: '#dea3cc',
+    n: '#000080',
+    o: '#808000',
+    p: '#de8ae5',
+    q: '#FFC0CB',
+    r: '#FF0000',
+    s: '#C0C0C0',
+    t: '#008080',
+    u: '#800080',
+    v: '#EE82EE',
+    w: '#F5DEB3',
+    x: '#006400',
+    y: '#FFFF00',
+    z: '#F0FFFF'
+  };
+    
+      var fields = document.getElementsByClassName('field-of-study');
+      for (var i = 0; i < fields.length; i++) {
+        var firstLetter = fields[i].innerText.charAt(0).toLowerCase();
+        fields[i].style.backgroundColor = colorMap[firstLetter] || '#808080';
+      }
+    
+    }
+    </script>
+    
 </body>
 </html>

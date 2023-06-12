@@ -28,7 +28,7 @@ def results(request):
         # Call the API with the search input
         params = {
             'query': query,
-            'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy'
+            'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy,authors'
         }
         response = requests.get(f'{BASE_URL}/search', params=params)
         # Render the results in another page
