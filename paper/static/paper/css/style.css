@@ -1,38 +1,45 @@
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-.container{
+
+.container {
     width: 100%;
     min-height: 100vh;
     padding: 5%;
-    background-image: linear-gradient(rgba(0,8,51,0.9), rgba(0,8,51,0.9)),url(../images/background.jpg);
+    background-image: linear-gradient(rgba(0, 8, 51, 0.9), rgba(0, 8, 51, 0.9)), url(../images/background.jpg);
     background-position: center;
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
-.container h1{
+
+.container h1 {
     color: #cac7ff;
-    position:absolute;
+    position: absolute;
     top: 200px;
     left: center;
 }
-.search-bar{
+
+.search-bar {
+    
     width: 100%;
     max-width: 700px;
-    background: rgba(255, 255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     border-radius: 60px;
     padding: 10px 20px;
     backdrop-filter: blur(4px) saturate(180%);
+    margin-bottom: 20px;
 }
 
-.search-bar input{
+.search-bar input {
     background: transparent;
     flex: 1;
     border: 0;
@@ -42,15 +49,15 @@
     color: #cac7ff;
 }
 
-::placeholder{
+::placeholder {
     color: #cac7ff;
 }
 
-.search-bar button img{
+.search-bar button img {
     width: 25px;
 }
 
-.search-bar button{
+.search-bar button {
     border: 0;
     border-radius: 50%;
     width: 60px;
@@ -58,3 +65,54 @@
     background: #58629b;
     cursor: pointer;
 }
+
+.search-bar ul {
+    position:absolute;
+    top: 100%;
+    left: 5.3%;
+    width: 100%;
+    max-width: 625px;
+    max-height: 350px;
+
+    border-radius: 0px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    list-style-type: none;
+    background: rgba(255, 255, 255, 0.2);
+
+    backdrop-filter: blur(4px) saturate(180%);
+    overflow-y: scroll;
+  } 
+
+  .search-bar li {
+    color: #cac7ff;
+    margin-top: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 0px;
+  }
+  
+  .search-bar li:hover {
+    background-color: #f1f1f1;
+  }
+  .search-bar li1 {
+    margin-top: 0px;
+    color: #cac7ff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 10px;
+  }
+
+  .paperTitle {
+    /* Your styles for the paper title */
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .authorsYear {
+    /* Your styles for the authors and year */
+    color: #cac7ff;
+    font-size: 14px;
+  }
+
+  

@@ -8,6 +8,7 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
   <title>InfiniCite</title>
+
 </head>
 
 <body>
@@ -15,12 +16,14 @@
     <h1>InfiniCite</h1>
     <form action="{% url 'search' %}" method="get" class="search-bar">
       <input type="text" name="query" id="query-field" placeholder="Search..."
-        value="{{ form.query.value|default_if_none:'' }}">
+        value="{{ form.query.value|default_if_none:'' }}" autocomplete="off">
+      <ul id="autocomplete-results" class="autocomplete-active"></ul>
       <button class="search-button" type="submit">
         <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
       </button>
     </form>
   </div>
+
   <script>
     const debounce = (callback, delay) => {
       let timerId;
@@ -34,15 +37,50 @@
     };
 
     const inputField = document.querySelector('#query-field');
+    const resultsList = document.querySelector('#autocomplete-results');
 
     const debounceAutocomplete = debounce((event) => {
       const query = event.target.value;
-      fetch(`/autocomplete?query=${query}`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-        });
+      if (query.length >= 3) {
+        fetch(`/autocomplete?query=${query}`)
+          .then(response => response.json())
+          .then(data => {
+            resultsList.innerHTML = '';
+            console.log(data);
+            // Check if data is an array
+            if (Array.isArray(data.matches)) {
 
+              // Populate the results in the dropdown
+              data.matches.forEach(result => {
+
+                const li = document.createElement('li');
+                const paperTitle = document.createElement('div');
+                const authorsYear = document.createElement('div');
+                paperTitle.classList.add('paperTitle');
+                authorsYear.classList.add('authorsYear');
+                paperTitle.innerText = result.title;
+                authorsYear.innerText = result.authorsYear;
+                li.addEventListener('click', () => {
+                  inputField.value = result.title;
+                  resultsList.innerHTML = '';
+                });
+                li.appendChild(paperTitle);
+                li.appendChild(authorsYear);
+                resultsList.appendChild(li);
+              });
+
+              // Show the results dropdown if there are suggestions
+              if (data.length > 0) {
+                //resultsList.style.display = 'block';
+              }
+            } else {
+              // Handle the case when data is not an array
+              console.error('Invalid response format');
+            }
+          });
+      }else{
+        resultsList.innerHTML = '';
+      }
       // Call your autocomplete API here with the query
       console.log(`Calling autocomplete API with query: ${query}`);
     }, 500);
