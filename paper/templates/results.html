@@ -65,7 +65,7 @@
     <a href="{{ paper.url }}">Read More</a><p></p>
     <form action="{% url 'graph' %}" method="get" class="button">
       <label for="graph"></label>
-      <input type="checkbox" name="query" id="graph" value="{{paper.paperId}}" checked />
+      <input type="checkbox" name="query" id="graph" value="{{ paper.paperId }}" checked />
       <input type="submit" value="View Graph" />
     </form>
 

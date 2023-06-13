@@ -91,13 +91,14 @@ def save_paper(request):
     
 def graph(request):
     query = request.session.get('query')
+    request.session['query'] = '18305cc15dd15e7cc79d1a0ef332f8e5e822e513'
     if query:
-        request.session['query'] = None
+        #request.session['query'] = None
         # Call the API to get the references and citations
         params = {
             'fields': 'citations,references'
         }
-        response = requests.get(f'{BASE_URL}/18305cc15dd15e7cc79d1a0ef332f8e5e822e513', params=params)
+        response = requests.get(f'{BASE_URL}/{request.session["query"]}', params=params)
         # Render the results as a graph with connections
         return render(request, 'graph.html', {'paper': response.json()})
     #Not sure what this does quite yet- need to figure it out
