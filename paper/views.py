@@ -69,6 +69,7 @@ def autocomplete(request):
         return JsonResponse(response.json(), safe=False)
     else:
         return redirect('index')  # redirect to index view
+<<<<<<< HEAD
 
 @login_required
 def save_paper(request):
@@ -86,3 +87,20 @@ def save_paper(request):
         except:
             pass
     return JsonResponse({'status':'ok'})
+=======
+    
+def graph(request):
+    query = request.session.get('query')
+    if query:
+        request.session['query'] = None
+        # Call the API to get the references and citations
+        params = {
+            'fields': 'citations,references'
+        }
+        response = requests.get(f'{BASE_URL}/18305cc15dd15e7cc79d1a0ef332f8e5e822e513', params=params)
+        # Render the results as a graph with connections
+        return render(request, 'graph.html', {'paper': response.json()})
+    #Not sure what this does quite yet- need to figure it out
+    else:
+        return redirect('index') # Redirect to index view
+>>>>>>> 6284ab7 (First few features)
