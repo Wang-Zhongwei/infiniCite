@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
+  <title>InfiniCite</title>
+</head>
+
+<body>
+  <header>
+    {% if user.is_authenticated %}
+      {{ request.user.username }}
+      <a href="user/logout">Logout</a>
+    {% else %}
+      <a href="user/login">Login</a>
+      <a href="user/register">Register</a>
+    {% endif %}
+  </header>
+  <div class="container">
+    <h1>InfiniCite</h1>
+    <form action="{% url 'search' %}" method="get" class="search-bar">
+      <input type="text" name="query" id="query-field" placeholder="Search..." value="{{ form.query.value|default_if_none:'' }}">
+      <button class="search-button" type="submit">
+        <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
+      </button>
+    </form>
+  </div>
+</body>
+</html>

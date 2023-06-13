@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .forms import SearchForm
@@ -65,5 +66,23 @@ def autocomplete(request):
             'query': query,
         }
         response = requests.get(f'{BASE_URL}/paper/autocomplete', params=params)
-        # Return the results as a JSON response
         return JsonResponse(response.json(), safe=False)
+    else:
+        return redirect('index')  # redirect to index view
+
+@login_required
+def save_paper(request):
+    paper_id = request.POST.get('id')
+    action = request.POST.get('action')
+    
+    if paper_id and action:
+        try:
+            paper = paper.objects.get(id=paper_id)
+            if action == 'save':
+                paper.users_saved.add(id=paper_id)
+            else:
+                paper.users_saved.remove(id=paper_id)
+            return JsonResponse({'status':'ok'})
+        except:
+            pass
+    return JsonResponse({'status':'ok'})

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from author.models import Author
+from user.models import Account
 
 class Paper(models.Model):
     paperId= models.CharField(max_length=255, primary_key=True)
@@ -17,6 +18,6 @@ class Paper(models.Model):
 
 class Library(models.Model):
     name = models.CharField(max_length=255)
-    owner = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='libraries')
+    owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='libraries')
     papers = models.ManyToManyField(Paper, related_name='libraries', blank=True)
-    sharedWith = models.ManyToManyField(Author, related_name='sharedLibraries', blank=True)
+    sharedWith = models.ManyToManyField(Account, related_name='sharedLibraries', blank=True)
