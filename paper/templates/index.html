@@ -11,6 +11,15 @@
 </head>
 
 <body>
+  <header>
+    {% if user.is_authenticated %}
+      {{ request.user.username }}
+      <a href="user/logout">Logout</a>
+    {% else %}
+      <a href="user/login">Login</a>
+      <a href="user/register">Register</a>
+    {% endif %}
+  </header>
   <div class="container">
     <h1>InfiniCite</h1>
     <form action="{% url 'search' %}" method="get" class="search-bar">
