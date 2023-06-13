@@ -17,14 +17,29 @@
     <form action="{% url 'paper:search' %}" method="get" class="search-bar">
       <input type="text" name="query" id="query-field" placeholder="Search..."
         value="{{ form.query.value|default_if_none:'' }}" autocomplete="off">
+      <input type="hidden" name="page" value="{{ form.page.value|default:1 }}">
+      <input type="hidden" name="searchPaper" value="true" id="paper-search">
       <ul id="autocomplete-results" class="autocomplete-active"></ul>
       <button class="search-button" type="submit">
         <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
       </button>
     </form>
+
+    <div>
+      <label for="toggle-author-search">Author Search:</label>
+      <input type="checkbox" id="toggle-author-search" onchange="toggleSearchType(this)">
+    </div>
   </div>
 
   <script>
+    function toggleSearchType(checkbox) {
+      var searchPaper = document.getElementById("paper-search");
+      if (checkbox.checked) {
+        searchPaper.value = "false";
+      } else {
+        searchPaper.value = "true";
+      }
+    }
     const debounce = (callback, delay) => {
       let timerId;
 
@@ -78,12 +93,12 @@
               console.error('Invalid response format');
             }
           });
-      }else{
+      } else {
         resultsList.innerHTML = '';
       }
       // Call your autocomplete API here with the query
       console.log(`Calling autocomplete API with query: ${query}`);
-    }, 500);
+    }, 300);
 
     inputField.addEventListener('input', debounceAutocomplete);
 

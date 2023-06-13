@@ -21,16 +21,17 @@ touch django_config.py
 cd ..
 ```
 ## Configurations
-### MongoDB
+### PostgreSQL
 Copy
 ```
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'infiniCite',
-        'CLIENT': {
-            'host': '<your-connection-string>'
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'infinicite',
+        'USER': '<username>',
+        'PASSWORD': '<password>',
+        'HOST': '<host>',
+        'PORT': '5432',
     }
 }
 ```
