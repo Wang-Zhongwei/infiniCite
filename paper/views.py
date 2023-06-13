@@ -8,7 +8,7 @@ from django.http import JsonResponse
 BASE_URL = 'http://api.semanticscholar.org/graph/v1/paper'
 def index(request):
     form = SearchForm()
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'paper/index.html', {'form': form})
 
 def search(request):
     if request.method == "GET":
@@ -16,10 +16,10 @@ def search(request):
         if form.is_valid():
             # Store the search input in session
             request.session['query'] = form.cleaned_data['query']
-            return redirect('results')  # redirect to results view
+            return redirect('paper:results')  # redirect to results view
         else:
-            return render(request, 'index.html', {'form': form})
-    return redirect('index')  # redirect to index view
+            return render(request, 'paper/index.html', {'form': form})
+    return redirect('paper:index')  # redirect to index view
 
 def results(request):
     query = request.session.get('query')
@@ -32,9 +32,9 @@ def results(request):
         }
         response = requests.get(f'{BASE_URL}/search', params=params)
         # Render the results in another page
-        return render(request, 'results.html', {'papers': response.json()})
+        return render(request, 'paper/results.html', {'papers': response.json()})
     else:
-        return redirect('index')  # redirect to index view
+        return redirect('paper:index')  # redirect to index view
 
 def autocomplete(request):
     query = request.GET.get('query', '')

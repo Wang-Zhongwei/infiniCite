@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      background-color: #f8f9fa;
+      padding: 10px 0;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    nav .user-info {
+      display: inline-block;
+      padding-left: 10px;
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    footer {
+      margin-top: 20px;
+      background-color: #f8f9fa;
+      padding: 10px 0;
+      text-align: center;
+    }
+  </style>
+  <title>InfiniCite</title>
+
+  <!-- Add your CSS files here -->
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+
+      <!-- Display user information if user is authenticated -->
+      {% if user.is_authenticated %}
+      <div class="user-info">
+        <p>Welcome, {{ user.username }}!</p>
+        <a href="/logout/">Logout</a>
+      </div>
+      {% else %}
+      <a href="/login/">Login</a>
+      <a href="/signup/">Sign Up</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    <!-- This is where content from child templates will go -->
+    {% endblock %}
+  </main>
+
+  <footer>
+    <!-- Add your footer here -->
+    <p>© 2023 InfiniCite</p>
+  </footer>
+</body>
+
+</html>

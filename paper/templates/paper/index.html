@@ -14,7 +14,7 @@
 <body>
   <div class="container">
     <h1>InfiniCite</h1>
-    <form action="{% url 'search' %}" method="get" class="search-bar">
+    <form action="{% url 'paper:search' %}" method="get" class="search-bar">
       <input type="text" name="query" id="query-field" placeholder="Search..."
         value="{{ form.query.value|default_if_none:'' }}" autocomplete="off">
       <ul id="autocomplete-results" class="autocomplete-active"></ul>

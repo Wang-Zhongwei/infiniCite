@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Library</title>
+</head>
+
+<body>
+  
+  {% extends "user/base_generic.html" %}
+  {% block content %}
+  <h1>My Library</h1>
+  {% for paper in my_library %}
+  <div class="paper">
+    <h2>{{ paper.title }}</h2>
+    <p>URL: <a href="{{ paper.url }}">{{ paper.url }}</a></p>
+    <p>Abstract: {{ paper.abstract }}</p>
+    <p>Reference Count: {{ paper.referenceCount }}</p>
+    <p>Citation Count: {{ paper.citationCount }}</p>
+    <p>Open Access PDF: <a href="{{ paper.openAccessPdf.url }}">{{ paper.openAccessPdf.url }}</a> ({{
+      paper.openAccessPdf.status }})</p>
+    <!-- <p>Embedding Model: {{ paper.embedding.model }}</p> -->
+    <p>TL;DR: {{ paper.tldr }}</p>
+    <p>Publication Date: {{ paper.publicationDate }}</p>
+    <!-- <p>Authors:</p>
+    <ul>
+      {% for author in paper.authors %}
+      <li>{{ author.name }} (ID: {{ author.authorId }})</li>
+      {% endfor %}
+    </ul> -->
+  </div>
+  {% endfor %}
+  {% endblock %}
+
+</body>
+
+</html>
