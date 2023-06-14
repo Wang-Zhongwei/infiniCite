@@ -71,17 +71,35 @@ def autocomplete(request):
         return redirect('index')  # redirect to index view
     
 def graph(request):
-    query = request.session.get('query')
-    print(query)
-    if query:
-        #request.session['query'] = None
-        # Call the API to get the references and citations
+    paperId = request.session.get('query')
+    if paperId:
         params = {
-            'fields': 'citations,references'
+            'fields' : 'paperId,authors,year'
         }
-        response = requests.get(f'{BASE_URL}/{request.session["query"]}', params=params)
+        #Call the API to get the info about this paper
+        originalPaper = requests.get(f'{BASE_URL}/{paperId}/',params=params)
+        # Call the API to get the references and citations
+        citations = requests.get(f'{BASE_URL}/{paperId}/citations',params=params)
+        references = requests.get(f'{BASE_URL}/{paperId}/references',params=params)
+        citationNodes = list()
+        citationEdges = list()
+        
+        citationNodes.append(originalPaper)
+        for paper in citations.json()['data']:
+            citationNodes.append(paper)
+        for currentPaper in citationNodes[1:]: #Start at the second list element so we don't draw an edge from this paper to itself
+            newEdge = [originalPaper, currentPaper]
+            citationEdges.append(newEdge)
+            currentPaperCitations = requests.get(f'{BASE_URL}/{currentPaper["paperId"]}/citations',params=params)
+            for possiblePaper in currentPaperCitations.json()['data']:
+                for citedPaper in citationNodes:
+                    if possiblePaper['paperId'] == citedPaper['paperId']:
+                        newEdge = [currentPaper,possiblePaper]
+                        citationEdges.append(newEdge)
+        
+
+
         # Render the results as a graph with connections
-        return render(request, 'graph.html', {'paper': response.json()})
-    #Not sure what this does quite yet- need to figure it out
+        return render(request, 'graph.html', {'nodes': citationNodes, 'edges': citationEdges})
     else:
         return redirect('index') # Redirect to index view
