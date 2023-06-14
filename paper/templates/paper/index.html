@@ -1,108 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'user/navigation_bar_generic.html' %}
+{% load static %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
-  <title>InfiniCite</title>
+{% block extra-css %}
+<link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
+{% endblock %}
 
-</head>
+{% block heading %}
+InfiniCite
+{% endblock%}
 
-<body>
-  <div class="container">
-    <h1>InfiniCite</h1>
-    <form action="{% url 'paper:search' %}" method="get" class="search-bar">
-      <input type="text" name="query" id="query-field" placeholder="Search..."
-        value="{{ form.query.value|default_if_none:'' }}" autocomplete="off">
-      <input type="hidden" name="page" value="{{ form.page.value|default:1 }}">
-      <input type="hidden" name="searchPaper" value="true" id="paper-search">
-      <ul id="autocomplete-results" class="autocomplete-active"></ul>
-      <button class="search-button" type="submit">
-        <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
-      </button>
-    </form>
+{% block content %}
+<div class="container">
+  <form action="{% url 'paper:search' %}" method="get" class="search-bar">
+    <input type="text" name="query" id="query-field" placeholder="Search..."
+      value="{{ form.query.value|default_if_none:'' }}" autocomplete="off">
+    <input type="hidden" name="page" value="{{ form.page.value|default:1 }}">
+    <input type="hidden" name="searchPaper" value="true" id="paper-search">
+    <ul id="autocomplete-results" class="autocomplete-active"></ul>
+    <button class="search-button" type="submit">
+      <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
+    </button>
+  </form>
 
-    <div>
-      <label for="toggle-author-search">Author Search:</label>
-      <input type="checkbox" id="toggle-author-search" onchange="toggleSearchType(this)">
-    </div>
+  <div>
+    <label for="toggle-author-search">Author Search:</label>
+    <input type="checkbox" id="toggle-author-search" onchange="toggleSearchType(this)">
   </div>
+</div>
 
-  <script>
-    function toggleSearchType(checkbox) {
-      var searchPaper = document.getElementById("paper-search");
-      if (checkbox.checked) {
-        searchPaper.value = "false";
-      } else {
-        searchPaper.value = "true";
-      }
+<script>
+  function toggleSearchType(checkbox) {
+    var searchPaper = document.getElementById("paper-search");
+    if (checkbox.checked) {
+      searchPaper.value = "false";
+    } else {
+      searchPaper.value = "true";
     }
-    const debounce = (callback, delay) => {
-      let timerId;
+  }
+  const debounce = (callback, delay) => {
+    let timerId;
 
-      return (...args) => {
-        clearTimeout(timerId);
-        timerId = setTimeout(() => {
-          callback.apply(this, args);
-        }, delay);
-      };
+    return (...args) => {
+      clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        callback.apply(this, args);
+      }, delay);
     };
+  };
 
-    const inputField = document.querySelector('#query-field');
-    const resultsList = document.querySelector('#autocomplete-results');
+  const inputField = document.querySelector('#query-field');
+  const resultsList = document.querySelector('#autocomplete-results');
 
-    const debounceAutocomplete = debounce((event) => {
-      const query = event.target.value;
-      if (query.length >= 3) {
-        fetch(`/autocomplete?query=${query}`)
-          .then(response => response.json())
-          .then(data => {
-            resultsList.innerHTML = '';
-            console.log(data);
-            // Check if data is an array
-            if (Array.isArray(data.matches)) {
+  const debounceAutocomplete = debounce((event) => {
+    const query = event.target.value;
+    if (query.length >= 3) {
+      fetch(`/autocomplete?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+          resultsList.innerHTML = '';
+          console.log(data);
+          // Check if data is an array
+          if (Array.isArray(data.matches)) {
 
-              // Populate the results in the dropdown
-              data.matches.forEach(result => {
+            // Populate the results in the dropdown
+            data.matches.forEach(result => {
 
-                const li = document.createElement('li');
-                const paperTitle = document.createElement('div');
-                const authorsYear = document.createElement('div');
-                paperTitle.classList.add('paperTitle');
-                authorsYear.classList.add('authorsYear');
-                paperTitle.innerText = result.title;
-                authorsYear.innerText = result.authorsYear;
-                li.addEventListener('click', () => {
-                  inputField.value = result.title;
-                  resultsList.innerHTML = '';
-                });
-                li.appendChild(paperTitle);
-                li.appendChild(authorsYear);
-                resultsList.appendChild(li);
+              const li = document.createElement('li');
+              const paperTitle = document.createElement('div');
+              const authorsYear = document.createElement('div');
+              paperTitle.classList.add('paperTitle');
+              authorsYear.classList.add('authorsYear');
+              paperTitle.innerText = result.title;
+              authorsYear.innerText = result.authorsYear;
+              li.addEventListener('click', () => {
+                inputField.value = result.title;
+                resultsList.innerHTML = '';
               });
+              li.appendChild(paperTitle);
+              li.appendChild(authorsYear);
+              resultsList.appendChild(li);
+            });
 
-              // Show the results dropdown if there are suggestions
-              if (data.length > 0) {
-                //resultsList.style.display = 'block';
-              }
-            } else {
-              // Handle the case when data is not an array
-              console.error('Invalid response format');
+            // Show the results dropdown if there are suggestions
+            if (data.length > 0) {
+              //resultsList.style.display = 'block';
             }
-          });
-      } else {
-        resultsList.innerHTML = '';
-      }
-      // Call your autocomplete API here with the query
-      console.log(`Calling autocomplete API with query: ${query}`);
-    }, 300);
-
-    inputField.addEventListener('input', debounceAutocomplete);
-
-  </script>
-</body>
-
-</html>
+          } else {
+            // Handle the case when data is not an array
+            console.error('Invalid response format');
+          }
+        });
+    } else {
+      resultsList.innerHTML = '';
+    }
+    // Call your autocomplete API here with the query
+    console.log(`Calling autocomplete API with query: ${query}`);
+  }, 300);
+  inputField.addEventListener('input', debounceAutocomplete);
+</script>
+{% endblock %}

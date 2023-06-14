@@ -1,33 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Authors</h1>
-  <table>
-      <tr>
-          <th>Author ID</th>
-          <th>Name</th>
-          <th>External IDs</th>
-          <th>Affiliations</th>
-          <th>Paper Count</th>
-          <th>Citation Count</th>
-          <th>H-Index</th>
-      </tr>
+{% extends "user/navigation_bar_generic.html" %}
+{% load static %}
+
+{% block extra-css %}
+<link rel="stylesheet" href="{% static 'paper/css/style_resultPage.css'%}">
+{% endblock %}
+
+{% block heading %}
+Author Results
+{% endblock%}
+
+{% block content %}
+<h1>Authors</h1>
+<table>
+  <tr>
+    <th>Author ID</th>
+    <th>Name</th>
+    <th>External IDs</th>
+    <th>Affiliations</th>
+    <th>Paper Count</th>
+    <th>Citation Count</th>
+    <th>H-Index</th>
+  </tr>
   {% for author in authors.data %}
-      <tr>
-          <td>{{ author.authorId }}</td>
-          <td>{{ author.name }}</td>
-          <td>{{ author.externalIds|join:", " }}</td>
-          <td>{{ author.affiliations|join:", " }}</td>
-          <td>{{ author.paperCount }}</td>
-          <td>{{ author.citationCount }}</td>
-          <td>{{ author.hIndex }}</td>
-      </tr>
+  <tr>
+    <td>{{ author.authorId }}</td>
+    <td>{{ author.name }}</td>
+    <td>{{ author.externalIds|join:", " }}</td>
+    <td>{{ author.affiliations|join:", " }}</td>
+    <td>{{ author.paperCount }}</td>
+    <td>{{ author.citationCount }}</td>
+    <td>{{ author.hIndex }}</td>
+  </tr>
   {% endfor %}
-  </table>
-</body>
-</html>
+</table>
+{% endblock %}

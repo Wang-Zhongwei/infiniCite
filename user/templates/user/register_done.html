@@ -14,13 +14,8 @@
   <div class="container">
     <h1>InfiniCite</h1>
     <div class="container">
-      <h2>Log-in</h1>
-      <p>Please, use the following form to log-in. If you don't have anaccount <a href="{% url "register" %}">register here</a></p>
-      <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Log in"></p>
-      </form>
+        <h1>Welcome {{ new_user.first_name }}!</h1>
+        <p>Your account has been successfully created. Now you can <a href="{% url 'user:login' %}">log in</a>.</p>
     </div>
   </div>
 </body>

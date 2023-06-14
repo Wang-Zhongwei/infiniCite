@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SearchForm
 import requests
 from django.http import JsonResponse
+from .models import Paper, Library
 
 BASE_URL = 'http://api.semanticscholar.org/graph/v1'
 RECORDS_PER_PAGE = 10
@@ -72,17 +73,21 @@ def autocomplete(request):
 
 @login_required
 def save_paper(request):
-    paper_id = request.POST.get('id')
-    action = request.POST.get('action')
+    paperId = request.GET.get('paperId')
     
-    if paper_id and action:
+    if paperId:
         try:
-            paper = paper.objects.get(id=paper_id)
-            if action == 'save':
-                paper.users_saved.add(id=paper_id)
-            else:
-                paper.users_saved.remove(id=paper_id)
-            return JsonResponse({'status':'ok'})
+            paper = Paper.objects.get(id=paperId)
         except:
             pass
+    return JsonResponse({'status':'ok'})
+
+@login_required
+def create_library(request):
+    # get user id from session 
+    userId = request.user.id
+    libraryName = request.GET.get('libraryName')
+    if libraryName:
+        library = Library.objects.create(name=libraryName, owner=userId)
+        library.save()
     return JsonResponse({'status':'ok'})

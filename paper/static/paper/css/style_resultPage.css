@@ -5,19 +5,19 @@ body {
   padding: 0;
 }
 
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 h1 {
+  text-align: center;
   font-size: 24px;
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 20px;
 }
 
+.paper {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center; 
+}
 
 .paper h2 {
   font-size: 20px;
@@ -55,15 +55,14 @@ h1 {
 }
 
 .paper-left {
-  width: 75%;  /* Set a fixed width */
+  width: 70%;  /* Set a fixed width */
   text-align: justify;  /* Spread the text evenly across the line */
-  margin-bottom: 10px;
-  margin-right: 5px;
-  padding: 20px;
+  margin: 5px;
+  padding: 15px;
   border: 0px solid #ddd;
   border-left: 10px;
   border-right: 10px;
-  border-radius: 30px;
+  border-radius: 20px;
   background-color: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   justify-content: space-between;   /* Separate the children containers */
@@ -71,23 +70,19 @@ h1 {
   overflow: auto;
 }
 
-.paper-right{
+.paper-right {
   width: 25%;  /* Set a fixed width */
   text-align: left;  /* Spread the text evenly across the line */
-  line-height: 1.5;
+  line-height: 1.2;
   margin-bottom: 10px;
   padding: 20px;
   border: 0px solid #ddd;
   border-left: 10px;
   border-right: 10px;
-  border-radius: 30px;
+  border-radius: 20px;
   background-color: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   justify-content: space-between;   /* Separate the children containers */
-}
-
-.paper{
-  display: flex;
 }
 
 .field-of-study{

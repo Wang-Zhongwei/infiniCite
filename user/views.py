@@ -6,15 +6,15 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm
 
 def index(request):
-    # user_id = request.session['user_id']
-    user_id = '6484e94301a4909fb6c81438' # test user
+    # Get the user id
+    user_id = request.user.id
 
     # Now we get the papers owned by the user
     libraries = Library.objects.filter(owner=user_id)
     paper_ids = []
     for library in libraries:
-       paper_ids += library.papers.all().values_list('_id', flat=True)
-    papers = Paper.objects.filter(_id__in=paper_ids)
+       paper_ids += library.papers.all().values_list('id', flat=True)
+    papers = Paper.objects.filter(paperId__in=paper_ids)
     return render(request, "user/index.html", {"my_library": papers})
 
 # Create your views here.
@@ -47,7 +47,7 @@ def user_login(request):
                 return HttpResponse('Invalid login')
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+        return render(request, 'user/login.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
@@ -59,7 +59,7 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
-            return render(request, 'register_done.html', {'new_user': new_user})
+            return render(request, 'user/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
-    return render(request, 'register.html', {'user_form': user_form})
+    return render(request, 'user/register.html', {'user_form': user_form})

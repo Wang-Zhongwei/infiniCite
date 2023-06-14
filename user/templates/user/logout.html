@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% load static %}
-  <link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'user/css/style.css'%}">
   <title>InfiniCite</title>
 </head>
 
@@ -17,7 +17,7 @@
       <h2>Logged out</h1>
         <p>
             You have been successfully logged out.
-            You can <a href="{% url "login" %}">log-in again</a>.
+            You can <a href="{% url 'user:login' %}">log-in again</a>.
         </p>
     </div>
   </div>
