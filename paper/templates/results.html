@@ -63,44 +63,9 @@
     <p>Citations: {{ paper.citationCount }}</p>
     <p>Fields of Study: {{ paper.fieldsOfStudy }}</p>
     <a href="{{ paper.url }}">Read More</a><p></p>
-    <form action="{% url 'graph' %}" method="get" class="button">
-      <button id="send-paperId" type="submit" onclick="sendPaperId('{{ paper.paperId }}')">View Graph</button>
-      <script>
-        function getCookie(name) {
-          let cookieValue = null;
-          if (document.cookie && document.cookie !== '') {
-              const cookies = document.cookie.split(';');
-              for (let i = 0; i < cookies.length; i++) {
-                  const cookie = cookies[i].trim();
-                  // Does this cookie string begin with the name we want?
-                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                      break;
-                  }
-              }
-          }
-          return cookieValue;
-        }
-        function sendPaperId(paperId){
-          
-          const request = new XMLHttpRequest()
-          
-          const csrftoken = getCookie('csrftoken');
-          request.open('POST', "{% url 'graph' %}", true)
-          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-          request.setRequestHeader('X-CSRFToken', csrftoken)
-          request.onload = () => {
-            if (request.readyState == 4 && request.status == 201) {
-              console.log(JSON.parse(request.responseText));
-            } else {
-              console.log(`Error: ${request.status}`);
-            }
-          };
-          request.send(JSON.stringify({
-            "query": paperId,
-          }))
-        }
-      </script>
+    <form action="{% url 'paper:graph' %}" method="get" class="button">
+      <input type="hidden" name="paperId" value={{paper.paperId}}>
+      <button id="send-paperId" type="submit">View Graph</button>
     </form>
 
   </div>

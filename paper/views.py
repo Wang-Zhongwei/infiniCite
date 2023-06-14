@@ -69,25 +69,6 @@ def autocomplete(request):
         return JsonResponse(response.json(), safe=False)
     else:
         return redirect('index')  # redirect to index view
-<<<<<<< HEAD
-
-@login_required
-def save_paper(request):
-    paper_id = request.POST.get('id')
-    action = request.POST.get('action')
-    
-    if paper_id and action:
-        try:
-            paper = paper.objects.get(id=paper_id)
-            if action == 'save':
-                paper.users_saved.add(id=paper_id)
-            else:
-                paper.users_saved.remove(id=paper_id)
-            return JsonResponse({'status':'ok'})
-        except:
-            pass
-    return JsonResponse({'status':'ok'})
-=======
     
 def graph(request):
     query = request.session.get('query')
@@ -104,4 +85,3 @@ def graph(request):
     #Not sure what this does quite yet- need to figure it out
     else:
         return redirect('index') # Redirect to index view
->>>>>>> 6284ab7 (First few features)
