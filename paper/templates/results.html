@@ -86,7 +86,7 @@
           const request = new XMLHttpRequest()
           
           const csrftoken = getCookie('csrftoken');
-          request.open('POST', '', true)
+          request.open('POST', "{% url 'graph' %}", true)
           request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
           request.setRequestHeader('X-CSRFToken', csrftoken)
           request.onload = () => {
