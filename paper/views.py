@@ -91,7 +91,7 @@ def save_paper(request):
     
 def graph(request):
     query = request.session.get('query')
-    request.session['query'] = '18305cc15dd15e7cc79d1a0ef332f8e5e822e513'
+    print(query)
     if query:
         #request.session['query'] = None
         # Call the API to get the references and citations
