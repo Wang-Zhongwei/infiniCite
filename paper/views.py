@@ -71,29 +71,29 @@ def autocomplete(request):
         return redirect('index')  # redirect to index view
     
 def graph(request):
-    paperId = request.session.get('query')
+    paperId = request.GET.get('paperId','')
     if paperId:
         params = {
             'fields' : 'paperId,authors,year'
         }
         #Call the API to get the info about this paper
-        originalPaper = requests.get(f'{BASE_URL}/{paperId}/',params=params)
+        originalPaper = requests.get(f'{BASE_URL}/paper/{paperId}/',params=params)
         # Call the API to get the references and citations
-        citations = requests.get(f'{BASE_URL}/{paperId}/citations',params=params)
-        references = requests.get(f'{BASE_URL}/{paperId}/references',params=params)
+        citations = requests.get(f'{BASE_URL}/paper/{paperId}/citations',params=params)
+        references = requests.get(f'{BASE_URL}/paper/{paperId}/references',params=params)
         citationNodes = list()
         citationEdges = list()
         
-        citationNodes.append(originalPaper)
+        citationNodes.append(originalPaper.json())
         for paper in citations.json()['data']:
-            citationNodes.append(paper)
+            citationNodes.append(paper['citingPaper'])
         for currentPaper in citationNodes[1:]: #Start at the second list element so we don't draw an edge from this paper to itself
-            newEdge = [originalPaper, currentPaper]
+            newEdge = [originalPaper.json(), currentPaper]
             citationEdges.append(newEdge)
-            currentPaperCitations = requests.get(f'{BASE_URL}/{currentPaper["paperId"]}/citations',params=params)
+            currentPaperCitations = requests.get(f'{BASE_URL}/paper/{currentPaper["paperId"]}/citations',params=params)
             for possiblePaper in currentPaperCitations.json()['data']:
                 for citedPaper in citationNodes:
-                    if possiblePaper['paperId'] == citedPaper['paperId']:
+                    if possiblePaper['citingPaper']['paperId'] == citedPaper['paperId']:
                         newEdge = [currentPaper,possiblePaper]
                         citationEdges.append(newEdge)
         

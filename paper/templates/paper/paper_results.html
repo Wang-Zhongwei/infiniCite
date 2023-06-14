@@ -46,6 +46,12 @@
         <div class="field-of-study">{{ field }}</div><br>
         {% endfor %}
       </p>
+      <p>
+        <form action="{% url 'paper:graph' %}" method="get" class="button">
+          <input type="hidden" name="paperId" value={{paper.paperId}}>
+          <button id="send-paperId" type="submit">View Graph</button>
+        </form>    
+      </p>
     </div>  
   </div>
   {% empty %}
