@@ -40,7 +40,7 @@ Research Paper Results
     <p>Abstract: {{ paper.abstract }}</p>
   </div>
 
-  <div class="paper-right" data-paper="{{paper.paperId}}">
+  <div class="paper-right">
     <p>
       <span class="sub-title-icon">&#128197;</span>
       Year: {{ paper.year }}
@@ -60,25 +60,35 @@ Research Paper Results
     <div class="field-of-study">{{ field }}</div><br>
     {% endfor %}
     </p>
-    <button class="save-button">Save</button>
-
+    <p>
+    <form action="{% url 'paper:graph' %}" class="button">
+      <input type="hidden" name="paperId" value="{{ paper.paperId }}">
+      <input type="radio" id="citation-graph" name="graphType" value="citations">
+      <label for="citation-graph">Citation Graph</label>
+      <input type="radio" id="reference-graph" name="graphType" value="references">
+      <label for="reference-graph">Reference Graph</label>
+      <button id="send-paperId" type="submit">View</button>
+    </form>
+    </p>
+    <p>
     <div class="sidebar">
       <h2>Your Libraries</h2>
       <ul class="library-list"></ul>
       <input class="new-library-name" type="text" placeholder="New Library Name">
       <button class="new-library-button">Create New Library</button>
     </div>
+    </p>
   </div>
 </div>
 {% empty %}
 <p>No papers found.</p>
 {% endfor %}
+{% endblock %}
 
 
 {% block pagination %}
 {% include "paper/pagination.html" %}
 {% endblock %}
-
 
 <script>
   // Add event listeners to all the save buttons
@@ -166,5 +176,3 @@ Research Paper Results
     }
   }
 </script>
-
-{% endblock %}

@@ -186,3 +186,50 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             'source_library': source_serializer.data,
             'target_library': target_serializer.data,
         }, status=status.HTTP_200_OK)
+    
+def get_paper_info(paper_id, params={'fields': 'paperId,authors,year,title,citationCount'}):
+    return requests.get(f'{BASE_URL}/paper/{paper_id}/', params=params).json()
+
+def get_paper_connections(paper_id, graph_type, params={'fields': 'paperId,intents'}):
+    return requests.get(f'{BASE_URL}/paper/{paper_id}/{graph_type}', params=params).json()['data']
+
+def create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):
+    if graph_type == 'citations':
+        return {"source": high_deg_nbr, "target": low_deg_nbr, "type":edge_type}
+    else:
+        return {"source": low_deg_nbr, "target": high_deg_nbr, "type":edge_type}
+
+
+def graph(request):
+    paper_id = request.GET.get('paperId', '')
+    graph_type = request.GET.get('graphType', 'citations')
+    if graph_type == 'citations':
+        nbr_name = 'citingPaper'
+    else:
+        nbr_name = 'citedPaper'
+    
+    if not paper_id:
+        return redirect('index')
+
+    params = {'fields': 'paperId,authors,year,title,citationCount,isInfluential,intents'}
+    
+    origin = get_paper_info(paper_id)
+    first_deg_nbrs = get_paper_connections(paper_id, graph_type, params)
+
+    nodes = [origin] + [{**paper[nbr_name], "isInfluencial": paper['isInfluential']} for paper in first_deg_nbrs]
+    ids_set = set([paper['paperId'] for paper in nodes[1:]])
+    edges = [create_edge(origin['paperId'], paper[nbr_name]['paperId'], paper['intents'], graph_type=graph_type) for paper in first_deg_nbrs]
+
+    for first_deg_nbr in first_deg_nbrs:
+        if not first_deg_nbr['isInfluential']:
+            continue
+        second_deg_nbrs = get_paper_connections(first_deg_nbr[nbr_name]['paperId'], graph_type=graph_type)
+
+        for second_deg_nbr in second_deg_nbrs:
+            if second_deg_nbr[nbr_name]['paperId'] in ids_set:
+                edges.append(create_edge(first_deg_nbr[nbr_name]['paperId'], second_deg_nbr[nbr_name]['paperId'],  second_deg_nbr['intents'], graph_type=graph_type))
+
+    for node in nodes:
+        node['id'] = node.pop('paperId')
+
+    return render(request, 'paper/graph.html', {'nodes': nodes, 'edges': edges})
