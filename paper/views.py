@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SearchForm
 import requests
 from django.http import JsonResponse
+from user.models import Account
 from .models import Paper, Library
 
 BASE_URL = 'http://api.semanticscholar.org/graph/v1'
@@ -100,12 +101,88 @@ def save_paper(request):
             pass
     return JsonResponse({'status':'ok'})
 
-@login_required
-def create_library(request):
-    # get user id from session 
-    userId = request.user.id
-    libraryName = request.GET.get('libraryName')
-    if libraryName:
-        library = Library.objects.create(name=libraryName, owner=userId)
-        library.save()
-    return JsonResponse({'status':'ok'})
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from .models import Library, Paper
+from .serializers import LibrarySerializer, PaperSerializer
+
+
+class LibraryViewSet(viewsets.ModelViewSet):
+    queryset = Library.objects.all()
+    serializer_class = LibrarySerializer
+    def create(self, request, *args, **kwargs):
+        userId = request.user.id
+        owner = Account.objects.get(id=userId)
+        return super().create(request, *args, **kwargs)
+
+class LibraryPaperViewSet(viewsets.ViewSet):
+    def create(self, request, *args, **kwargs):
+        library = get_object_or_404(Library, pk=kwargs['library_pk'])
+        
+        # Try to get the paper from the library
+        try:
+            paper = Paper.objects.get(paperId=request.data['paperId'])
+        except Paper.DoesNotExist:
+            # If the paper doesn't exist in the library, use the Semantic Scholar API to search for the paper
+            query_params = {
+                'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
+            }
+            paper = self.get_paper_by_id(request.data['paperId'], query_params)
+            if paper is None:
+                return Response({'detail': 'Paper not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        library.papers.add(paper)
+        serializer = LibrarySerializer(library)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def get_paper_by_id(self, id, query_params):
+        response = requests.get(f'{BASE_URL}/paper/{id}', params=query_params)
+
+        if response.status_code != 200:
+            # You might want to add more specific error handling here
+            return None
+
+        paper_data = response.json()
+
+        try:
+            paper = Paper.objects.create(
+                paperId=paper_data['paperId'],
+                url=paper_data['url'],
+                title=paper_data['title'],
+                abstract=paper_data.get('abstract', ""),
+                referenceCount=paper_data['referenceCount'],
+                citationCount=paper_data['citationCount'],
+                openAccessPdf=paper_data['openAccessPdf'].get('url', ""),
+                embedding=paper_data['embedding'].get('vector', []),
+                tldr=paper_data['tldr'].get('text', ""),
+                publicationDate=paper_data['publicationDate'],
+                # You'll need to handle authors separately
+            )
+        except KeyError:
+            # Handle the case where expected data was not found in the response
+            return None
+
+        return paper
+
+    def destroy(self, request, *args, **kwargs):
+        library = get_object_or_404(Library, pk=kwargs['library_pk'])
+        paper = get_object_or_404(Paper, pk=kwargs['pk'])
+        library.papers.remove(paper)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+    def move(self, request, *args, **kwargs):
+        source_library = get_object_or_404(Library, pk=kwargs['library_pk'])
+        target_library = get_object_or_404(Library, pk=request.data['targetLibraryId'])
+        paper = get_object_or_404(Paper, pk=kwargs['pk'])
+
+        source_library.papers.remove(paper)
+        target_library.papers.add(paper)
+
+        source_serializer = LibrarySerializer(source_library)
+        target_serializer = LibrarySerializer(target_library)
+        
+        return Response({
+            'source_library': source_serializer.data,
+            'target_library': target_serializer.data,
+        }, status=status.HTTP_200_OK)

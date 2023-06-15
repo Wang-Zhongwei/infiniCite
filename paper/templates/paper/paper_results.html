@@ -3,6 +3,22 @@
 
 {% block extra-css %}
 <link rel="stylesheet" href="{% static 'paper/css/style_resultPage.css'%}">
+<style>
+  .sidebar {
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .save-button {
+    margin-top: 20px;
+  }
+</style>
 {% endblock %}
 
 {% block heading %}
@@ -24,7 +40,7 @@ Research Paper Results
     <p>Abstract: {{ paper.abstract }}</p>
   </div>
 
-  <div class="paper-right">
+  <div class="paper-right" data-paper="{{paper.paperId}}">
     <p>
       <span class="sub-title-icon">&#128197;</span>
       Year: {{ paper.year }}
@@ -44,28 +60,14 @@ Research Paper Results
     <div class="field-of-study">{{ field }}</div><br>
     {% endfor %}
     </p>
-    <p>
-    <div class="save-button-container">
-      <button aria-label="Save to Library" class="save-button" data-paper-id="{{ paper.paperId }}">
-        <span class="cl-button__label">Save</span>
-      </button>
-      <div class="dropdown-menu">
-        <!-- Dropdown menu content -->
-        <ul>
-          <li><a href="#">Option 1</a></li>
-          <li><a href="#">Option 2</a></li>
-          <li><a href="#">Option 3</a></li>
-        </ul>
-      </div>
+    <button class="save-button">Save</button>
+
+    <div class="sidebar">
+      <h2>Your Libraries</h2>
+      <ul class="library-list"></ul>
+      <input class="new-library-name" type="text" placeholder="New Library Name">
+      <button class="new-library-button">Create New Library</button>
     </div>
-    <script>
-      $(document).ready(function () {
-        $(".save-button").click(function () {
-          $(this).siblings(".dropdown-menu").toggleClass("show");
-        });
-      });
-    </script>
-    </p>
   </div>
 </div>
 {% empty %}
@@ -78,6 +80,53 @@ Research Paper Results
 {% endblock %}
 
 
+<script>
+  // Add event listeners to all the save buttons
+  document.querySelectorAll('.paper-right').forEach(paperElement => {
+    const paperId = paperElement.getAttribute('data-paper');
+    const sidebar = paperElement.querySelector('.sidebar');
+
+    paperElement.querySelector('.save-button').addEventListener('click', function () {
+      sidebar.style.display = 'block';
+
+      // Use Ajax to fetch the user's libraries
+      fetch('/libraries/')
+        .then(response => response.json())
+        .then(data => {
+          const libraryList = sidebar.querySelector('.library-list');
+          libraryList.innerHTML = '';
+          data.forEach(library => {
+            const listItem = document.createElement('li');
+            listItem.textContent = library.name;
+            listItem.addEventListener('click', function () {
+              // Use Ajax to save the paper to the selected library
+              fetch(`/libraries/${library.id}/papers/`, {
+                method: 'POST',
+                params: JSON.stringify({ paperId: paperId }),
+                headers: { 'Content-Type': 'application/json' }
+              }).then(() => alert('Paper saved!'));
+            });
+            libraryList.appendChild(listItem);
+          });
+        });
+    });
+
+    sidebar.querySelector('.new-library-button').addEventListener('click', function () {
+      const newLibraryName = sidebar.querySelector('.new-library-name').value;
+      if (!newLibraryName) {
+        alert('Please enter a name for the new library.');
+        return;
+      }
+
+      // Use Ajax to create a new library
+      fetch('/libraries/', {
+        method: 'POST',
+        body: JSON.stringify({ name: newLibraryName }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then(() => alert('New library created!'));
+    });
+  });
+</script>
 
 <script>
   window.onload = function () {
@@ -116,36 +165,6 @@ Research Paper Results
       fields[i].style.backgroundColor = colorMap[firstLetter] || '#808080';
     }
   }
-
-  // Get all the buttons with the class name 'save-button'
-  const saveButtons = document.getElementsByClassName('save-button');
-
-  // Attach event listeners to each button
-  Array.from(saveButtons).forEach(button => {
-    button.addEventListener('click', () => {
-      // Retrieve the paperId value from the clicked button
-      const paperId = button.getAttribute('data-paper-id');
-
-      // Call your backend API here
-      fetch(`/save?paperId=${paperId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Handle the response data
-          console.log(data);
-        })
-        .catch(error => {
-          // Handle any errors
-          console.error('Error:', error);
-        });
-    });
-  });
-
-
 </script>
 
 {% endblock %}
