@@ -10,6 +10,14 @@ InfiniCite
 {% endblock%}
 
 {% block content %}
+<div class="switch-button">
+  <input class="switch-button-checkbox" type="checkbox" id="toggle-author-search" onchange="toggleSearchType(this)">
+  <label class="switch-button-label" for="toggle-author-search">
+    <div class="switch-button-slider"></div>
+    <span class="switch-button-label-span">Paper</span>
+  </label>
+</div>
+
 <div class="container">
   <form action="{% url 'paper:search' %}" method="get" class="search-bar">
     <input type="text" name="query" id="query-field" placeholder="Search..."
@@ -21,12 +29,6 @@ InfiniCite
       <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
     </button>
   </form>
-
-  <div>
-    <label for="toggle-author-search">Author Search:</label>
-    <input type="checkbox" id="toggle-author-search" onchange="toggleSearchType(this)">
-  </div>
-</div>
 
 <script>
   function toggleSearchType(checkbox) {
