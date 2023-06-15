@@ -47,9 +47,13 @@
         {% endfor %}
       </p>
       <p>
-        <form action="{% url 'paper:graph' %}" method="get" class="button">
+        <form action="{% url 'paper:graph' %}" class="button">
           <input type="hidden" name="paperId" value={{paper.paperId}}>
-          <button id="send-paperId" type="submit">View Graph</button>
+          <input type="radio" id="citation-graph" name="graphType" value="citations">
+          <label for="citation-graph">Citation Graph</label>
+          <input type="radio" id="reference-graph" name="graphType" value="references">
+          <label for="reference-graph">Reference Graph</label>
+          <button id="send-paperId" type="submit">View</button>
         </form>    
       </p>
     </div>  
