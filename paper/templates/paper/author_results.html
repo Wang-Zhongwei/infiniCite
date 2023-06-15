@@ -33,4 +33,9 @@ Author Results
   </tr>
   {% endfor %}
 </table>
+
+{% block pagination %}
+{% include 'paper/pagination.html' with page=page query=query total_page=total_page searchPaper=searchPaper%}
+{% endblock %}
+
 {% endblock %}

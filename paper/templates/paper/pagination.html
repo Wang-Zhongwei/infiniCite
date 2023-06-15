@@ -1,0 +1,21 @@
+<div id="app" class="container">  
+  <ul class="page">
+    {% if page > 1 %}
+      <a href="?query={{ query }}&page=1&searchPaper={{searchPaper}}">&laquo;</a>
+      <a href="?query={{ query }}&page={{ page|add:"-1" }}&searchPaper={{searchPaper}}">previous</a>
+    {% endif %}
+    
+    {% for page_num in pages_to_show %}
+      {% if page_num == page %}
+        <li class="page__numbers active">{{ page_num }}</li>
+      {% else %}
+        <li class="page__numbers"><a href="?query={{ query }}&page={{ page_num }}&searchPaper={{searchPaper}}">{{ page_num }}</a></li>
+      {% endif %}
+    {% endfor %}
+    
+    {% if page < total_pages %}
+      <a href="?query={{ query }}&page={{ page|add:"1" }}&searchPaper={{searchPaper}}">next</a>
+      <a href="?query={{ query }}&page={{ total_pages }}&searchPaper={{searchPaper}}">&raquo;</a>
+    {% endif %}
+  </ul>
+</div>

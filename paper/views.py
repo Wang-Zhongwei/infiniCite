@@ -18,7 +18,7 @@ def search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            page = form.cleaned_data['page']
+            page = form.cleaned_data['page'] or 1
             searchPaper = form.cleaned_data['searchPaper']
             return handle_search(request, query, page, searchPaper)
         else:
@@ -45,7 +45,16 @@ def search_papers(request, query, page):
         'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy,authors'
     }
     response = requests.get(f'{BASE_URL}/paper/search', params=params)
-    return render(request, 'paper/paper_results.html', {'papers': response.json()})
+    data = response.json()
+    total = data.get('total', 0)
+    total_pages = total // RECORDS_PER_PAGE + 1
+
+    # Calculate the range of pages to show
+    start = max(1, page - 3)
+    end = min(total_pages, page + 3) + 1
+    pages_to_show = range(start, end)
+
+    return render(request, 'paper/paper_results.html', {'papers': data, 'page': page, 'query': query, 'total_pages': total_pages, 'pages_to_show': pages_to_show, 'searchPaper': True})
 
 
 def search_authors(request, query, page):
@@ -56,7 +65,16 @@ def search_authors(request, query, page):
         'fields': 'authorId,name,affiliations,paperCount,citationCount,hIndex'
     }
     response = requests.get(f'{BASE_URL}/author/search', params=params)
-    return render(request, 'paper/author_results.html', {'authors': response.json()})
+    data = response.json()
+    total = data.get('total', 0)
+    total_pages = total // RECORDS_PER_PAGE + 1
+
+    # Calculate the range of pages to show
+    start = max(1, page - 3)
+    end = min(total_pages, page + 3) + 1
+    pages_to_show = range(start, end)
+
+    return render(request, 'paper/author_results.html', {'authors': data, 'page': page, 'query': query, 'total_pages': total_pages, 'pages_to_show': pages_to_show, 'searchPaper': False})
 
 def autocomplete(request):
     query = request.GET.get('query', '')

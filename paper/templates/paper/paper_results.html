@@ -7,7 +7,7 @@
 
 {% block heading %}
 Research Paper Results
-{% endblock%}
+{% endblock %}
 
 {% block content %}
 {% for paper in papers.data %}
@@ -71,6 +71,14 @@ Research Paper Results
 {% empty %}
 <p>No papers found.</p>
 {% endfor %}
+
+
+{% block pagination %}
+{% include "paper/pagination.html" %}
+{% endblock %}
+
+
+
 <script>
   window.onload = function () {
     var colorMap = {
@@ -139,4 +147,5 @@ Research Paper Results
 
 
 </script>
+
 {% endblock %}
