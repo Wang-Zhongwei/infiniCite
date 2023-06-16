@@ -9,6 +9,7 @@ router.register(r'libraries', LibraryViewSet)
 urlpatterns = [
     path('', views.index, name='index'),
     path('search/', views.search, name='search'),
+    path('graph/', views.graph, name='graph'),
     path('autocomplete/', views.autocomplete, name='autocomplete'),
     path('', include(router.urls)),
     path('libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'post': 'create'}), name='library-paper-add'),
