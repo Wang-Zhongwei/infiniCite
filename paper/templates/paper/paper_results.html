@@ -31,6 +31,7 @@ Research Paper Results
   <div class="paper-left">
     <h2>{{ paper.title }}
       <a href="{{ paper.url }}">Read More</a>
+      <button class="save-button" style="float: right;">Save</button>
     </h2>
     <p>Authors:
       {% for author in paper.authors %}
@@ -39,6 +40,7 @@ Research Paper Results
     </p>
     <p>Abstract: {{ paper.abstract }}</p>
   </div>
+  <div style="clear: both;"></div>
 
   <div class="paper-right" data-paper="{{ paper.paperId }}">
     <p>
@@ -60,17 +62,18 @@ Research Paper Results
     <div class="field-of-study">{{ field }}</div><br>
     {% endfor %}
     </p>
-    <div>
+    <div>  
       <form action="{% url 'paper:graph' %}" class="button">
         <input type="hidden" name="paperId" value="{{ paper.paperId }}">
         <input type="radio" id="citation-graph" name="graphType" value="citations">
         <label for="citation-graph">Citation Graph</label>
         <input type="radio" id="reference-graph" name="graphType" value="references">
         <label for="reference-graph">Reference Graph</label>
-        <button id="send-paperId" type="submit">View</button>
+        <button class="view-button" id="send-paperId" type="submit">View</button>
+        
       </form>
-
-      <button class="save-button">Save</button>
+      
+      
 
       <div class="sidebar" style="display:none;">
         <h2>Your Libraries</h2>
