@@ -1,13 +1,9 @@
-{% extends "user/navigation_bar_generic.html" %}
+{% extends "base.html" %}
 {% load static %}
 
-{% block extra-css %}
-<link rel="stylesheet" href="{% static 'paper/css/style_resultPage.css'%}">
+{% block css %}
+<link rel="stylesheet" href="{% static 'paper/css/result-page.css'%}">
 {% endblock %}
-
-{% block heading %}
-Author Results
-{% endblock%}
 
 {% block content %}
 <h1>Authors</h1>
@@ -33,9 +29,5 @@ Author Results
   </tr>
   {% endfor %}
 </table>
-
-{% block pagination %}
-{% include 'paper/pagination.html' with page=page query=query total_page=total_page searchPaper=searchPaper%}
 {% endblock %}
-
-{% endblock %}
+{% include 'pagination.html' with page=page query=query total_page=total_page searchPaper=searchPaper%}

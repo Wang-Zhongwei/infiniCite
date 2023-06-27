@@ -1,35 +1,36 @@
-{% extends 'user/navigation_bar_generic.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block extra-css %}
-<link rel="stylesheet" href="{% static 'paper/css/style.css'%}">
+{% block css %}
+<link rel="stylesheet" href="{% static 'paper/css/index.css'%}">
 {% endblock %}
 
-{% block heading %}
-InfiniCite
-{% endblock%}
-
 {% block content %}
-<div class="switch-button">
-  <input class="switch-button-checkbox" type="checkbox" id="toggle-author-search" onchange="toggleSearchType(this)">
-  <label class="switch-button-label" for="toggle-author-search">
-    <div class="switch-button-slider"></div>
-    <span class="switch-button-label-span">Paper</span>
-  </label>
-</div>
-
 <div class="container">
-  <form action="{% url 'paper:search' %}" method="get" class="search-bar">
-    <input type="text" name="query" id="query-field" placeholder="Search..."
-      value="{{ form.query.value|default_if_none:'' }}" autocomplete="off">
-    <input type="hidden" name="page" value="{{ form.page.value|default:1 }}">
-    <input type="hidden" name="searchPaper" value="true" id="paper-search">
-    <ul id="autocomplete-results" class="autocomplete-active"></ul>
-    <button class="search-button" type="submit">
-      <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
-    </button>
-  </form>
+  <div class="switch-button">
+    <input class="switch-button-checkbox" type="checkbox" id="toggle-author-search" onchange="toggleSearchType(this)">
+    <label class="switch-button-label" for="toggle-author-search">
+      <div class="switch-button-slider"></div>
+      <span class="switch-button-label-span">Paper</span>
+    </label>
+  </div>
+  
+  <div class="form-container">
+    <form action="{% url 'paper:search' %}" method="get" class="search-bar">
+      <input type="text" name="query" id="query-field" placeholder="Search..."
+        value="{{ form.query.value|default_if_none:'' }}" autocomplete="off">
+      <input type="hidden" name="page" value="{{ form.page.value|default:1 }}">
+      <input type="hidden" name="searchPaper" value="true" id="paper-search">
+      <ul id="autocomplete-results" class="autocomplete-active"></ul>
+      <button class="search-button" type="submit">
+        <img src="{% static 'paper/images/search.png' %}" alt="search-icon">
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
 
+{% block js %}
 <script>
   function toggleSearchType(checkbox) {
     var searchPaper = document.getElementById("paper-search");

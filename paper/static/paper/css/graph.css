@@ -1,0 +1,18 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.paper {
+  margin-bottom: 2em;
+  padding: 1em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.paper h2 {
+  margin-top: 0;
+}
+
+.paper p {
+  margin: 0.5em 0;
+}

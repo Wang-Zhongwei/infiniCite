@@ -13,4 +13,4 @@ class LibrarySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Library
-        fields = ['name', 'owner', 'papers', 'sharedWith']
+        fields = ['id', 'name', 'owner', 'papers', 'sharedWith']

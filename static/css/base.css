@@ -1,0 +1,36 @@
+body {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: auto 1fr 4vh;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main"
+    "sidebar footer";
+  height: 104vh; /* Full viewport height */
+}
+
+header {
+  grid-area: header;
+  /* additional styles for header */
+}
+
+aside {
+  grid-area: sidebar;
+  /* additional styles for sidebar */
+}
+
+main {
+  grid-area: main;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+  /* additional styles for main */
+}
+
+footer {
+  grid-area: footer;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* additional styles for footer */
+}

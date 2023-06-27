@@ -1,0 +1,207 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/sidebar.css'%}">
+<div class="sidebar-open">
+  <div class="profile">
+    <img class="avatar" src="#" />
+
+    <div class="content">
+      <div class="overline">Product Manager</div>
+
+      <div class="title">Andrew Smith</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TODO: add active selector: refer to chatgpt-->
+  <div class="navigation pages">
+    <div class="title2">
+      <div class="overline2">Main</div>
+    </div>
+
+    <div class="link">
+      <i class="bi bi-house icon"></i>
+      <div class="label">Home</div>
+    </div>
+
+    <div class="link">
+      <i class="bi bi-search icon"></i>
+      <div class="label">Search</div>
+    </div>
+
+    <div class="link">
+      <i class="bi bi-clock-history icon"></i>
+      <div class="label">History</div>
+    </div>
+
+    <div class="dropdown">
+      <div class="link">
+        <i class="bi bi-collection icon"></i>
+        <div class="label">Library</div>
+        <a href="#">
+          <span class="function-icon-container">
+            <i class="bi bi-plus-circle icon function-icon small"></i>
+          </span>
+        </a>
+        <span class="function-icon-container">
+          <i class="bi bi-chevron-down icon function-icon small collapsed" data-toggle="collapse"
+            data-target="#library-links-container"></i>
+        </span>
+      </div>
+
+      <div class="links-container collapse" id="library-links-container">
+        <!-- TODO: hide remaining content by ... if library name is too long -->
+        <div class="link3">
+          <div class="label3">LLM</div>
+          <div class="dropdown">
+            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="function-icon-container">
+                <i class="bi bi-three-dots icon small"></i>
+              </span>
+            </div>
+            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-pencil-square icon small"></i>
+                &nbsp; Rename
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-trash icon small"></i>
+                &nbsp; Delete
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-files icon small"></i>
+                &nbsp; Duplicate
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-share icon small"></i>
+                &nbsp; Share
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="link3">
+          <div class="label3">GNN</div>
+          <div class="dropdown">
+            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="function-icon-container">
+                <i class="bi bi-three-dots icon small"></i>
+              </span>
+            </div>
+            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-pencil-square icon small"></i>
+                &nbsp; Rename
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-trash icon small"></i>
+                &nbsp; Delete
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-files icon small"></i>
+                &nbsp; Duplicate
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-share icon small"></i>
+                &nbsp; Share
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="link3">
+          <div class="label3">CNN</div>
+          <div class="dropdown">
+            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="function-icon-container">
+                <i class="bi bi-three-dots icon small"></i>
+              </span>
+            </div>
+            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-pencil-square icon small"></i>
+                &nbsp; Rename
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-trash icon small"></i>
+                &nbsp; Delete
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-files icon small"></i>
+                &nbsp; Duplicate
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-share icon small"></i>
+                &nbsp; Share
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="link3">
+          <div class="label3">Natural Language Interface</div>
+          <div class="dropdown">
+            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="function-icon-container">
+                <i class="bi bi-three-dots icon small"></i>
+              </span>
+            </div>
+            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-pencil-square icon small"></i>
+                &nbsp; Rename
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-trash icon small"></i>
+                &nbsp; Delete
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-files icon small"></i>
+                &nbsp; Duplicate
+              </a>
+              <a class="dropdown-item library-option" href="#">
+                <i class="bi bi-share icon small"></i>
+                &nbsp; Share
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- TODO: set height by number of elements -->
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="navigation2">
+    <div class="title2">
+      <div class="overline2">Settings</div>
+    </div>
+
+    <div class="link">
+      <i class="bi bi-gear icon"></i>
+      <div class="label">Settings</div>
+    </div>
+  </div>
+
+  <div class="navigation">
+    <div class="link">
+      <i class="bi bi-question-circle icon"></i>
+      <div class="label">Help</div>
+    </div>
+
+    <div class="link">
+      <svg class="icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M5.83337 1.66669C5.17033 1.66669 4.53445 1.93008 4.06561 2.39892C3.59677 2.86776 3.33337 3.50365 3.33337 4.16669V15.8334C3.33337 16.4964 3.59677 17.1323 4.06561 17.6011C4.53445 18.07 5.17033 18.3334 5.83337 18.3334H14.1667C14.8297 18.3334 15.4656 18.07 15.9345 17.6011C16.4033 17.1323 16.6667 16.4964 16.6667 15.8334V15C16.6667 14.5398 16.2936 14.1667 15.8334 14.1667C15.3731 14.1667 15 14.5398 15 15V15.8334C15 16.0544 14.9122 16.2663 14.756 16.4226C14.5997 16.5789 14.3877 16.6667 14.1667 16.6667H5.83337C5.61236 16.6667 5.4004 16.5789 5.24412 16.4226C5.08784 16.2663 5.00004 16.0544 5.00004 15.8334V4.16669C5.00004 3.94567 5.08784 3.73371 5.24412 3.57743C5.4004 3.42115 5.61236 3.33335 5.83337 3.33335H14.1667C14.3877 3.33335 14.5997 3.42115 14.756 3.57743C14.9122 3.73371 15 3.94567 15 4.16669V5.00002C15 5.46026 15.3731 5.83335 15.8334 5.83335C16.2936 5.83335 16.6667 5.46026 16.6667 5.00002V4.16669C16.6667 3.50365 16.4033 2.86776 15.9345 2.39892C15.4656 1.93008 14.8297 1.66669 14.1667 1.66669H5.83337Z"
+          fill="#CC8889" />
+        <path
+          d="M13.9226 6.91076C13.5972 6.58533 13.0696 6.58533 12.7441 6.91076C12.4187 7.2362 12.4187 7.76384 12.7441 8.08928L13.8215 9.16669H10C9.5398 9.16669 9.16671 9.53978 9.16671 10C9.16671 10.4603 9.5398 10.8334 10 10.8334H13.8215L12.7441 11.9108C12.4187 12.2362 12.4187 12.7638 12.7441 13.0893C13.0696 13.4147 13.5972 13.4147 13.9226 13.0893L16.4226 10.5893C16.7481 10.2638 16.7481 9.7362 16.4226 9.41076L13.9226 6.91076Z"
+          fill="#CC8889" />
+      </svg>
+
+      <div class="label5">Logout Account</div>
+    </div>
+  </div>
+</div>

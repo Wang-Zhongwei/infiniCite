@@ -12,4 +12,15 @@
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "database-1.covgjpmlgmrq.us-east-1.rds.amazonaws.com",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "connection0",
+            "database": "infinicite",
+            "username": "jonathan"
+        }
+    ],
 }

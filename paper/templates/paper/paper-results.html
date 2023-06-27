@@ -1,33 +1,13 @@
-{% extends "user/navigation_bar_generic.html" %}
+{% extends "base.html" %}
 {% load static %}
 
-{% block extra-css %}
-<link rel="stylesheet" href="{% static 'paper/css/style_resultPage.css'%}">
-<style>
-  .sidebar {
-    display: none;
-    position: absolute;
-    right: 0;
-    width: 300px;
-    height: 100%;
-    background-color: #f9f9f9;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  .save-button {
-    margin-top: 20px;
-  }
-</style>
-{% endblock %}
-
-{% block heading %}
-Research Paper Results
+{% block css %}
+<link rel="stylesheet" href="{% static 'paper/css/result-page.css'%}">
 {% endblock %}
 
 {% block content %}
 {% for paper in papers.data %}
-<div class="paper" style="display: flex; justify-content: space-between;">
+<div class="paper" style="display: flex; justify-content: space-between;" paper-id="{{ paper.paperId }}">
   <div class="paper-left">
     <h2>{{ paper.title }}
       <a href="{{ paper.url }}">Read More</a>
@@ -42,7 +22,7 @@ Research Paper Results
   </div>
   <div style="clear: both;"></div>
 
-  <div class="paper-right" data-paper="{{ paper.paperId }}">
+  <div class="paper-right">
     <p>
       <span class="sub-title-icon">&#128197;</span>
       Year: {{ paper.year }}
@@ -70,26 +50,18 @@ Research Paper Results
         <input type="radio" id="reference-graph" name="graphType" value="references">
         <label for="reference-graph">Reference Graph</label>
         <button class="view-button" id="send-paperId" type="submit">View</button>
-        
       </form>
-      
-      
-
-      <div class="sidebar" style="display:none;">
-        <h2>Your Libraries</h2>
-        <ul class="library-list"></ul>
-        <input class="new-library-name" type="text" placeholder="New Library Name">
-        <button class="new-library-button">Create New Library</button>
-      </div>
     </div>
   </div>
 </div>
 {% empty %}
 <p>No papers found.</p>
 {% endfor %}
-{% block pagination %}
-{% include 'paper/pagination.html' with page=page query=query total_page=total_page searchPaper=searchPaper%}
 {% endblock %}
+
+{% include 'pagination.html' with page=page query=query total_page=total_page searchPaper=searchPaper%}
+
+{% block js %}
 <script>
   window.onload = function () {
     var colorMap = {
@@ -128,7 +100,25 @@ Research Paper Results
     }
   }
 </script>
+
 <script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  const csrftoken = getCookie('csrftoken');
+
   // Add event listeners to all the save buttons
   document.querySelectorAll('.paper-right').forEach(paperElement => {
     const paperId = paperElement.getAttribute('data-paper');
@@ -151,7 +141,7 @@ Research Paper Results
               fetch(`/libraries/${library.id}/papers/`, {
                 method: 'POST',
                 params: JSON.stringify({ paperId: paperId }),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
               }).then(() => alert('Paper saved!'));
             });
             libraryList.appendChild(listItem);
@@ -170,7 +160,7 @@ Research Paper Results
       fetch('/libraries/', {
         method: 'POST',
         body: JSON.stringify({ name: newLibraryName }),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json','X-CSRFToken': csrftoken }
       }).then(() => alert('New library created!'));
     });
   });
