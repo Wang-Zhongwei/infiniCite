@@ -126,6 +126,14 @@ h1 {
   color: var(--greyDark);
 }
 
+.flex-container {
+  display: flex; 
+}
+
+.flex-child {
+  flex: 1;
+  border: 2px;
+}
 
 
 .items-list {
@@ -248,4 +256,6 @@ h1 {
   color:#007bff;
   
 }
+
+
 
