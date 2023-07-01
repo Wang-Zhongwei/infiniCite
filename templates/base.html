@@ -15,26 +15,28 @@
 </head>
 
 <body>
-  <header>
+  <aside data-sidebar>
+    {% include 'sidebar.html' %}
+  </aside>
+  <section>
     <nav>
       {% include 'navbar.html' %}
     </nav>
-  </header>
-
-  <aside>
-    {% include 'sidebar.html' %}
-  </aside>
-
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
-
-  <footer>
-    {% include 'footer.html' %}
-  </footer>
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+  </section>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const menuIconButton = document.querySelector("[data-menu-icon-btn]")
+    const sidebar = document.querySelector("[data-sidebar]")
+
+    menuIconButton.addEventListener("click", () => {
+      sidebar.classList.toggle("close")
+    })
+  </script>
   {% block js %}
   {% endblock %}
 </body>

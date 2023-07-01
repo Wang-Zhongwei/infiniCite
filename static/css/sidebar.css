@@ -1,7 +1,8 @@
-.sidebar-open * {
+.sidebar * {
   box-sizing: border-box;
 }
-.sidebar-open {
+
+.sidebar {
   background: #161a23;
   border-radius: 1px;
   border-style: solid;
@@ -20,10 +21,6 @@
   position: relative;
 }
 
-.pages {
-  flex-grow: 1;
-}
-
 .profile {
   display: flex;
   flex-direction: row;
@@ -34,6 +31,7 @@
   flex-shrink: 0;
   position: relative;
 }
+
 .avatar {
   border-radius: 36.22px;
   flex-shrink: 0;
@@ -41,6 +39,7 @@
   height: 44px;
   position: relative;
 }
+
 .content {
   display: flex;
   flex-direction: column;
@@ -50,6 +49,7 @@
   flex: 1;
   position: relative;
 }
+
 .overline {
   color: rgba(255, 255, 255, 0.5);
   text-align: left;
@@ -61,6 +61,7 @@
   align-items: center;
   justify-content: flex-start;
 }
+
 .title {
   color: rgba(255, 255, 255, 0.8);
   text-align: left;
@@ -68,6 +69,7 @@
   position: relative;
   align-self: stretch;
 }
+
 .divider {
   background: #2d2f39;
   border-radius: 2px;
@@ -88,6 +90,7 @@
   flex-shrink: 0;
   position: relative;
 }
+
 .title2 {
   padding: 0px 12px 0px 12px;
   display: flex;
@@ -99,6 +102,7 @@
   flex-shrink: 0;
   position: relative;
 }
+
 .overline2 {
   color: rgba(255, 255, 255, 0.5);
   text-align: left;
@@ -157,7 +161,7 @@
 .icon-calendar {
   flex-shrink: 0;
   position: relative;
-  overflow: visible;
+  overflow: auto;
 }
 
 .dropdown {
@@ -216,6 +220,7 @@
   position: relative;
   flex: 1;
 }
+
 .line {
   background: #2d2f39;
   flex-shrink: 0;
@@ -240,9 +245,11 @@
   0% {
     transform: rotate(0deg);
   }
+
   50% {
     transform: rotate(30deg);
   }
+
   100% {
     transform: rotate(0deg);
   }
@@ -261,12 +268,14 @@
   top: 113px;
   overflow: hidden;
 }
+
 .pointing {
   position: absolute;
   left: 5.37px;
   top: 4.39px;
-  overflow: visible;
+  overflow: auto;
 }
+
 .navigation2 {
   display: flex;
   flex-direction: column;
@@ -277,30 +286,13 @@
   flex: 1;
   position: relative;
 }
+
 .label5 {
   color: #cc8889;
   text-align: left;
   font: 500 14px/20px "Inter", sans-serif;
   position: relative;
   flex: 1;
-}
-
-.button {
-  background: #161a23;
-  border-radius: 8px;
-  border-style: solid;
-  border-color: #2d2f39;
-  border-width: 1px;
-  padding: 6px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  position: absolute;
-  right: -14px;
-  top: 34px;
 }
 
 .dropdown-menu {

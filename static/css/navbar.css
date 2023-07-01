@@ -13,3 +13,7 @@
 .form-inline {
   min-width: 50%;
 }
+
+#menu-icon-container {
+  margin-right: 12px;
+}
