@@ -7,9 +7,9 @@ h1 {
 }
 
 .paper {
-  margin-bottom: 20px;
   display: flex;
   justify-content: center; 
+  background-color: hwb(0 9% 91%);
 }
 
 .paper h2 {
@@ -50,32 +50,39 @@ h1 {
 .paper-left {
   width: 70%;  /* Set a fixed width */
   text-align: justify;  /* Spread the text evenly across the line */
-  margin: 10px;
-  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  margin-right: 10px;
+  margin-left: 20px;
+  padding: 30px;
   border: 0px solid #ddd;
   border-left: 10px;
   border-right: 10px;
   border-radius: 15px;
-  background-color: #fff;
+  background-color: rgb(55, 54, 54);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   justify-content: space-between;   /* Separate the children containers */
   max-height: 270px;
   overflow: auto;
+  color: rgb(220, 219, 219);
+  opacity: 0.8;
 }
 
 .paper-right {
   width: 25%;  /* Set a fixed width */
   text-align: left;  /* Spread the text evenly across the line */
   line-height: 1.2;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  margin-top: 10px;
   padding: 20px;
   border: 0px solid #ddd;
   border-left: 10px;
   border-right: 10px;
   border-radius: 15px;
-  background-color: #fff;
+  background-color: rgb(55, 54, 54);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   justify-content: space-between;   /* Separate the children containers */
+  color:rgb(220, 219, 219);
 }
 
 .field-of-study{
@@ -103,13 +110,13 @@ h1 {
   --greyDark: #2d4848;
 }
 
-*,
+/* *,
 *::before,
 *::after {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
-}
+} */
 
 .items-list {
   max-width: 90vw;
@@ -161,7 +168,7 @@ h1 {
   height: 5rem;
   margin: 3rem;
   border-radius: 0.6rem;
-  background: #ffffff;
+  background: hwb(0 9% 91%);
   box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
 }
 .page__numbers, .page__btn, .page__dots {
@@ -231,3 +238,7 @@ h1 {
   color:#007bff;
 }
 
+/* .results {
+  justify-content: flex-end;
+  margin-left: auto;
+} */
