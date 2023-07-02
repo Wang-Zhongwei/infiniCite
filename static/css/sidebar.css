@@ -1,24 +1,22 @@
-.sidebar * {
-  box-sizing: border-box;
-}
-
 .sidebar {
+  color: white;
   background: #161a23;
   border-radius: 1px;
   border-style: solid;
   border-width: 0 1px 0 0;
   border-color: #555;
-  padding: 24px;
+  padding: 20px 25px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   align-items: flex-start;
   justify-content: space-between;
   flex-shrink: 0;
   width: 100%;
   height: 100%;
-  padding-bottom: 4vh;
   position: relative;
+  overflow: hidden;
+  will-change: transform;
 }
 
 .profile {
@@ -30,6 +28,20 @@
   align-self: stretch;
   flex-shrink: 0;
   position: relative;
+  overflow: hidden;
+  margin-bottom: 10%;
+}
+
+span {
+  white-space: nowrap;
+}
+
+.content {
+  overflow: inherit;
+}
+
+.nav-main {
+  flex-grow: 1;
 }
 
 .avatar {
@@ -66,7 +78,7 @@
   color: rgba(255, 255, 255, 0.8);
   text-align: left;
   font: 500 14px/20px "Inter", sans-serif;
-  position: relative;
+  position: relative; 
   align-self: stretch;
 }
 
@@ -128,7 +140,7 @@
 }
 
 .label {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.7);
   text-align: left;
   font: 500 14px/20px "Inter", sans-serif;
   position: relative;
@@ -158,12 +170,6 @@
   background: #4d5061;
 }
 
-.icon-calendar {
-  flex-shrink: 0;
-  position: relative;
-  overflow: auto;
-}
-
 .dropdown {
   display: flex;
   flex-direction: column;
@@ -183,7 +189,7 @@
   align-items: flex-end;
   justify-content: flex-start;
   flex-shrink: 0;
-  width: 198px;
+  width: 100%;
   position: relative;
 }
 
@@ -256,24 +262,7 @@
 }
 
 .link:hover .label {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.cursor-pointer {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  left: 170px;
-  top: 113px;
-  overflow: hidden;
-}
-
-.pointing {
-  position: absolute;
-  left: 5.37px;
-  top: 4.39px;
-  overflow: auto;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .navigation2 {
@@ -297,12 +286,14 @@
 
 .dropdown-menu {
   background-color: rgb(37, 37, 37);
-  color: rgb(214, 214, 214);
+  color: rgb(244, 244, 244);
 }
 
 .library-options-menu {
   border-radius: 5%;
   font-size: small;
+  overflow: visible;
+  opacity: 0.9;
 }
 
 .dropdown-item {

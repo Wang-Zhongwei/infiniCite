@@ -9,7 +9,6 @@ h1 {
 .paper {
   display: flex;
   justify-content: center; 
-  background-color: hwb(0 9% 91%);
 }
 
 .paper h2 {
@@ -62,9 +61,9 @@ h1 {
   background-color: rgb(55, 54, 54);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   justify-content: space-between;   /* Separate the children containers */
-  max-height: 270px;
+  max-height: 400px;
   overflow: auto;
-  color: rgb(220, 219, 219);
+  color: white;
   opacity: 0.8;
 }
 
@@ -82,7 +81,8 @@ h1 {
   background-color: rgb(55, 54, 54);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   justify-content: space-between;   /* Separate the children containers */
-  color:rgb(220, 219, 219);
+  color:white;
+  opacity: 0.8;
 }
 
 .field-of-study{
@@ -151,6 +151,7 @@ h1 {
   font-size: 3rem;
   transition: all 0.3s ease;
 }
+
 .item:hover span {
   transform: scale(1.2);
   color: var(--primary);
@@ -168,7 +169,8 @@ h1 {
   height: 5rem;
   margin: 3rem;
   border-radius: 0.6rem;
-  background: hwb(0 9% 91%);
+  /* background: hwb(0 9% 91%); */
+  background: transparent;
   box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
 }
 .page__numbers, .page__btn, .page__dots {
@@ -237,8 +239,3 @@ h1 {
   background-color:#ddd;
   color:#007bff;
 }
-
-/* .results {
-  justify-content: flex-end;
-  margin-left: auto;
-} */

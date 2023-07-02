@@ -31,10 +31,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const menuIconButton = document.querySelector("[data-menu-icon-btn]")
-    const sidebar = document.querySelector("[data-sidebar]")
-
+    // const sidebar = document.querySelector("[data-sidebar]")
+    const body = document.querySelector("body")
     menuIconButton.addEventListener("click", () => {
-      sidebar.classList.toggle("close")
+      body.classList.toggle("sidebar-closed")
     })
   </script>
   {% block js %}

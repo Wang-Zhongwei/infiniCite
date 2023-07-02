@@ -22,10 +22,10 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(rgba(0, 8, 51, 0.9), rgba(0, 8, 51, 0.9)), url(../images/background.jpg);
   background-position: center;
   background-size: cover;
   display: flex;
+  /* background-image: url(../images/background.JPG); */
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
@@ -70,6 +70,7 @@
   width: 100%;
   max-width: 625px;
   max-height: 350px;
+  padding: 0px 10px;
 
   border-radius: 0px;
   border-bottom-left-radius: 20px;
@@ -83,23 +84,16 @@
 
 .search-bar li {
   color: #cac7ff;
-  margin-top: 10px;
+  margin-top: 5px;
   padding: 10px 20px;
   cursor: pointer;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 }
 
 .search-bar li:hover {
-  background-color: #f1f1f1;
+  background-color: #aaa;
 }
 
-.search-bar li1 {
-  margin-top: 0px;
-  color: #cac7ff;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 10px;
-}
 
 .paperTitle {
   /* Your styles for the paper title */
