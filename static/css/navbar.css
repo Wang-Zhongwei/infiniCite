@@ -1,0 +1,15 @@
+#search-box {
+  background-color: #333;
+  flex-grow: 1;
+}
+
+.navbar {
+  border-width: 0 0 1px 0;
+  border-radius: 1px;
+  border-style: solid;
+  border-color: #555;
+}
+
+.form-inline {
+  min-width: 50%;
+}
