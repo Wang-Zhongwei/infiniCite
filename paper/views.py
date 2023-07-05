@@ -55,7 +55,7 @@ def search_papers(request, query, page):
     end = min(total_pages, page + 3) + 1
     pages_to_show = range(start, end)
 
-    return render(request, 'paper/paper_results.html', {'papers': data, 'page': page, 'query': query, 'total_pages': total_pages, 'pages_to_show': pages_to_show, 'searchPaper': True})
+    return render(request, 'paper/paper-results.html', {'papers': data, 'page': page, 'query': query, 'total_pages': total_pages, 'pages_to_show': pages_to_show, 'searchPaper': True})
 
 
 def search_authors(request, query, page):
@@ -75,7 +75,7 @@ def search_authors(request, query, page):
     end = min(total_pages, page + 3) + 1
     pages_to_show = range(start, end)
 
-    return render(request, 'paper/author_results.html', {'authors': data, 'page': page, 'query': query, 'total_pages': total_pages, 'pages_to_show': pages_to_show, 'searchPaper': False})
+    return render(request, 'paper/author-results.html', {'authors': data, 'page': page, 'query': query, 'total_pages': total_pages, 'pages_to_show': pages_to_show, 'searchPaper': False})
 
 def autocomplete(request):
     query = request.GET.get('query', '')
@@ -113,8 +113,16 @@ class LibraryViewSet(viewsets.ModelViewSet):
     serializer_class = LibrarySerializer
     def create(self, request, *args, **kwargs):
         userId = request.user.id
-        owner = Account.objects.get(id=userId)
-        return super().create(request, *args, **kwargs)
+        # try get the account by user_id 
+        try: 
+            owner = Account.objects.get(user_id=userId)
+        except:
+            # create an account if not exist
+            owner = Account.objects.create(user_id=userId)
+        # create a library
+        library = Library.objects.create(owner=owner, name=request.data['name'])
+        serializer = LibrarySerializer(library)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class LibraryPaperViewSet(viewsets.ViewSet):
     def create(self, request, *args, **kwargs):

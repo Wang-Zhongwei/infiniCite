@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from config.django_config import SECRET_KEY
 from config.elastic_config import ELASTICSEARCH_DSL
+import os
 
 # configure elasticsearch
 # ELASTICSEARCH_DSL = ELASTICSEARCH_DSL
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'infiniCite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,6 +129,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     PAPER_DIR / 'static',
+    BASE_DIR / 'static'
 ]
 
 
