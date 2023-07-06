@@ -4,6 +4,12 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from user.serializers import UserSerializer, AccountSerializer
+from .models import Account
+from rest_framework import viewsets
+
 
 def index(request):
     # Get the user id
@@ -17,17 +23,27 @@ def index(request):
     papers = Paper.objects.filter(paperId__in=paper_ids)
     return render(request, "user/index.html", {"my_library": papers})
 
-# Create your views here.
-def search(request):
-    # paper = Paper.objects.get(_id='9a39635c92641f9eeb297e5f6f9b61cf4392f04c')
-    papers = Paper.objects.all()
-    print(papers)
-    return render(request, 'user/index.html')
-    # db = database.clients["infiniCite"]
-    # collection = db["paper"]
-    # documents = collection.find()
-    # for doc in documents:
-    #     print(doc)
+
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+    def search(self, request):
+        """
+        Searches for accounts based on the given fields in the request data.
+        
+        Args:
+            request: The HTTP request object containing the data to search for.
+            
+        Returns:
+            A JSON response containing the serialized data of the matching accounts.
+        """
+        fields = request.data
+        users = User.objects.filter(**fields)
+        accounts = self.queryset.filter(user__in=users)
+        serializer = self.serializer_class(accounts, many=True)
+        
+        return JsonResponse(serializer.data, safe=False)
 
 def user_login(request):
     if request.method == 'POST':

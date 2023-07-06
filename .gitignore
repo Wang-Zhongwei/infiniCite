@@ -6,3 +6,4 @@ include
 lib
 share
 pyvenv.cfg
+*.log

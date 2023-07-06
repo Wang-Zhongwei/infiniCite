@@ -3,6 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 from author.models import Author
 from user.models import Account
 
+# TODO: add date created field
 class Paper(models.Model):
     paperId= models.CharField(max_length=255, primary_key=True)
     url = models.URLField(blank=True)
@@ -16,6 +17,7 @@ class Paper(models.Model):
     publicationDate = models.DateField()
     authors = models.ManyToManyField(Author, related_name='papers', blank=True)
 
+# TODO: add date created field
 class Library(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='libraries')

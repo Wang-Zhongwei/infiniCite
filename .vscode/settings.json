@@ -15,8 +15,9 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "database-1.covgjpmlgmrq.us-east-1.rds.amazonaws.com",
+            "server": "infinitecite.covgjpmlgmrq.us-east-1.rds.amazonaws.com",
             "port": 5432,
+            "askForPassword": true,
             "driver": "PostgreSQL",
             "name": "connection0",
             "database": "infinicite",

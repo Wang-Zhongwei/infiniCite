@@ -12,4 +12,4 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ['user']
+        fields = ['id', 'user', 'affiliation']

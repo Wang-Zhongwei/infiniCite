@@ -1,7 +1,7 @@
 :root {
   --sidebar-width: 18vw;
   --transition-duration: .4s;
-  --header-height: 9vh;
+  --header-height: 9%;
 }
 
 body {
@@ -44,6 +44,7 @@ nav {
   width: 100%;
   height: var(--header-height);
   will-change: transform;
+  z-index: 1;
 }
 
 main {
@@ -53,4 +54,5 @@ main {
   align-items: center;
   overflow: scroll;
   will-change: transform;
+  /* z-index: -1; add this line to move main behind nav */
 }

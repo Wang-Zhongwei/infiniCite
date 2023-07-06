@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   {% block css %}
@@ -15,9 +17,11 @@
 </head>
 
 <body>
+  {% if user.is_authenticated %}
   <aside data-sidebar>
     {% include 'sidebar.html' %}
   </aside>
+  {% endif %}
   <section>
     <nav>
       {% include 'navbar.html' %}
@@ -27,8 +31,6 @@
       {% endblock %}
     </main>
   </section>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const menuIconButton = document.querySelector("[data-menu-icon-btn]")
     // const sidebar = document.querySelector("[data-sidebar]")
@@ -36,6 +38,23 @@
     menuIconButton.addEventListener("click", () => {
       body.classList.toggle("sidebar-closed")
     })
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
   </script>
   {% block js %}
   {% endblock %}

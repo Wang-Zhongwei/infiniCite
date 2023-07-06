@@ -1,9 +1,11 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 <div class="navbar navbar-expand-lg">
-  <div class="function-icon-container" id="menu-icon-container" data-menu-icon-btn>
-    <i class="bi bi-layout-sidebar icon"></i>
-  </div>
+  {% if user.is_authenticated %}
+    <div class="function-icon-container" id="menu-icon-container" data-menu-icon-btn>
+      <i class="bi bi-layout-sidebar icon"></i>
+    </div>
+  {% endif %}
   <a class="navbar-brand" href="/">
     <img src="{%static 'assets/star-1.svg'%}" alt="logo" height="30" width="30">
     InfiniCite
@@ -28,15 +30,15 @@
     <ul class="navbar-nav ml-auto">
       {% if user.is_authenticated %}
       <li class="nav-item dropdown">
-        <button class="btn btn-primary dropdown-toggle" href="#" id="navbarDropdown" role="button"
-          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-          <i class="fas fa-user-circle"></i> Account
-        </button>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a>
-        </div>
+        <div class="dropdown">
+          <a class="btn btn-primary dropdown-toggle" href="#" role="menu" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle"></i> Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a>
+            <a class="dropdown-item" href="#">Settings</a>
+          </div>
+        </div>        
       </li>
       {% else %}
       <li class="nav-item dropdown">

@@ -5,12 +5,13 @@
     <img class="avatar" src="https://i.imgur.com/hczKIze.jpg" />
 
     <div class="content">
-      <div class="title"><span>Andrew Smith</span></div>
-      <div class="overline"><span>Stanford University</span></div>
+      {% if request.user.is_authenticated %}
+      <div class="title"><span>{{ request.user.first_name }} {{request.user.last_name}}</span></div>
+      <div class="overline"><span>{{ request.user.account.affiliation }}</span></div>
+      {% endif %}
     </div>
   </div>
 
-  <!-- TODO: add active selector: refer to chatgpt-->
   <div class="navigation nav-main">
     <div class="title2">
       <div class="overline2">Main</div>
@@ -35,11 +36,89 @@
       <div class="link">
         <i class="bi bi-collection icon"></i>
         <div class="label">Library</div>
-        <a href="#">
-          <span class="function-icon-container">
-            <i class="bi bi-plus-circle icon function-icon small"></i>
-          </span>
-        </a>
+        <span class="function-icon-container" id="add-library-btn">
+          <i class="bi bi-plus-circle icon function-icon small"></i>
+        </span>
+
+
+        <script>
+          // TODO: ajax call to create new library
+          function addLibraryToSidebar(data) {
+            const icon = document.createElement('i');
+            icon.className = "bi bi-folder icon small";
+            const libraryElem = document.createElement('div');
+            libraryElem.className = "link3";
+
+            const labelElem = document.createElement('div');
+            labelElem.className = "label3";
+            // labelElem.setAttribute('for', `library-checkbox-${data.id}`);
+            labelElem.innerText = data.name;
+            libraryElem.appendChild(labelElem);
+
+            const inputElem = document.createElement('input');
+            inputElem.type = "checkbox";
+            inputElem.id = `library-checkbox-${data.id}`;
+            inputElem.value = data.id;
+            inputElem.hidden = true;
+
+            const dropdownElem = document.createElement('div');
+            dropdownElem.className = "dropdown";
+
+            // TODO: modify links in dropdown-item
+            dropdownElem.innerHTML = `
+              <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="function-icon-container">
+                  <i class="bi bi-three-dots icon small"></i>
+                </span>
+              </div>
+              <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item library-option" href="#"> 
+                  <i class="bi bi-pencil-square icon small"></i>
+                  &nbsp; Rename
+                </a>
+                <a class="dropdown-item library-option" href="#">
+                  <i class="bi bi-trash icon small"></i>
+                  &nbsp; Delete
+                </a>
+                <a class="dropdown-item library-option" href="#">
+                  <i class="bi bi-files icon small"></i>
+                  &nbsp; Duplicate
+                </a>
+                <a class="dropdown-item library-option" href="#">
+                  <i class="bi bi-share icon small"></i>
+                  &nbsp; Share
+                </a>
+              </div>
+            </div>`;
+            libraryElem.prepend(icon);
+            libraryElem.appendChild(inputElem);
+            libraryElem.appendChild(dropdownElem);
+
+            const libraryList = document.querySelector('#library-links-container');
+            libraryList.appendChild(libraryElem);
+          }
+
+          function createNewLibrary(library) {
+            fetch('/api/libraries/', {
+              method: 'POST',
+              body: JSON.stringify(library),
+              headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+            }).then(response => {
+              alert('New library created!');
+              return response.json();
+            }).then(data => {
+              // add new library to sidebar
+              addLibraryToSidebar(data);
+            }).catch(() => alert('Error creating library!'));
+          }
+
+          document.querySelector("#add-library-btn").addEventListener("click", () => {
+            const libraryName = prompt("Enter the name of the new library:");
+            if (libraryName != null && libraryName != "") {
+              createNewLibrary({ name: libraryName });
+            };
+          });
+        </script>
         <span class="function-icon-container">
           <i class="bi bi-chevron-down icon function-icon small collapsed" data-toggle="collapse"
             data-target="#library-links-container"></i>
@@ -48,8 +127,11 @@
 
       <div class="links-container collapse" id="library-links-container">
         <!-- TODO: hide remaining content by ... if library name is too long -->
+        {% for library in libraries %}
         <div class="link3">
-          <div class="label3">LLM</div>
+          <i class="bi bi-folder icon small"></i>
+          <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
+          <div class="label3">{{library.name}}</div>
           <div class="dropdown">
             <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="function-icon-container">
@@ -57,114 +139,132 @@
               </span>
             </div>
             <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item library-option" href="#">
+              <div class="dropdown-item library-option rename">
                 <i class="bi bi-pencil-square icon small"></i>
                 &nbsp; Rename
-              </a>
-              <a class="dropdown-item library-option" href="#">
+              </div>
+              <div class="dropdown-item library-option delete">
                 <i class="bi bi-trash icon small"></i>
                 &nbsp; Delete
-              </a>
-              <a class="dropdown-item library-option" href="#">
+              </div>
+              <div class="dropdown-item library-option duplicate">
                 <i class="bi bi-files icon small"></i>
                 &nbsp; Duplicate
-              </a>
-              <a class="dropdown-item library-option" href="#">
+              </div>
+              <div class="dropdown-item library-option share">
                 <i class="bi bi-share icon small"></i>
                 &nbsp; Share
-              </a>
+              </div>
             </div>
           </div>
         </div>
+        {% endfor %}
+        <div class="divider"></div>
+        {% for library in shared_libraries %}
+        <!-- TODO: add manage shared library options -->
+        <div class="link3">
+          <i class="bi bi-globe-asia-australia icon small"></i>
+          <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
+          <div class="label3">{{library.name}}</div>
+        </div>
+        {% endfor %}
+        <script>
+          // TODO: maybe refactor the four actions 
+          // library rename action
+          document.querySelectorAll('.library-option.rename').forEach(function (item) {
+            item.addEventListener('click', function (event) {
+              event.preventDefault();
 
-        <div class="link3">
-          <div class="label3">GNN</div>
-          <div class="dropdown">
-            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="function-icon-container">
-                <i class="bi bi-three-dots icon small"></i>
-              </span>
-            </div>
-            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-pencil-square icon small"></i>
-                &nbsp; Rename
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-trash icon small"></i>
-                &nbsp; Delete
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-files icon small"></i>
-                &nbsp; Duplicate
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-share icon small"></i>
-                &nbsp; Share
-              </a>
-            </div>
-          </div>
-        </div>
+              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+              const newName = prompt('Enter the new name for the library:');
 
-        <div class="link3">
-          <div class="label3">CNN</div>
-          <div class="dropdown">
-            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="function-icon-container">
-                <i class="bi bi-three-dots icon small"></i>
-              </span>
-            </div>
-            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-pencil-square icon small"></i>
-                &nbsp; Rename
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-trash icon small"></i>
-                &nbsp; Delete
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-files icon small"></i>
-                &nbsp; Duplicate
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-share icon small"></i>
-                &nbsp; Share
-              </a>
-            </div>
-          </div>
-        </div>
+              if (newName != null && newName != "") {
+                fetch(`/api/libraries/${libraryId}/`, {
+                  method: 'PATCH',
+                  body: JSON.stringify({ name: newName }),
+                  headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+                }).then(() => {
+                  // update library name in the DOM
+                  event.target.closest('.link3').querySelector('.label3').textContent = newName;
+                }).catch(() => alert('Error renaming library!'));
+              }
+            });
+          });
 
-        <div class="link3">
-          <div class="label3">Natural Language Interface</div>
-          <div class="dropdown">
-            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="function-icon-container">
-                <i class="bi bi-three-dots icon small"></i>
-              </span>
-            </div>
-            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-pencil-square icon small"></i>
-                &nbsp; Rename
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-trash icon small"></i>
-                &nbsp; Delete
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-files icon small"></i>
-                &nbsp; Duplicate
-              </a>
-              <a class="dropdown-item library-option" href="#">
-                <i class="bi bi-share icon small"></i>
-                &nbsp; Share
-              </a>
-            </div>
-          </div>
-        </div>
+          // library delete action
+          document.querySelectorAll('.library-option.delete').forEach(function (item) {
+            item.addEventListener('click', function (event) {
+              event.preventDefault();
+
+              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+              const libraryName = event.target.closest('.link3').querySelector('.label3').textContent;
+
+              if (confirm(`Are you sure you want to delete the library "${libraryName}"?`)) {
+                fetch(`/api/libraries/${libraryId}/`, {
+                  method: 'DELETE',
+                  headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+                }).then(() => {
+                  // remove library from the DOM
+                  event.target.closest('.link3').remove();
+                }).catch(() => alert('Error deleting library!'));
+              }
+            });
+          });
+
+          // library duplicate action
+          document.querySelectorAll('.library-option.duplicate').forEach(function (item) {
+            item.addEventListener('click', async function (event) {
+              event.preventDefault();
+
+              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+              const libraryName = event.target.closest('.link3').querySelector('.label3').textContent;
+              const newLibraryName = prompt(`Enter the name of the new library to duplicate "${libraryName}" to:`);
+
+
+              if (newLibraryName != null && newLibraryName != "") {
+                const response = await fetch(`/api/libraries/${libraryId}`);
+                const library = await response.json();
+
+                if (library == null) {
+                  alert('Error duplicating library!');
+                  return;
+                }
+                createNewLibrary({ name: newLibraryName, papers: library.papers });
+              }
+            });
+          });
+
+          // library share action
+          document.querySelectorAll('.library-option.share').forEach(function (item) {
+            item.addEventListener('click', function (event) {
+              event.preventDefault();
+
+              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+              const email = prompt('Enter the email of the user you want to share the library with:');
+              fetch(`/user/api/search/`, {
+                method: 'POST',
+                body: JSON.stringify({ email: email }),
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+              }).then(response => response.json())
+                .then(data => {
+                  if (data.length === 0) {
+                    alert('User not found!');
+                    return;
+                  }
+                  const accountId = data[0].id;
+                  fetch(`/api/libraries/${libraryId}/share/`, {
+                    method: 'POST',
+                    body: JSON.stringify({ account_id: accountId }),
+                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+                  }).then(() => {
+                    alert('Library shared!');
+                  }).catch(() => alert('Error sharing library!'));
+                }).catch(() => alert('Error searching for user!'));
+            });
+          });
+        </script>
+
         <!-- TODO: set height by number of elements -->
-        <div class="line"></div>
       </div>
     </div>
   </div>
@@ -202,3 +302,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  const links = document.querySelectorAll(".link");
+  function setActive() {
+    if (links) {
+      links.forEach(l => {
+        l.classList.remove("active");
+      });
+    }
+    this.classList.add("active");
+  }
+
+  links.forEach(link => {
+    link.addEventListener("click", setActive);
+  });
+</script>

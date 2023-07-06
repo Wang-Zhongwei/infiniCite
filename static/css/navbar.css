@@ -6,10 +6,11 @@
 .navbar {
   height: 100%;
   width: 100%;
-  background-color: transparent; /* added */
+  /* background-color: transparent;  */
   border-width: 0 0 1px 0;
   border-radius: 1px;
   border-style: solid;
+  z-index: 1;
 }
 
 .form-inline {

@@ -7,6 +7,12 @@ import requests
 from django.http import JsonResponse
 from user.models import Account
 from .models import Paper, Library
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from .models import Library, Paper
+from .serializers import LibrarySerializer, PaperSerializer
+from user.serializers import AccountSerializer
 
 BASE_URL = 'http://api.semanticscholar.org/graph/v1'
 RECORDS_PER_PAGE = 10
@@ -101,51 +107,77 @@ def save_paper(request):
             pass
     return JsonResponse({'status':'ok'})
 
-from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from .models import Library, Paper
-from .serializers import LibrarySerializer, PaperSerializer
-
-
+# TODO: add login required
 class LibraryViewSet(viewsets.ModelViewSet):
     queryset = Library.objects.all()
     serializer_class = LibrarySerializer
+    account_queryset = Account.objects.all()
+
     def create(self, request, *args, **kwargs):
         userId = request.user.id
-        # try get the account by user_id 
+        # TODO: create account when user is created
         try: 
-            owner = Account.objects.get(user_id=userId)
+            owner = self.account_queryset.get(user_id=userId)
         except:
             # create an account if not exist
-            owner = Account.objects.create(user_id=userId)
+            self.account_queryset.create(user_id=userId)
+            
+
         # create a library
-        library = Library.objects.create(owner=owner, name=request.data['name'])
-        serializer = LibrarySerializer(library)
+        library = self.queryset.create(owner=owner, name=request.data['name'])
+        serializer = self.serializer_class(library)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    def share(self, request, *args, **kwargs):
+        """
+        Shares a library with an account.
+
+        Args:
+            request: The HTTP request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            A Response object with a status code of 200 if the library was successfully shared, or a status code of 404 if either the library or account was not found.
+        """ 
+        library_pk = kwargs['library_pk']
+        account_id = request.data['account_id']
+        if not (library_pk and account_id):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        lib = self.queryset.get(pk=library_pk)
+        acc = self.account_queryset.get(pk=account_id)
+        if lib and acc:
+            lib.sharedWith.add(acc)
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 class LibraryPaperViewSet(viewsets.ViewSet):
+    queryset = Paper.objects.all()
+    serializer_class = LibrarySerializer
+    paper_query_params = {
+        'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
+    }
+
     def create(self, request, *args, **kwargs):
         library = get_object_or_404(Library, pk=kwargs['library_pk'])
         
         # Try to get the paper from the library
         try:
-            paper = Paper.objects.get(paperId=request.data['paperId'])
+            paper = self.queryset.get(paperId=request.data['paperId'])
         except Paper.DoesNotExist:
             # If the paper doesn't exist in the library, use the Semantic Scholar API to search for the paper
-            query_params = {
-                'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
-            }
-            paper = self.get_paper_by_id(request.data['paperId'], query_params)
+            paper = self.get_paper_by_id(request.data['paperId'])
             if paper is None:
                 return Response({'detail': 'Paper not found.'}, status=status.HTTP_404_NOT_FOUND)
 
         library.papers.add(paper)
-        serializer = LibrarySerializer(library)
+        serializer = self.serializer_class(library)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    def get_paper_by_id(self, id, query_params):
-        response = requests.get(f'{BASE_URL}/paper/{id}', params=query_params)
+    def get_paper_by_id(self, id):
+        response = requests.get(f'{BASE_URL}/paper/{id}', params=self.paper_query_params)
 
         if response.status_code != 200:
             # You might want to add more specific error handling here
@@ -175,20 +207,20 @@ class LibraryPaperViewSet(viewsets.ViewSet):
 
     def destroy(self, request, *args, **kwargs):
         library = get_object_or_404(Library, pk=kwargs['library_pk'])
-        paper = get_object_or_404(Paper, pk=kwargs['pk'])
+        paper = get_object_or_404(self.queryset, pk=kwargs['pk'])
         library.papers.remove(paper)
         return Response(status=status.HTTP_204_NO_CONTENT)
         
     def move(self, request, *args, **kwargs):
         source_library = get_object_or_404(Library, pk=kwargs['library_pk'])
         target_library = get_object_or_404(Library, pk=request.data['targetLibraryId'])
-        paper = get_object_or_404(Paper, pk=kwargs['pk'])
+        paper = get_object_or_404(self.queryset, pk=kwargs['pk'])
 
         source_library.papers.remove(paper)
         target_library.papers.add(paper)
 
-        source_serializer = LibrarySerializer(source_library)
-        target_serializer = LibrarySerializer(target_library)
+        source_serializer = self.serializer_class(source_library)
+        target_serializer = self.serializer_class(target_library)
         
         return Response({
             'source_library': source_serializer.data,

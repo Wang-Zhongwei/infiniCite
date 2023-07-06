@@ -57,7 +57,7 @@
   const debounceAutocomplete = debounce((event) => {
     const query = event.target.value;
     if (query.length >= 3) {
-      fetch(`/autocomplete?query=${query}`)
+      fetch(`/api/autocomplete?query=${query}`)
         .then(response => response.json())
         .then(data => {
           resultsList.innerHTML = '';

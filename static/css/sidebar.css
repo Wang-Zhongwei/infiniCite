@@ -14,6 +14,7 @@
   flex-shrink: 0;
   width: 100%;
   height: 100%;
+  max-height: 100%;
   position: relative;
   overflow: hidden;
   will-change: transform;
@@ -78,7 +79,7 @@ span {
   color: rgba(255, 255, 255, 0.8);
   text-align: left;
   font: 500 14px/20px "Inter", sans-serif;
-  position: relative; 
+  position: relative;
   align-self: stretch;
 }
 
@@ -243,6 +244,15 @@ span {
   cursor: pointer;
 }
 
+.link.active {
+  background: #5d5f69;
+}
+
+.link.active i,
+.link.active .label {
+  color: #fff;
+}
+
 .link:hover .icon:not(.function-icon) {
   animation: icon-rotation 0.5s ease;
 }
@@ -261,6 +271,7 @@ span {
   }
 }
 
+.link:hover i,
 .link:hover .label {
   color: rgba(255, 255, 255, 0.9);
 }
