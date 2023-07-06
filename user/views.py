@@ -3,7 +3,8 @@ from paper.models import Paper, Library
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, AccountEditForm
+from .models import Account
 
 def index(request):
     # Get the user id
@@ -59,7 +60,9 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
+            Account.objects.create(user=new_user)
             return render(request, 'user/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
     return render(request, 'user/register.html', {'user_form': user_form})
+
