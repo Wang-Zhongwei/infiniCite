@@ -24,8 +24,3 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
-
-class AccountEditForm(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = ('field_of_study')

@@ -8,6 +8,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('login/', views.user_login, name='login'),
     path('register/', views.register, name='register'),
+    path('edit/', views.edit, name='edit'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # create customized logout view
     path('reset/done', auth_views.PasswordResetDoneView.as_view(), name='password_reset'),
     path('reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),

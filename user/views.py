@@ -3,7 +3,8 @@ from paper.models import Paper, Library
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, AccountEditForm
+from django.contrib.auth.decorators import login_required
+from .forms import LoginForm, UserRegistrationForm, UserEditForm
 from .models import Account
 
 def index(request):
@@ -66,3 +67,12 @@ def register(request):
         user_form = UserRegistrationForm()
     return render(request, 'user/register.html', {'user_form': user_form})
 
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        if user_form.is_valid():
+            user_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+    return render(request, 'user/edit.html', {'user_form': user_form})

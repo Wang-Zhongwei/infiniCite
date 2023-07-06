@@ -34,7 +34,7 @@
           <i class="fas fa-user-circle"></i> Account
         </button>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="{% url 'user:edit' %}">Settings</a>
           <a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a>
         </div>
       </li>
