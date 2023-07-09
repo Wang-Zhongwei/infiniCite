@@ -10,3 +10,9 @@ class Author(models.Model):
     paperCount = models.IntegerField()
     citationCount = models.IntegerField()
     hIndex = models.IntegerField()
+
+class PublicationVenue(models.Model):
+    name = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)
+    url = models.URLField(blank=True)
+    alternate_names = ArrayField(models.CharField(max_length=255), blank=True, default=list)

@@ -53,7 +53,6 @@
             labelElem.className = "label3";
             // labelElem.setAttribute('for', `library-checkbox-${data.id}`);
             labelElem.innerText = data.name;
-            libraryElem.appendChild(labelElem);
 
             const inputElem = document.createElement('input');
             inputElem.type = "checkbox";
@@ -72,29 +71,30 @@
                 </span>
               </div>
               <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item library-option" href="#"> 
+                <div class="dropdown-item library-option rename">
                   <i class="bi bi-pencil-square icon small"></i>
                   &nbsp; Rename
-                </a>
-                <a class="dropdown-item library-option" href="#">
+                </div>
+                <div class="dropdown-item library-option delete">
                   <i class="bi bi-trash icon small"></i>
                   &nbsp; Delete
-                </a>
-                <a class="dropdown-item library-option" href="#">
+                </div>
+                <div class="dropdown-item library-option duplicate">
                   <i class="bi bi-files icon small"></i>
                   &nbsp; Duplicate
-                </a>
-                <a class="dropdown-item library-option" href="#">
+                </div>
+                <div class="dropdown-item library-option share">
                   <i class="bi bi-share icon small"></i>
                   &nbsp; Share
-                </a>
+                </div>
               </div>
             </div>`;
-            libraryElem.prepend(icon);
             libraryElem.appendChild(inputElem);
+            libraryElem.prepend(icon);
+            libraryElem.appendChild(labelElem);
             libraryElem.appendChild(dropdownElem);
 
-            const libraryList = document.querySelector('#library-links-container');
+            const libraryList = document.querySelector('.library-list');
             libraryList.appendChild(libraryElem);
           }
 
@@ -127,47 +127,57 @@
 
       <div class="links-container collapse" id="library-links-container">
         <!-- TODO: hide remaining content by ... if library name is too long -->
-        {% for library in libraries %}
-        <div class="link3">
-          <i class="bi bi-folder icon small"></i>
-          <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
-          <div class="label3">{{library.name}}</div>
-          <div class="dropdown">
-            <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="function-icon-container">
-                <i class="bi bi-three-dots icon small"></i>
-              </span>
-            </div>
-            <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-              <div class="dropdown-item library-option rename">
-                <i class="bi bi-pencil-square icon small"></i>
-                &nbsp; Rename
+        <div class="library-list">
+          {% for library in libraries %}
+          <div class="link3">
+            <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
+            <i class="bi bi-folder icon small"></i>
+            <div class="label3">{{library.name}}</div>
+            <div class="dropdown">
+              <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="function-icon-container">
+                  <i class="bi bi-three-dots icon small"></i>
+                </span>
               </div>
-              <div class="dropdown-item library-option delete">
-                <i class="bi bi-trash icon small"></i>
-                &nbsp; Delete
-              </div>
-              <div class="dropdown-item library-option duplicate">
-                <i class="bi bi-files icon small"></i>
-                &nbsp; Duplicate
-              </div>
-              <div class="dropdown-item library-option share">
-                <i class="bi bi-share icon small"></i>
-                &nbsp; Share
+              <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-item library-option rename">
+                  <i class="bi bi-pencil-square icon small"></i>
+                  &nbsp; Rename
+                </div>
+                <div class="dropdown-item library-option delete">
+                  <i class="bi bi-trash icon small"></i>
+                  &nbsp; Delete
+                </div>
+                <div class="dropdown-item library-option duplicate">
+                  <i class="bi bi-files icon small"></i>
+                  &nbsp; Duplicate
+                </div>
+                <div class="dropdown-item library-option share">
+                  <i class="bi bi-share icon small"></i>
+                  &nbsp; Share
+                </div>
               </div>
             </div>
           </div>
+          {% endfor %}
+          <div class="libraries-confirm-container">
+            <button class="libraries-confirm-button" hidden>
+              confirm
+            </button>
+          </div>
         </div>
-        {% endfor %}
         <div class="divider"></div>
-        {% for library in shared_libraries %}
-        <!-- TODO: add manage shared library options -->
-        <div class="link3">
-          <i class="bi bi-globe-asia-australia icon small"></i>
-          <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
-          <div class="label3">{{library.name}}</div>
+        <div class="shared-library-list">
+          {% for library in shared_libraries %}
+          <!-- TODO: add manage shared library options -->
+          <div class="link3 shared-library-list">
+            <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
+            <i class="bi bi-globe-asia-australia icon small"></i>
+            <div class="label3"><label for="library-checkbox-{{library.id}}"></label>{{library.name}}</div>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
+
         <script>
           // TODO: maybe refactor the four actions 
           // library rename action

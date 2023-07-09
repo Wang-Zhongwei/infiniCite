@@ -7,3 +7,4 @@ lib
 share
 pyvenv.cfg
 *.log
+.DS_Store

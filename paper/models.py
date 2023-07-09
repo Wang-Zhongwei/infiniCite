@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-from author.models import Author
+from author.models import Author, PublicationVenue
 from user.models import Account
 
 # TODO: add date created field
@@ -9,6 +9,7 @@ class Paper(models.Model):
     url = models.URLField(blank=True)
     title = models.CharField(max_length=255)
     abstract = models.TextField(blank=True, default='')
+    fieldsOfStudy = ArrayField(models.CharField(max_length=255), blank=True, default=list)
     referenceCount = models.IntegerField()
     citationCount = models.IntegerField()
     openAccessPdf = models.URLField(blank=True, default='')
@@ -16,8 +17,12 @@ class Paper(models.Model):
     tldr = models.TextField(blank=True, default='')
     publicationDate = models.DateField()
     authors = models.ManyToManyField(Author, related_name='papers', blank=True)
+    publicationVenue = models.ManyToManyField(PublicationVenue, related_name='papers', blank=True)
+    publicationTypes = ArrayField(models.CharField(max_length=255), blank=True, default=list)
+    
 
 # TODO: add date created field
+# TODO: add user permissions field: view, edit, full control
 class Library(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='libraries')

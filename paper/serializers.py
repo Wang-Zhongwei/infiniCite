@@ -5,8 +5,8 @@ class PaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paper
         fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', 
-                  'citationCount', 'openAccessPdf', 'embedding', 'tldr', 
-                  'publicationDate', 'authors']
+                  'citationCount', 'openAccessPdf',
+                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes']
 
 class LibrarySerializer(serializers.ModelSerializer):
     papers = PaperSerializer(many=True, read_only=True)

@@ -10,47 +10,88 @@
   {% for paper in papers.data %}
   <div class="paper" style="display: flex; justify-content: space-between;" paper-id="{{ paper.paperId }}">
     <div class="paper-left">
-      <h2>{{ paper.title }}
-        <a href="{{ paper.url }}">Read More</a>
-        <button class="save-button" style="float: right;">Save</button>
+      <h2>
+        <a href="{{ paper.url }}">
+          {{ paper.title }}
+        </a>
       </h2>
-      <p>Authors:
+      <div class="authors">
         {% for author in paper.authors %}
         {{ author.name }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
+      </div>
+      <div class="publication-venue">
+        <a href="{{paper.publicationVenue.url}}">
+
+          {{ paper.publicationVenue.name }}
+        </a>
+      </div>
+      {% if user.is_authenticated %}
+      <!-- TODO: display filled bookmark if the paper is in library, optimize the backend so don't have to save the same
+      paper twice -->
+      <div class="paper-options-container">
+        <div class="types">
+          {% for type in paper.publicationTypes %}
+          <span class="type-tag">
+            {% if type == 'JournalArticle' %}
+            Journal
+            {% else %}
+            {{ type }}
+            {% endif %}
+          </span>
+          {% endfor %}
+        </div>
+        <div class="function-icon-container">
+          <!-- TODO: keep record of saving status: in process or canceled. Now if user click save twice it is equivalent to be canceled -->
+          <i class="bi bi-bookmark" onclick="savePaper('{{ paper.paperId }}')"></i>
+        </div>
+      </div>
+      {% endif %}
+      <p class="abstract">
+        {{ paper.abstract }}
       </p>
-      <p>Abstract: {{ paper.abstract }}</p>
     </div>
     <div style="clear: both;"></div>
-  
+
     <div class="paper-right">
-      <p>
-        <span class="sub-title-icon">&#128197;</span>
-        Year: {{ paper.year }}
-      </p>
-      <p>
-        <span class="sub-title-icon">&#128218;</span>
-        References: {{ paper.referenceCount }}
-      </p>
-      <p>
-        <span class="sub-title-icon">&#128203;</span>
-        Citations: {{ paper.citationCount }}
-      </p>
-      <p>
-        <span class="sub-title-icon">&#127891;</span>
-        Fields of Study: <br>
-        {% for field in paper.fieldsOfStudy %}
-      <div class="field-of-study">{{ field }}</div><br>
-      {% endfor %}
-      </p>
-      <div>  
+      <div>
+        <div class="local-network">Paper Specifics</div>
+        <p>
+          <i class="bi bi-calendar icon small"></i>
+          Year: {{ paper.year }}
+        </p>
+        <p>
+          <i class="bi bi-blockquote-left icon large"></i>
+          References: {{ paper.referenceCount }}
+        </p>
+        <p>
+          <i class="bi bi-quote icon"></i>
+          Citations: {{ paper.citationCount }}
+        </p>
+        <p>
+          <i class="bi bi-tags icon"></i>
+          Fields of Study:
+          {% for field in paper.fieldsOfStudy %}
+          <span class="field-of-study">{{ field }} </span>
+          {% endfor %}
+        </p>
+      </div>
+      <div>
+        <div class="divider"></div>
+        <div class="local-network">Local Network Visualization</div>
         <form action="{% url 'paper:graph' %}" class="button">
           <input type="hidden" name="paperId" value="{{ paper.paperId }}">
-          <input type="radio" id="citation-graph" name="graphType" value="citations">
-          <label for="citation-graph">Citation Graph</label>
-          <input type="radio" id="reference-graph" name="graphType" value="references">
-          <label for="reference-graph">Reference Graph</label>
-          <button class="view-button" id="send-paperId" type="submit">View</button>
+          <div>
+            <input type="radio" id="citation-graph" name="graphType" value="citations" checked>
+            <label for="citation-graph" style="font-size: smaller;">Citation Graph</label>
+          </div>
+          <div>
+            <input type="radio" id="reference-graph" name="graphType" value="references">
+            <label for="reference-graph" style="font-size: smaller;">Reference Graph</label>
+          </div>
+          <div class="view-button-container">
+            <button class="view-button" type="submit">View</button>
+          </div>
         </form>
       </div>
     </div>
@@ -66,88 +107,95 @@
 <script>
   window.onload = function () {
     var colorMap = {
-      a: '#FF0000',
-      b: '#8aabe5',
-      c: '#00FFFF',
-      d: '#00008B',
-      e: '#FFD700',
-      f: '#228B22',
-      g: '#808080',
-      h: '#FF69B4',
-      i: '#4B0082',
-      j: '#F0E68C',
-      k: '#ADD8E6',
-      l: '#00FF00',
-      m: '#dea3cc',
-      n: '#000080',
-      o: '#808000',
-      p: '#de8ae5',
-      q: '#FFC0CB',
-      r: '#FF0000',
-      s: '#C0C0C0',
-      t: '#008080',
-      u: '#800080',
-      v: '#EE82EE',
-      w: '#F5DEB3',
-      x: '#006400',
-      y: '#FFFF00',
-      z: '#F0FFFF'
+      a: "#990000",
+      b: "#3770d2",
+      c: "#009999",
+      d: "#000025",
+      e: "#998200",
+      f: "#0e390e",
+      g: "#4d4d4d",
+      h: "#ff0381",
+      i: "#10001c",
+      j: "#e4d232",
+      k: "#5fb2ce",
+      l: "#009900",
+      m: "#c358a3",
+      n: "#00001a",
+      o: "#1a1a00",
+      p: "#c537d2",
+      q: "#ff5a76",
+      r: "#990000",
+      s: "#8d8d8d",
+      t: "#001a1a",
+      u: "#1a001a",
+      v: "#e228e2",
+      w: "#e9b759",
+      x: "#000000",
+      y: "#999900",
+      z: "#8affff"
     };
 
     var fields = document.getElementsByClassName('field-of-study');
     for (var i = 0; i < fields.length; i++) {
       var firstLetter = fields[i].innerText.charAt(0).toLowerCase();
-      fields[i].style.backgroundColor = colorMap[firstLetter] || '#808080';
+      fields[i].style.backgroundColor = colorMap[firstLetter] ? colorMap[firstLetter] : '#808080';
     }
   }
 </script>
-
 <script>
-  // Add event listeners to all the save buttons
-  document.querySelectorAll('.paper-right').forEach(paperElement => {
-    const paperId = paperElement.getAttribute('data-paper');
-    const sidebar = paperElement.querySelector('.sidebar');
-
-    paperElement.querySelector('.save-button').addEventListener('click', function () {
-      sidebar.style.display = 'block';
-
-      // Use Ajax to fetch the user's libraries
-      fetch('/api/libraries/')
-        .then(response => response.json())
-        .then(data => {
-          const libraryList = sidebar.querySelector('.library-list');
-          libraryList.innerHTML = '';
-          data.forEach(library => {
-            const listItem = document.createElement('li');
-            listItem.textContent = library.name;
-            listItem.addEventListener('click', function () {
-              // Use Ajax to save the paper to the selected library
-              fetch(`/api/libraries/${library.id}/papers/`, {
-                method: 'POST',
-                params: JSON.stringify({ paperId: paperId }),
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
-              }).then(() => alert('Paper saved!'));
-            });
-            libraryList.appendChild(listItem);
-          });
-        });
+  const libraryList = document.querySelector('.library-list');
+  function toggleLibraryCheckBox() {
+    libraryList.querySelectorAll('input').forEach(input => {
+      input.checked = false;
+      input.toggleAttribute('hidden');
     });
+    // display the confirm button
+    libraryList.querySelector('.libraries-confirm-button').toggleAttribute('hidden');
+  }
 
-    sidebar.querySelector('.new-library-button').addEventListener('click', function () {
-      const newLibraryName = sidebar.querySelector('.new-library-name').value;
-      if (!newLibraryName) {
-        alert('Please enter a name for the new library.');
-        return;
+  function showSidebar() {
+    // toggle the sidebar if closed
+    const body = document.querySelector('body');
+    if (body.classList.contains('sidebar-closed')) {
+      body.classList.remove('sidebar-closed');
+    }
+    // display the library list if not shown
+    const libraryContainer = document.querySelector('#library-links-container');
+    if (!libraryContainer.classList.contains('show')) {
+      libraryContainer.classList.add('show');
+    }
+  }
+
+  function confirmBtnOnClick(paperId) {
+    const ids = [];
+    libraryList.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        ids.push(input.value);
       }
-
-      // Use Ajax to create a new library
-      fetch('/api/libraries/', {
-        method: 'POST',
-        body: JSON.stringify({ name: newLibraryName }),
-        headers: { 'Content-Type': 'application/json','X-CSRFToken': csrftoken }
-      }).then(() => alert('New library created!'));
     });
-  });
-</script>
+    libraryList.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        fetch(`/api/libraries/${input.value}/papers/`, {
+          method: 'POST',
+          body: JSON.stringify({ ids: [paperId] }),
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+        }).catch(err => {
+          console.log(err);
+          alert('Error saving paper!');
+        });
+      }
+    });
+    toggleLibraryCheckBox();
+    alert('Paper saved!')
+  }
 
+  function savePaper(paperId) {
+    showSidebar();
+    toggleLibraryCheckBox();
+    if (confirm('Save this paper to your libraries?')) {
+      const confirmButton = libraryList.querySelector('.libraries-confirm-button');
+      confirmButton.addEventListener('click', () => confirmBtnOnClick(paperId));
+    }
+  }
+</script>
 {% endblock %}

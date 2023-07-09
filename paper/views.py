@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from .models import Library, Paper
 from .serializers import LibrarySerializer, PaperSerializer
 from user.serializers import AccountSerializer
+from .exceptions import *
 
 BASE_URL = 'http://api.semanticscholar.org/graph/v1'
 RECORDS_PER_PAGE = 10
@@ -49,7 +50,7 @@ def search_papers(request, query, page):
         'query': query,
         'limit': RECORDS_PER_PAGE,
         'offset': (page - 1) * RECORDS_PER_PAGE,
-        'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy,authors'
+        'fields': 'paperId,title,abstract,year,publicationTypes,journal,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors'
     }
     response = requests.get(f'{BASE_URL}/paper/search', params=params)
     data = response.json()
@@ -96,17 +97,6 @@ def autocomplete(request):
     else:
         return redirect('index')  # redirect to index view
 
-@login_required
-def save_paper(request):
-    paperId = request.GET.get('paperId')
-    
-    if paperId:
-        try:
-            paper = Paper.objects.get(id=paperId)
-        except:
-            pass
-    return JsonResponse({'status':'ok'})
-
 # TODO: add login required
 class LibraryViewSet(viewsets.ModelViewSet):
     queryset = Library.objects.all()
@@ -122,7 +112,6 @@ class LibraryViewSet(viewsets.ModelViewSet):
             # create an account if not exist
             self.account_queryset.create(user_id=userId)
             
-
         # create a library
         library = self.queryset.create(owner=owner, name=request.data['name'])
         serializer = self.serializer_class(library)
@@ -154,55 +143,73 @@ class LibraryViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 class LibraryPaperViewSet(viewsets.ViewSet):
+    library_queryset = Library.objects.all()
     queryset = Paper.objects.all()
     serializer_class = LibrarySerializer
     paper_query_params = {
-        'fields': 'paperId,title,abstract,year,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
+        'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
     }
 
     def create(self, request, *args, **kwargs):
+        papers = [self.get_paper(id) for id in request.data['ids']]
         library = get_object_or_404(Library, pk=kwargs['library_pk'])
-        
-        # Try to get the paper from the library
-        try:
-            paper = self.queryset.get(paperId=request.data['paperId'])
-        except Paper.DoesNotExist:
-            # If the paper doesn't exist in the library, use the Semantic Scholar API to search for the paper
-            paper = self.get_paper_by_id(request.data['paperId'])
+        for paper in papers:
             if paper is None:
-                return Response({'detail': 'Paper not found.'}, status=status.HTTP_404_NOT_FOUND)
-
-        library.papers.add(paper)
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
+            library.papers.add(paper)
+        # TODO: check if just the primary key of the paper is returned otherwise do not return data
         serializer = self.serializer_class(library)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    def get_paper_by_id(self, id):
+    def get_paper(self, id):
+        try:
+            paper = self.queryset.get(paperId=id)
+        except Paper.DoesNotExist:
+            # If the paper doesn't exist in the library, use the Semantic Scholar API to search for the paper
+            try: 
+                paper = self.get_paper_thru_api(id)
+            except SemanticAPIException:
+                return None
+            
+        return paper
+
+    # def add_to_libraries(self, request, *args, **kwargs):
+    #     paperId = kwargs['paper_pk']
+    #     paper = self.get_paper(paperId)
+    #     if paper is None:
+    #         return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
+
+    #     library_ids = request.data.get('ids', [])
+    #     paper = self.get_object()
+    #     for library_id in library_ids:
+    #         library = self.library_queryset.get(pk=library_id)
+    #         library.papers.add(paper)
+
+    #     return Response({'status': 'success'})
+    
+    def get_paper_thru_api(self, id, save=True):
         response = requests.get(f'{BASE_URL}/paper/{id}', params=self.paper_query_params)
 
         if response.status_code != 200:
             # You might want to add more specific error handling here
-            return None
+            raise SemanticAPIException(f'Semantic API returned status code {response.status_code}')
 
         paper_data = response.json()
-
-        try:
-            paper = Paper.objects.create(
-                paperId=paper_data['paperId'],
-                url=paper_data['url'],
-                title=paper_data['title'],
-                abstract=paper_data.get('abstract', ""),
-                referenceCount=paper_data['referenceCount'],
-                citationCount=paper_data['citationCount'],
-                openAccessPdf=paper_data['openAccessPdf'].get('url', ""),
-                embedding=paper_data['embedding'].get('vector', []),
-                tldr=paper_data['tldr'].get('text', ""),
-                publicationDate=paper_data['publicationDate'],
-                # You'll need to handle authors separately
-            )
-        except KeyError:
-            # Handle the case where expected data was not found in the response
-            return None
-
+        paper = self.queryset.create(
+            paperId=paper_data['paperId'],
+            url=paper_data['url'],
+            title=paper_data['title'],
+            abstract=paper_data['abstract'] if paper_data['abstract'] is not None else '',
+            referenceCount=paper_data['referenceCount'],
+            citationCount=paper_data['citationCount'],
+            openAccessPdf = paper_data['openAccessPdf']['url'] if paper_data['openAccessPdf'] is not None else '',
+            embedding=paper_data['embedding']['vector'] if paper_data['embedding'] is not None else [],
+            tldr=paper_data['tldr']['text'] if paper_data['tldr'] is not None else '',
+            publicationDate=paper_data['publicationDate'],
+            # TODO: handle authors saving in the database
+        )
+        if save:
+            paper.save()
         return paper
 
     def destroy(self, request, *args, **kwargs):

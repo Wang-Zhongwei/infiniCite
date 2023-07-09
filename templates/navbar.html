@@ -31,9 +31,9 @@
       {% if user.is_authenticated %}
       <li class="nav-item dropdown">
         <div class="dropdown">
-          <a class="btn btn-primary dropdown-toggle" href="#" role="menu" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-primary dropdown-toggle" role="menu" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle"></i> Account
-          </a>
+          </button>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a>
             <a class="dropdown-item" href="#">Settings</a>
@@ -42,7 +42,7 @@
       </li>
       {% else %}
       <li class="nav-item dropdown">
-        <button class="btn btn-primary dropdown-toggle" href="#" id="navbarDropdown" role="button"
+        <button type="button" class="btn btn-primary dropdown-toggle" id="navbarDropdown" role="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle"></i> Login
         </button>
