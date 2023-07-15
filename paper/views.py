@@ -173,19 +173,18 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             
         return paper
 
-    # def add_to_libraries(self, request, *args, **kwargs):
-    #     paperId = kwargs['paper_pk']
-    #     paper = self.get_paper(paperId)
-    #     if paper is None:
-    #         return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
+    def add_to_libraries(self, request, *args, **kwargs):
+        paperId = kwargs['paper_pk']
+        paper = self.get_paper(paperId)
+        if paper is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
 
-    #     library_ids = request.data.get('ids', [])
-    #     paper = self.get_object()
-    #     for library_id in library_ids:
-    #         library = self.library_queryset.get(pk=library_id)
-    #         library.papers.add(paper)
+        library_ids = request.data.get('libraryIds', [])
+        for library_id in library_ids:
+            library = self.library_queryset.get(pk=library_id)
+            library.papers.add(paper)
 
-    #     return Response({'status': 'success'})
+        return Response({'status': 'success'})
     
     def get_paper_thru_api(self, id, save=True):
         response = requests.get(f'{BASE_URL}/paper/{id}', params=self.paper_query_params)

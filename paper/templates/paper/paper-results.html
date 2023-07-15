@@ -79,7 +79,7 @@
       <div>
         <div class="divider"></div>
         <div class="local-network">Local Network Visualization</div>
-        <form action="{% url 'paper:graph' %}" class="button">
+        <form action="{% url 'paper:graph' %}">
           <input type="hidden" name="paperId" value="{{ paper.paperId }}">
           <div>
             <input type="radio" id="citation-graph" name="graphType" value="citations" checked>
@@ -90,7 +90,7 @@
             <label for="reference-graph" style="font-size: smaller;">Reference Graph</label>
           </div>
           <div class="view-button-container">
-            <button class="view-button" type="submit">View</button>
+            <button class="btn btn-primary view-button" type="submit">View</button>
           </div>
         </form>
       </div>
@@ -144,13 +144,29 @@
 </script>
 <script>
   const libraryList = document.querySelector('.library-list');
-  function toggleLibraryCheckBox() {
+  function toggleLibraryCheckBox(show) {
     libraryList.querySelectorAll('input').forEach(input => {
-      input.checked = false;
-      input.toggleAttribute('hidden');
+      if (show) {
+        input.removeAttribute('hidden');
+      } else {
+        input.checked = false;
+        input.setAttribute('hidden', '');
+      }
     });
     // display the confirm button
-    libraryList.querySelector('.libraries-confirm-button').toggleAttribute('hidden');
+    const confirmBtn = document.querySelector('.confirm-save-to-libraries-btn');
+    const cancelBtn = document.querySelector('.cancel-save-to-libraries-btn');
+    if (show) {
+      if (confirmBtn.hasAttribute('hidden') && cancelBtn.hasAttribute('hidden')) {
+        confirmBtn.removeAttribute('hidden');
+        cancelBtn.removeAttribute('hidden');
+      }
+    } else {
+      if (!confirmBtn.hasAttribute('hidden') && !cancelBtn.hasAttribute('hidden')) {
+        confirmBtn.setAttribute('hidden', '');
+        cancelBtn.setAttribute('hidden', '');
+      }
+    }
   }
 
   function showSidebar() {
@@ -165,37 +181,45 @@
       libraryContainer.classList.add('show');
     }
   }
+  let paperId = '';
+  function confirmBtnOnClick() {
+    if (paperId === '') {
+      alert('Paper not selected!');
+      return;
+    }
+    const libraryIds = [];
+    libraryList.querySelectorAll('input').forEach(input => {
+      if (input.checked) {
+        libraryIds.push(input.value);
+      }
+    });
 
-  function confirmBtnOnClick(paperId) {
-    const ids = [];
-    libraryList.querySelectorAll('input').forEach(input => {
-      if (input.checked) {
-        ids.push(input.value);
-      }
+    // batch save one paper to multiple libraries
+    fetch(`/api/paper/${paperId}/libraries/`, {
+      method: 'POST',
+      body: JSON.stringify({
+        libraryIds: libraryIds
+      }),
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+    }).catch(err => {
+      console.log(err);
+      alert('Error saving paper!');
     });
-    libraryList.querySelectorAll('input').forEach(input => {
-      if (input.checked) {
-        fetch(`/api/libraries/${input.value}/papers/`, {
-          method: 'POST',
-          body: JSON.stringify({ ids: [paperId] }),
-          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
-        }).catch(err => {
-          console.log(err);
-          alert('Error saving paper!');
-        });
-      }
-    });
-    toggleLibraryCheckBox();
+
+    toggleLibraryCheckBox(false);
     alert('Paper saved!')
   }
 
-  function savePaper(paperId) {
+  function savePaper(id) {
     showSidebar();
-    toggleLibraryCheckBox();
-    if (confirm('Save this paper to your libraries?')) {
-      const confirmButton = libraryList.querySelector('.libraries-confirm-button');
-      confirmButton.addEventListener('click', () => confirmBtnOnClick(paperId));
-    }
+    toggleLibraryCheckBox(true);
+    paperId = id;
   }
+
+  function cancelBtnOnClick() {
+    paperId = '';
+    toggleLibraryCheckBox(false);
+  }
+
 </script>
 {% endblock %}

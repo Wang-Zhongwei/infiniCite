@@ -345,7 +345,7 @@ span {
   width: 100%;
 }
 
-.libraries-confirm-container {
+.confirm-save-to-libraries-container {
   padding: 0px 12px 6px 12px;
   display: flex;
   flex-direction: row;
@@ -355,27 +355,52 @@ span {
   gap: 10px;
 }
 
-.libraries-confirm-button {
+.confirm-save-to-libraries-btn {
   width: fit-content;
   height: fit-content;
   justify-content: center;
   align-items: end;
   margin-top: 10%;
-  background-color: rgb(90, 100, 234);
+  /* background-color: rgb(90, 100, 234); */
   opacity: 0.9;
-  color: #fff;
+  color: whitesmoke;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: small;
 }
 
-.libraries-confirm-button:hover {
+.cancel-save-to-libraries-btn {
+  transition: 0.3s ease;
+  width: fit-content;
+  height: fit-content;
+  justify-content: center;
+  align-items: end;
+  margin-top: 10%;
+  background-color: transparent;
+  opacity: 0.9;
+  border-radius: 4px;
+  color: whitesmoke;
+  border: none;
+  padding: 4px 10px;
+  font-size: small;
+  cursor: pointer;
+}
+
+.cancel-save-to-libraries-btn:hover {
+  background-color: gray;
+}
+
+.cancel-save-to-libraries-btn:active {
+  background-color: #777;
+}
+
+/* .libraries-confirm-button:hover {
   background-color: rgb(60, 70, 200);
 }
 
 .libraries-confirm-button:active {
   background-color: rgb(40, 60, 180);
-}
+} */
 
 .types {
   display: flex;

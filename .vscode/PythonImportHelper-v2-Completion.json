@@ -1,0 +1,1555 @@
+[
+    {
+        "label": "django.contrib.postgres.fields",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.contrib.postgres.fields",
+        "description": "django.contrib.postgres.fields",
+        "detail": "django.contrib.postgres.fields",
+        "documentation": {}
+    },
+    {
+        "label": "ArrayField",
+        "importPath": "django.contrib.postgres.fields",
+        "description": "django.contrib.postgres.fields",
+        "isExtraImport": true,
+        "detail": "django.contrib.postgres.fields",
+        "documentation": {}
+    },
+    {
+        "label": "ArrayField",
+        "importPath": "django.contrib.postgres.fields",
+        "description": "django.contrib.postgres.fields",
+        "isExtraImport": true,
+        "detail": "django.contrib.postgres.fields",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "viewsets",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "viewsets",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "get_asgi_application",
+        "importPath": "django.core.asgi",
+        "description": "django.core.asgi",
+        "isExtraImport": true,
+        "detail": "django.core.asgi",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "importPath": "config.django_config",
+        "description": "config.django_config",
+        "isExtraImport": true,
+        "detail": "config.django_config",
+        "documentation": {}
+    },
+    {
+        "label": "ELASTICSEARCH_DSL",
+        "importPath": "config.elastic_config",
+        "description": "config.elastic_config",
+        "isExtraImport": true,
+        "detail": "config.elastic_config",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASES",
+        "importPath": "config.db_config",
+        "description": "config.db_config",
+        "isExtraImport": true,
+        "detail": "config.db_config",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "get_wsgi_application",
+        "importPath": "django.core.wsgi",
+        "description": "django.core.wsgi",
+        "isExtraImport": true,
+        "detail": "django.core.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "django.db.models.deletion",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.db.models.deletion",
+        "description": "django.db.models.deletion",
+        "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Mapping",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Type",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorList",
+        "importPath": "django.forms.utils",
+        "description": "django.forms.utils",
+        "isExtraImport": true,
+        "detail": "django.forms.utils",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenue",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "Account",
+        "importPath": "user.models",
+        "description": "user.models",
+        "isExtraImport": true,
+        "detail": "user.models",
+        "documentation": {}
+    },
+    {
+        "label": "Account",
+        "importPath": "user.models",
+        "description": "user.models",
+        "isExtraImport": true,
+        "detail": "user.models",
+        "documentation": {}
+    },
+    {
+        "label": "Account",
+        "importPath": "user.models",
+        "description": "user.models",
+        "isExtraImport": true,
+        "detail": "user.models",
+        "documentation": {}
+    },
+    {
+        "label": "APITestCase",
+        "importPath": "rest_framework.test",
+        "description": "rest_framework.test",
+        "isExtraImport": true,
+        "detail": "rest_framework.test",
+        "documentation": {}
+    },
+    {
+        "label": "DefaultRouter",
+        "importPath": "rest_framework.routers",
+        "description": "rest_framework.routers",
+        "isExtraImport": true,
+        "detail": "rest_framework.routers",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "AccountSerializer",
+        "importPath": "user.serializers",
+        "description": "user.serializers",
+        "isExtraImport": true,
+        "detail": "user.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "UserSerializer",
+        "importPath": "user.serializers",
+        "description": "user.serializers",
+        "isExtraImport": true,
+        "detail": "user.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "AccountSerializer",
+        "importPath": "user.serializers",
+        "description": "user.serializers",
+        "isExtraImport": true,
+        "detail": "user.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "views",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "Paper",
+        "importPath": "paper.models",
+        "description": "paper.models",
+        "isExtraImport": true,
+        "detail": "paper.models",
+        "documentation": {}
+    },
+    {
+        "label": "Library",
+        "importPath": "paper.models",
+        "description": "paper.models",
+        "isExtraImport": true,
+        "detail": "paper.models",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "author.migrations.0001_initial",
+        "description": "author.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Author',\n            fields=[\n                ('authorId', models.CharField(max_length=255, primary_key=True, serialize=False)),\n                ('externalIds', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, size=None)),",
+        "detail": "author.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "author.migrations.0002_alter_author_affiliations_alter_author_externalids",
+        "description": "author.migrations.0002_alter_author_affiliations_alter_author_externalids",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('author', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='author',\n            name='affiliations',\n            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, default=list, size=None),\n        ),",
+        "detail": "author.migrations.0002_alter_author_affiliations_alter_author_externalids",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "author.migrations.0003_publicationvenue",
+        "description": "author.migrations.0003_publicationvenue",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('author', '0002_alter_author_affiliations_alter_author_externalids'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='PublicationVenue',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('name', models.CharField(max_length=255)),",
+        "detail": "author.migrations.0003_publicationvenue",
+        "documentation": {}
+    },
+    {
+        "label": "AuthorConfig",
+        "kind": 6,
+        "importPath": "author.apps",
+        "description": "author.apps",
+        "peekOfCode": "class AuthorConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'author'",
+        "detail": "author.apps",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "kind": 6,
+        "importPath": "author.models",
+        "description": "author.models",
+        "peekOfCode": "class Author(models.Model):\n    authorId = models.CharField(max_length=255, primary_key=True)\n    externalIds = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    name= models.CharField(max_length=255)\n    affiliations = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    paperCount = models.IntegerField()\n    citationCount = models.IntegerField()\n    hIndex = models.IntegerField()\nclass PublicationVenue(models.Model):\n    name = models.CharField(max_length=255)",
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenue",
+        "kind": 6,
+        "importPath": "author.models",
+        "description": "author.models",
+        "peekOfCode": "class PublicationVenue(models.Model):\n    name = models.CharField(max_length=255)\n    type = models.CharField(max_length=255)\n    url = models.URLField(blank=True)\n    alternate_names = ArrayField(models.CharField(max_length=255), blank=True, default=list)",
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "AuthorSerializer",
+        "kind": 6,
+        "importPath": "author.serializers",
+        "description": "author.serializers",
+        "peekOfCode": "class AuthorSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Author\n        fields = ['authorId', 'externalIds', 'name', 'affiliations', \n                  'paperCount', 'citationCount', 'hIndex']",
+        "detail": "author.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASES",
+        "kind": 5,
+        "importPath": "config.db_config",
+        "description": "config.db_config",
+        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql',\n        'NAME': 'infinicite',\n        'USER': 'jonathan',\n        'PASSWORD': 'Wzw314156',\n        'HOST': 'infinitecite.covgjpmlgmrq.us-east-1.rds.amazonaws.com',\n        'PORT': '5432',\n    }\n}",
+        "detail": "config.db_config",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "config.django_config",
+        "description": "config.django_config",
+        "peekOfCode": "SECRET_KEY = 'django-insecure-x2hh80-0dtt@x+b9$igb#olbkw!=-+191#vs&x(xd4s$ldc^tr'",
+        "detail": "config.django_config",
+        "documentation": {}
+    },
+    {
+        "label": "ELASTICSEARCH_DSL",
+        "kind": 5,
+        "importPath": "config.elastic_config",
+        "description": "config.elastic_config",
+        "peekOfCode": "ELASTICSEARCH_DSL = {\n    'default': {\n        'hosts': 'https://t1jf62gab6:pk88yw88m9@infinite-search-4352159232.us-east-1.bonsaisearch.net:443'  \n    },\n}",
+        "detail": "config.elastic_config",
+        "documentation": {}
+    },
+    {
+        "label": "application",
+        "kind": 5,
+        "importPath": "infiniCite.asgi",
+        "description": "infiniCite.asgi",
+        "peekOfCode": "application = get_asgi_application()",
+        "detail": "infiniCite.asgi",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_DIR",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = SECRET_KEY\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "SECRET_KEY = SECRET_KEY\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DEBUG",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "DEBUG = True\nALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "ALLOWED_HOSTS",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    # 'django_elasticsearch_dsl',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "INSTALLED_APPS",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    # 'django_elasticsearch_dsl',\n    'paper',\n    'user',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MIDDLEWARE",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\nROOT_URLCONF = 'infiniCite.urls'",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "ROOT_URLCONF",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "ROOT_URLCONF = 'infiniCite.urls'\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [os.path.join(BASE_DIR, 'templates')],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "TEMPLATES",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [os.path.join(BASE_DIR, 'templates')],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',\n                'django.contrib.auth.context_processors.auth',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "WSGI_APPLICATION",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "WSGI_APPLICATION = 'infiniCite.wsgi.application'\n# Database\n# https://docs.djangoproject.com/en/4.2/ref/settings/#databases\n# DATABASE CONFIGURATION IS NOT PUBLIC!!!\nfrom config.db_config import DATABASES\nDATABASES = DATABASES\n# Password validation\n# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators\nAUTH_PASSWORD_VALIDATORS = [\n    {",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASES",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "DATABASES = DATABASES\n# Password validation\n# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators\nAUTH_PASSWORD_VALIDATORS = [\n    {\n        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',\n    },",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "AUTH_PASSWORD_VALIDATORS",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "AUTH_PASSWORD_VALIDATORS = [\n    {\n        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',\n    },",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LANGUAGE_CODE",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nBASE_DIR = Path(__file__).resolve(strict=True).parent.parent\nPAPER_DIR = BASE_DIR / 'paper'\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "TIME_ZONE",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nBASE_DIR = Path(__file__).resolve(strict=True).parent.parent\nPAPER_DIR = BASE_DIR / 'paper'\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    PAPER_DIR / 'static',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "USE_I18N",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nBASE_DIR = Path(__file__).resolve(strict=True).parent.parent\nPAPER_DIR = BASE_DIR / 'paper'\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    PAPER_DIR / 'static',\n    BASE_DIR / 'static'",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "USE_TZ",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "USE_TZ = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nBASE_DIR = Path(__file__).resolve(strict=True).parent.parent\nPAPER_DIR = BASE_DIR / 'paper'\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    PAPER_DIR / 'static',\n    BASE_DIR / 'static'\n]",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_DIR",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve(strict=True).parent.parent\nPAPER_DIR = BASE_DIR / 'paper'\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    PAPER_DIR / 'static',\n    BASE_DIR / 'static'\n]\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "PAPER_DIR",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "PAPER_DIR = BASE_DIR / 'paper'\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    PAPER_DIR / 'static',\n    BASE_DIR / 'static'\n]\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# settings.py",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_URL",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "STATIC_URL = '/static/'\nSTATICFILES_DIRS = [\n    PAPER_DIR / 'static',\n    BASE_DIR / 'static'\n]\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# settings.py\n# configure logging ",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATICFILES_DIRS",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "STATICFILES_DIRS = [\n    PAPER_DIR / 'static',\n    BASE_DIR / 'static'\n]\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# settings.py\n# configure logging \nLOGGING = {",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_AUTO_FIELD",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n# settings.py\n# configure logging \nLOGGING = {\n    'version': 1,\n    'disable_existing_loggers': False,\n    'handlers': {\n        'file': {\n            'level': 'DEBUG',\n            'class': 'logging.handlers.RotatingFileHandler',",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LOGGING",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "LOGGING = {\n    'version': 1,\n    'disable_existing_loggers': False,\n    'handlers': {\n        'file': {\n            'level': 'DEBUG',\n            'class': 'logging.handlers.RotatingFileHandler',\n            'filename': os.path.join(BASE_DIR, 'django.log'),\n            'maxBytes': 1024 * 1024 * 5,  # 5 MB\n            'backupCount': 5,",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "infiniCite.urls",
+        "description": "infiniCite.urls",
+        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('', include('paper.urls')),\n    path('user/', include('user.urls')),\n]",
+        "detail": "infiniCite.urls",
+        "documentation": {}
+    },
+    {
+        "label": "application",
+        "kind": 5,
+        "importPath": "infiniCite.wsgi",
+        "description": "infiniCite.wsgi",
+        "peekOfCode": "application = get_wsgi_application()",
+        "detail": "infiniCite.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "paper.migrations.0001_initial",
+        "description": "paper.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        ('author', '0001_initial'),\n        ('user', '0001_initial'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Paper',\n            fields=[",
+        "detail": "paper.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "paper.migrations.0002_alter_library_papers_alter_library_sharedwith_and_more",
+        "description": "paper.migrations.0002_alter_library_papers_alter_library_sharedwith_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('user', '0002_account_affiliation'),\n        ('paper', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='library',\n            name='papers',\n            field=models.ManyToManyField(blank=True, default=list, related_name='libraries', to='paper.paper'),",
+        "detail": "paper.migrations.0002_alter_library_papers_alter_library_sharedwith_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "paper.migrations.0003_paper_fieldsofstudy",
+        "description": "paper.migrations.0003_paper_fieldsofstudy",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('paper', '0002_alter_library_papers_alter_library_sharedwith_and_more'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='paper',\n            name='fieldsOfStudy',\n            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, default=list, size=None),\n        ),",
+        "detail": "paper.migrations.0003_paper_fieldsofstudy",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "paper.migrations.0004_paper_publicationtypes_paper_publicationvenue",
+        "description": "paper.migrations.0004_paper_publicationtypes_paper_publicationvenue",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('author', '0003_publicationvenue'),\n        ('paper', '0003_paper_fieldsofstudy'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='paper',\n            name='publicationTypes',\n            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, default=list, size=None),",
+        "detail": "paper.migrations.0004_paper_publicationtypes_paper_publicationvenue",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "kind": 6,
+        "importPath": "paper.apps",
+        "description": "paper.apps",
+        "peekOfCode": "class AppConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'paper'",
+        "detail": "paper.apps",
+        "documentation": {}
+    },
+    {
+        "label": "library_data",
+        "kind": 2,
+        "importPath": "paper.context_processors",
+        "description": "paper.context_processors",
+        "peekOfCode": "def library_data(request):\n    # Get library data for logged in user\n    libraries = Library.objects.filter(owner_id=request.user.account.id).order_by('name') if request.user.is_authenticated else []\n    return {'libraries': libraries}\ndef shared_library_data(request):\n    # Get shared library data for logged in user\n    shared_libraries = Library.objects.filter(sharedWith__id=request.user.account.id).order_by(\"name\") if request.user.is_authenticated else []\n    return {'shared_libraries': shared_libraries}",
+        "detail": "paper.context_processors",
+        "documentation": {}
+    },
+    {
+        "label": "shared_library_data",
+        "kind": 2,
+        "importPath": "paper.context_processors",
+        "description": "paper.context_processors",
+        "peekOfCode": "def shared_library_data(request):\n    # Get shared library data for logged in user\n    shared_libraries = Library.objects.filter(sharedWith__id=request.user.account.id).order_by(\"name\") if request.user.is_authenticated else []\n    return {'shared_libraries': shared_libraries}",
+        "detail": "paper.context_processors",
+        "documentation": {}
+    },
+    {
+        "label": "SemanticAPIException",
+        "kind": 6,
+        "importPath": "paper.exceptions",
+        "description": "paper.exceptions",
+        "peekOfCode": "class SemanticAPIException(Exception):\n    \"\"\"Base class for API exceptions.\"\"\"\n    pass",
+        "detail": "paper.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "SearchForm",
+        "kind": 6,
+        "importPath": "paper.forms",
+        "description": "paper.forms",
+        "peekOfCode": "class SearchForm(forms.Form):\n    query = forms.CharField(max_length=200)\n    page = forms.IntegerField(min_value=1, initial=1)\n    searchPaper = forms.BooleanField(required=False, initial=True)",
+        "detail": "paper.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Paper",
+        "kind": 6,
+        "importPath": "paper.models",
+        "description": "paper.models",
+        "peekOfCode": "class Paper(models.Model):\n    paperId= models.CharField(max_length=255, primary_key=True)\n    url = models.URLField(blank=True)\n    title = models.CharField(max_length=255)\n    abstract = models.TextField(blank=True, default='')\n    fieldsOfStudy = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    referenceCount = models.IntegerField()\n    citationCount = models.IntegerField()\n    openAccessPdf = models.URLField(blank=True, default='')\n    embedding = ArrayField(models.FloatField(), blank=True, default=list)",
+        "detail": "paper.models",
+        "documentation": {}
+    },
+    {
+        "label": "Library",
+        "kind": 6,
+        "importPath": "paper.models",
+        "description": "paper.models",
+        "peekOfCode": "class Library(models.Model):\n    name = models.CharField(max_length=255)\n    owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='libraries')\n    papers = models.ManyToManyField(Paper, related_name='libraries', blank=True, default=list)\n    sharedWith = models.ManyToManyField(Account, related_name='sharedLibraries', blank=True, default=list)",
+        "detail": "paper.models",
+        "documentation": {}
+    },
+    {
+        "label": "PaperSerializer",
+        "kind": 6,
+        "importPath": "paper.serializers",
+        "description": "paper.serializers",
+        "peekOfCode": "class PaperSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',\n                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes']\nclass LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:\n        model = Library",
+        "detail": "paper.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "LibrarySerializer",
+        "kind": 6,
+        "importPath": "paper.serializers",
+        "description": "paper.serializers",
+        "peekOfCode": "class LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:\n        model = Library\n        fields = ['id', 'name', 'owner', 'papers', 'sharedWith']",
+        "detail": "paper.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "LibraryViewSetTestCase",
+        "kind": 6,
+        "importPath": "paper.tests",
+        "description": "paper.tests",
+        "peekOfCode": "class LibraryViewSetTestCase(APITestCase):\n    def setUp(self):\n        self.author = Author.objects.create(authorId='author1', name='Author 1', paperCount=0, citationCount=0, hIndex=0)\n        self.user = User.objects.create_user(username='jonathan', password='123')\n        self.account = Account.objects.create(user=self.user)\n        self.library = Library.objects.create(name='Library 1', owner=self.account)\n        self.paper = Paper.objects.create(paperId='paper1', title='Paper 1', referenceCount=0, citationCount=0, publicationDate='2023-06-01')\n        self.paper.authors.add(self.author)\n    def test_create_library(self):\n        url = reverse('paper:library-list')  # Use the name of the route as registered in your router",
+        "detail": "paper.tests",
+        "documentation": {}
+    },
+    {
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "paper.urls",
+        "description": "paper.urls",
+        "peekOfCode": "app_name = 'paper'\nrouter = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),",
+        "detail": "paper.urls",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "paper.urls",
+        "description": "paper.urls",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),\n    path('api/libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'post': 'create'}), name='library-paper-add'),",
+        "detail": "paper.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "paper.urls",
+        "description": "paper.urls",
+        "peekOfCode": "urlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),\n    path('api/libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'post': 'create'}), name='library-paper-add'),\n    path('api/libraries/<int:library_pk>/papers/<str:pk>/', LibraryPaperViewSet.as_view({'delete': 'destroy'}), name='library-paper-remove'),\n    path('api/libraries/<int:library_pk>/papers/<str:pk>/move/', LibraryPaperViewSet.as_view({'post': 'move'}), name='library-paper-move'),",
+        "detail": "paper.urls",
+        "documentation": {}
+    },
+    {
+        "label": "LibraryViewSet",
+        "kind": 6,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "class LibraryViewSet(viewsets.ModelViewSet):\n    queryset = Library.objects.all()\n    serializer_class = LibrarySerializer\n    account_queryset = Account.objects.all()\n    def create(self, request, *args, **kwargs):\n        userId = request.user.id\n        # TODO: create account when user is created\n        try: \n            owner = self.account_queryset.get(user_id=userId)\n        except:",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "LibraryPaperViewSet",
+        "kind": 6,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "class LibraryPaperViewSet(viewsets.ViewSet):\n    library_queryset = Library.objects.all()\n    queryset = Paper.objects.all()\n    serializer_class = LibrarySerializer\n    paper_query_params = {\n        'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',\n    }\n    def create(self, request, *args, **kwargs):\n        papers = [self.get_paper(id) for id in request.data['ids']]\n        library = get_object_or_404(Library, pk=kwargs['library_pk'])",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def index(request):\n    form = SearchForm()\n    return render(request, 'paper/index.html', {'form': form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']\n            page = form.cleaned_data['page'] or 1\n            searchPaper = form.cleaned_data['searchPaper']",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "search",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']\n            page = form.cleaned_data['page'] or 1\n            searchPaper = form.cleaned_data['searchPaper']\n            return handle_search(request, query, page, searchPaper)\n        else:\n            return render(request, 'paper/index.html', {'form': form})",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "handle_search",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def handle_search(request, query, page, searchPaper):\n    if query:\n        if searchPaper:\n            return search_papers(request, query, page)\n        else:\n            return search_authors(request, query, page)\n    else:\n        return redirect('paper:index')\ndef search_papers(request, query, page):\n    params = {",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "search_papers",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def search_papers(request, query, page):\n    params = {\n        'query': query,\n        'limit': RECORDS_PER_PAGE,\n        'offset': (page - 1) * RECORDS_PER_PAGE,\n        'fields': 'paperId,title,abstract,year,publicationTypes,journal,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors'\n    }\n    response = requests.get(f'{BASE_URL}/paper/search', params=params)\n    data = response.json()\n    total = data.get('total', 0)",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "search_authors",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def search_authors(request, query, page):\n    params = {\n        'query': query,\n        'limit': RECORDS_PER_PAGE,\n        'offset': (page - 1) * RECORDS_PER_PAGE,\n        'fields': 'authorId,name,affiliations,paperCount,citationCount,hIndex'\n    }\n    response = requests.get(f'{BASE_URL}/author/search', params=params)\n    data = response.json()\n    total = data.get('total', 0)",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "autocomplete",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def autocomplete(request):\n    query = request.GET.get('query', '')\n    print('query', query)\n    if query:\n        # Call the API with the search input\n        params = {\n            'query': query,\n        }\n        response = requests.get(f'{BASE_URL}/paper/autocomplete', params=params)\n        return JsonResponse(response.json(), safe=False)",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_paper_info",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def get_paper_info(paper_id, params={'fields': 'paperId,authors,year,title,citationCount'}):\n    return requests.get(f'{BASE_URL}/paper/{paper_id}/', params=params).json()\ndef get_paper_connections(paper_id, graph_type, params={'fields': 'paperId,intents'}):\n    return requests.get(f'{BASE_URL}/paper/{paper_id}/{graph_type}', params=params).json()['data']\ndef create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == 'citations':\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\":edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\":edge_type}\ndef graph(request):",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_paper_connections",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def get_paper_connections(paper_id, graph_type, params={'fields': 'paperId,intents'}):\n    return requests.get(f'{BASE_URL}/paper/{paper_id}/{graph_type}', params=params).json()['data']\ndef create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == 'citations':\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\":edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\":edge_type}\ndef graph(request):\n    paper_id = request.GET.get('paperId', '')\n    graph_type = request.GET.get('graphType', 'citations')",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "create_edge",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == 'citations':\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\":edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\":edge_type}\ndef graph(request):\n    paper_id = request.GET.get('paperId', '')\n    graph_type = request.GET.get('graphType', 'citations')\n    if graph_type == 'citations':\n        nbr_name = 'citingPaper'",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "graph",
+        "kind": 2,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "def graph(request):\n    paper_id = request.GET.get('paperId', '')\n    graph_type = request.GET.get('graphType', 'citations')\n    if graph_type == 'citations':\n        nbr_name = 'citingPaper'\n    else:\n        nbr_name = 'citedPaper'\n    if not paper_id:\n        return redirect('index')\n    params = {'fields': 'paperId,authors,year,title,citationCount,isInfluential,intents'}",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_URL",
+        "kind": 5,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "BASE_URL = 'http://api.semanticscholar.org/graph/v1'\nRECORDS_PER_PAGE = 10\ndef index(request):\n    form = SearchForm()\n    return render(request, 'paper/index.html', {'form': form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "RECORDS_PER_PAGE",
+        "kind": 5,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "RECORDS_PER_PAGE = 10\ndef index(request):\n    form = SearchForm()\n    return render(request, 'paper/index.html', {'form': form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']\n            page = form.cleaned_data['page'] or 1",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "user.migrations.0001_initial",
+        "description": "user.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Account',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
+        "detail": "user.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "user.migrations.0002_account_affiliation",
+        "description": "user.migrations.0002_account_affiliation",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('user', '0001_initial'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='account',\n            name='affiliation',\n            field=models.CharField(blank=True, default='', max_length=255),\n        ),",
+        "detail": "user.migrations.0002_account_affiliation",
+        "documentation": {}
+    },
+    {
+        "label": "UsersConfig",
+        "kind": 6,
+        "importPath": "user.apps",
+        "description": "user.apps",
+        "peekOfCode": "class UsersConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'user'",
+        "detail": "user.apps",
+        "documentation": {}
+    },
+    {
+        "label": "LoginForm",
+        "kind": 6,
+        "importPath": "user.forms",
+        "description": "user.forms",
+        "peekOfCode": "class LoginForm(forms.Form):\n    username = forms.CharField()\n    password = forms.CharField(widget=forms.PasswordInput)\nclass UserRegistrationForm(forms.ModelForm):\n    password = forms.CharField(label='Password', widget=forms.PasswordInput)\n    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)\n    class Meta:\n        model = User\n        fields = ('username', 'email')\n        def clean_password2(self):",
+        "detail": "user.forms",
+        "documentation": {}
+    },
+    {
+        "label": "UserRegistrationForm",
+        "kind": 6,
+        "importPath": "user.forms",
+        "description": "user.forms",
+        "peekOfCode": "class UserRegistrationForm(forms.ModelForm):\n    password = forms.CharField(label='Password', widget=forms.PasswordInput)\n    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)\n    class Meta:\n        model = User\n        fields = ('username', 'email')\n        def clean_password2(self):\n            cd = self.cleaned_data\n            if cd['password'] != cd['password2']:\n                raise forms.ValidationError('Passwords don\\'t match.')",
+        "detail": "user.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Account",
+        "kind": 6,
+        "importPath": "user.models",
+        "description": "user.models",
+        "peekOfCode": "class Account(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE)\n    affiliation = models.CharField(max_length=255, blank=True, default='')",
+        "detail": "user.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserSerializer",
+        "kind": 6,
+        "importPath": "user.serializers",
+        "description": "user.serializers",
+        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = User\n        fields = ['id', 'username', 'email']  # Include any other fields you might need\nclass AccountSerializer(serializers.ModelSerializer):\n    user = UserSerializer(read_only=True)\n    class Meta:\n        model = Account\n        fields = ['id', 'user', 'affiliation']",
+        "detail": "user.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "AccountSerializer",
+        "kind": 6,
+        "importPath": "user.serializers",
+        "description": "user.serializers",
+        "peekOfCode": "class AccountSerializer(serializers.ModelSerializer):\n    user = UserSerializer(read_only=True)\n    class Meta:\n        model = Account\n        fields = ['id', 'user', 'affiliation']",
+        "detail": "user.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "user.urls",
+        "description": "user.urls",
+        "peekOfCode": "app_name = 'user'\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('login/', views.user_login, name='login'),\n    path('register/', views.register, name='register'),\n    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # create customized logout view\n    path('reset/done', auth_views.PasswordResetDoneView.as_view(), name='password_reset'),\n    path('reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),\n    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),\n    path('reset/complete', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),",
+        "detail": "user.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "user.urls",
+        "description": "user.urls",
+        "peekOfCode": "urlpatterns = [\n    path('', views.index, name='index'),\n    path('login/', views.user_login, name='login'),\n    path('register/', views.register, name='register'),\n    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # create customized logout view\n    path('reset/done', auth_views.PasswordResetDoneView.as_view(), name='password_reset'),\n    path('reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),\n    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),\n    path('reset/complete', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),\n    # TODO: change url path to `api/user/search`",
+        "detail": "user.urls",
+        "documentation": {}
+    },
+    {
+        "label": "AccountViewSet",
+        "kind": 6,
+        "importPath": "user.views",
+        "description": "user.views",
+        "peekOfCode": "class AccountViewSet(viewsets.ModelViewSet):\n    queryset = Account.objects.all()\n    serializer_class = AccountSerializer\n    def search(self, request):\n        \"\"\"\n        Searches for accounts based on the given fields in the request data.\n        Args:\n            request: The HTTP request object containing the data to search for.\n        Returns:\n            A JSON response containing the serialized data of the matching accounts.",
+        "detail": "user.views",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "user.views",
+        "description": "user.views",
+        "peekOfCode": "def index(request):\n    # Get the user id\n    user_id = request.user.id\n    # Now we get the papers owned by the user\n    libraries = Library.objects.filter(owner=user_id)\n    paper_ids = []\n    for library in libraries:\n       paper_ids += library.papers.all().values_list('id', flat=True)\n    papers = Paper.objects.filter(paperId__in=paper_ids)\n    return render(request, \"user/index.html\", {\"my_library\": papers})",
+        "detail": "user.views",
+        "documentation": {}
+    },
+    {
+        "label": "user_login",
+        "kind": 2,
+        "importPath": "user.views",
+        "description": "user.views",
+        "peekOfCode": "def user_login(request):\n    if request.method == 'POST':\n        form = LoginForm(request.POST)\n        if form.is_valid():\n            cd = form.cleaned_data\n            user = authenticate(request,\n                username=cd['username'],\n                password=cd['password'])\n            if user is not None:\n                if user.is_active:",
+        "detail": "user.views",
+        "documentation": {}
+    },
+    {
+        "label": "register",
+        "kind": 2,
+        "importPath": "user.views",
+        "description": "user.views",
+        "peekOfCode": "def register(request):\n    if request.method == 'POST':\n        user_form = UserRegistrationForm(request.POST)\n        if user_form.is_valid():\n            # Create a new user object but avoid saving it yet\n            new_user = user_form.save(commit=False)\n            # Set the chosen password\n            new_user.set_password(user_form.cleaned_data['password'])\n            # Save the User object\n            new_user.save()",
+        "detail": "user.views",
+        "documentation": {}
+    },
+    {
+        "label": "response",
+        "kind": 5,
+        "importPath": "TempDataGenerator",
+        "description": "TempDataGenerator",
+        "peekOfCode": "response = requests.get(\"http://api.semanticscholar.org/graph/v1/paper/search?query=literature+graph\")\noutfile = \"SampleData.json\"\nfinalOutput = list()\nwith open(outfile, \"w\") as filename:\n    data = list()\n    print(response.json()['data'])\n    data = response.json()['data']\n    for item in data:\n        id = item['paperId']\n        newResponse = requests.get(\"http://api.semanticscholar.org/graph/v1/paper/\" + str(id) + \"?fields=title,citations,authors,year,abstract\")",
+        "detail": "TempDataGenerator",
+        "documentation": {}
+    },
+    {
+        "label": "outfile",
+        "kind": 5,
+        "importPath": "TempDataGenerator",
+        "description": "TempDataGenerator",
+        "peekOfCode": "outfile = \"SampleData.json\"\nfinalOutput = list()\nwith open(outfile, \"w\") as filename:\n    data = list()\n    print(response.json()['data'])\n    data = response.json()['data']\n    for item in data:\n        id = item['paperId']\n        newResponse = requests.get(\"http://api.semanticscholar.org/graph/v1/paper/\" + str(id) + \"?fields=title,citations,authors,year,abstract\")\n        print(newResponse)",
+        "detail": "TempDataGenerator",
+        "documentation": {}
+    },
+    {
+        "label": "finalOutput",
+        "kind": 5,
+        "importPath": "TempDataGenerator",
+        "description": "TempDataGenerator",
+        "peekOfCode": "finalOutput = list()\nwith open(outfile, \"w\") as filename:\n    data = list()\n    print(response.json()['data'])\n    data = response.json()['data']\n    for item in data:\n        id = item['paperId']\n        newResponse = requests.get(\"http://api.semanticscholar.org/graph/v1/paper/\" + str(id) + \"?fields=title,citations,authors,year,abstract\")\n        print(newResponse)\n        finalOutput.append(newResponse.json())",
+        "detail": "TempDataGenerator",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "manage",
+        "description": "manage",
+        "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'infiniCite.settings')\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
+        "detail": "manage",
+        "documentation": {}
+    }
+]

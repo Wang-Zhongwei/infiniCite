@@ -71,19 +71,19 @@
                 </span>
               </div>
               <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-                <div class="dropdown-item library-option rename">
+                <div class="dropdown-item library-option rename" onclick="handleRenameLibrary(event)">
                   <i class="bi bi-pencil-square icon small"></i>
                   &nbsp; Rename
                 </div>
-                <div class="dropdown-item library-option delete">
+                <div class="dropdown-item library-option delete" onclick="handleDeleteLibrary(event)">
                   <i class="bi bi-trash icon small"></i>
                   &nbsp; Delete
                 </div>
-                <div class="dropdown-item library-option duplicate">
+                <div class="dropdown-item library-option duplicate" onclick="handleDuplicateLibrary(event)">
                   <i class="bi bi-files icon small"></i>
                   &nbsp; Duplicate
                 </div>
-                <div class="dropdown-item library-option share">
+                <div class="dropdown-item library-option share" onclick="handleShareLibrary(event)">
                   <i class="bi bi-share icon small"></i>
                   &nbsp; Share
                 </div>
@@ -140,19 +140,19 @@
                 </span>
               </div>
               <div class="dropdown-menu library-options-menu" aria-labelledby="dropdownMenuButton">
-                <div class="dropdown-item library-option rename">
+                <div class="dropdown-item library-option rename" onclick="handleRenameLibrary(event)">
                   <i class="bi bi-pencil-square icon small"></i>
                   &nbsp; Rename
                 </div>
-                <div class="dropdown-item library-option delete">
+                <div class="dropdown-item library-option delete" onclick="handleDeleteLibrary(event)">
                   <i class="bi bi-trash icon small"></i>
                   &nbsp; Delete
                 </div>
-                <div class="dropdown-item library-option duplicate">
+                <div class="dropdown-item library-option duplicate" onclick="handleDuplicateLibrary(event)">
                   <i class="bi bi-files icon small"></i>
                   &nbsp; Duplicate
                 </div>
-                <div class="dropdown-item library-option share">
+                <div class="dropdown-item library-option share" onclick="handleShareLibrary(event)">
                   <i class="bi bi-share icon small"></i>
                   &nbsp; Share
                 </div>
@@ -160,11 +160,15 @@
             </div>
           </div>
           {% endfor %}
-          <div class="libraries-confirm-container">
-            <button class="libraries-confirm-button" hidden>
-              confirm
-            </button>
+        </div>
+        <div class="confirm-save-to-libraries-container">
+          <div class="cancel-save-to-libraries-btn" title="cancel save paper" onclick="cancelBtnOnClick()" hidden>
+            cancel
           </div>
+          <button class="btn btn-primary confirm-save-to-libraries-btn" onclick="confirmBtnOnClick()"
+            title="confirm save paper" hidden>
+            confirm
+          </button>
         </div>
         <div class="divider"></div>
         <div class="shared-library-list">
@@ -181,99 +185,84 @@
         <script>
           // TODO: maybe refactor the four actions 
           // library rename action
-          document.querySelectorAll('.library-option.rename').forEach(function (item) {
-            item.addEventListener('click', function (event) {
-              event.preventDefault();
+          function handleRenameLibrary(event) {
+            event.preventDefault();
+            const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+            const newName = prompt('Enter the new name for the library:');
 
-              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
-              const newName = prompt('Enter the new name for the library:');
-
-              if (newName != null && newName != "") {
-                fetch(`/api/libraries/${libraryId}/`, {
-                  method: 'PATCH',
-                  body: JSON.stringify({ name: newName }),
-                  headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
-                }).then(() => {
-                  // update library name in the DOM
-                  event.target.closest('.link3').querySelector('.label3').textContent = newName;
-                }).catch(() => alert('Error renaming library!'));
-              }
-            });
-          });
+            if (newName != null && newName != "") {
+              fetch(`/api/libraries/${libraryId}/`, {
+                method: 'PATCH',
+                body: JSON.stringify({ name: newName }),
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+              }).then(() => {
+                // update library name in the DOM
+                event.target.closest('.link3').querySelector('.label3').textContent = newName;
+              }).catch(() => alert('Error renaming library!'));
+            }
+          }
 
           // library delete action
-          document.querySelectorAll('.library-option.delete').forEach(function (item) {
-            item.addEventListener('click', function (event) {
-              event.preventDefault();
+          function handleDeleteLibrary(event) {
+            event.preventDefault();
+            const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+            const libraryName = event.target.closest('.link3').querySelector('.label3').textContent;
 
-              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
-              const libraryName = event.target.closest('.link3').querySelector('.label3').textContent;
-
-              if (confirm(`Are you sure you want to delete the library "${libraryName}"?`)) {
-                fetch(`/api/libraries/${libraryId}/`, {
-                  method: 'DELETE',
-                  headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
-                }).then(() => {
-                  // remove library from the DOM
-                  event.target.closest('.link3').remove();
-                }).catch(() => alert('Error deleting library!'));
-              }
-            });
-          });
+            if (confirm(`Are you sure you want to delete the library "${libraryName}"?`)) {
+              fetch(`/api/libraries/${libraryId}/`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+              }).then(() => {
+                // remove library from the DOM
+                event.target.closest('.link3').remove();
+              }).catch(() => alert('Error deleting library!'));
+            }
+          }
 
           // library duplicate action
-          document.querySelectorAll('.library-option.duplicate').forEach(function (item) {
-            item.addEventListener('click', async function (event) {
-              event.preventDefault();
+          async function handleDuplicateLibrary(event) {
+            event.preventDefault();
+            const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+            const libraryName = event.target.closest('.link3').querySelector('.label3').textContent;
+            const newLibraryName = prompt(`Enter the name of the new library to duplicate "${libraryName}" to:`);
 
-              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
-              const libraryName = event.target.closest('.link3').querySelector('.label3').textContent;
-              const newLibraryName = prompt(`Enter the name of the new library to duplicate "${libraryName}" to:`);
-
-
-              if (newLibraryName != null && newLibraryName != "") {
-                const response = await fetch(`/api/libraries/${libraryId}`);
-                const library = await response.json();
-
-                if (library == null) {
-                  alert('Error duplicating library!');
-                  return;
-                }
-                createNewLibrary({ name: newLibraryName, papers: library.papers });
+            if (newLibraryName != null && newLibraryName != "") {
+              const response = await fetch(`/api/libraries/${libraryId}`);
+              const library = await response.json();
+              if (library == null) {
+                alert('Error duplicating library!');
+                return;
               }
-            });
-          });
+              createNewLibrary({ name: newLibraryName, papers: library.papers });
+            }
+          }
 
           // library share action
-          document.querySelectorAll('.library-option.share').forEach(function (item) {
-            item.addEventListener('click', function (event) {
-              event.preventDefault();
-
-              const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
-              const email = prompt('Enter the email of the user you want to share the library with:');
-              fetch(`/user/api/search/`, {
-                method: 'POST',
-                body: JSON.stringify({ email: email }),
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
-              }).then(response => response.json())
-                .then(data => {
-                  if (data.length === 0) {
-                    alert('User not found!');
-                    return;
-                  }
-                  const accountId = data[0].id;
-                  fetch(`/api/libraries/${libraryId}/share/`, {
-                    method: 'POST',
-                    body: JSON.stringify({ account_id: accountId }),
-                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
-                  }).then(() => {
-                    alert('Library shared!');
-                  }).catch(() => alert('Error sharing library!'));
-                }).catch(() => alert('Error searching for user!'));
-            });
-          });
+          function handleLibraryShare(event) {
+            event.preventDefault();
+            const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
+            const email = prompt('Enter the email of the user you want to share the library with:');
+            fetch(`/user/api/search/`, {
+              method: 'POST',
+              body: JSON.stringify({ email: email }),
+              headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+            }).then(response => response.json())
+              .then(data => {
+                if (data.length === 0) {
+                  alert('User not found!');
+                  return;
+                }
+                const accountId = data[0].id;
+                fetch(`/api/libraries/${libraryId}/share/`, {
+                  method: 'POST',
+                  body: JSON.stringify({ account_id: accountId }),
+                  headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+                }).then(() => {
+                  alert('Library shared!');
+                }).catch(() => alert('Error sharing library!'));
+              }).catch(() => alert('Error searching for user!'));
+          }
         </script>
-
         <!-- TODO: set height by number of elements -->
       </div>
     </div>

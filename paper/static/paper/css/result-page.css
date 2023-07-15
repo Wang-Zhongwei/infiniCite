@@ -189,30 +189,8 @@
 }
 
 .view-button {
-  background-color: #007bff;
-  transition-duration: 0.4s;
-  border-radius: 8px;
-  padding: 8px 18px;
-  display: inline-block;
-  align-items: center;
+  padding: 4px 18px;
   color: whitesmoke;
-}
-
-.view-button:hover {
-  background-color: #ddd;
-  color: #007bff;
-}
-
-.save-button {
-  background-color: #2d4848;
-  transition-duration: 0.4s;
-  border-radius: 8px;
-  padding: 10px 24px;
-}
-
-.save-button:hover {
-  background-color: #ddd;
-  color: #007bff;
 }
 
 .paper-options-container {
