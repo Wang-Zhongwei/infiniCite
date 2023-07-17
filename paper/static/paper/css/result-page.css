@@ -31,7 +31,7 @@
   /* Set a fixed width */
   text-align: justify;
   /* Spread the text evenly across the line */
-  margin: 40px 10px 0px 20px;
+  margin: 15px 10px 15px 20px;
   padding: 25px 35px;
   border-radius: 8px;
   background-color: rgb(55, 54, 54, 0.8);
@@ -50,7 +50,7 @@
   text-align: left;
   /* Spread the text evenly across the line */
   line-height: 1.2;
-  margin: 40px 20px 0px 10px;
+  margin: 15px 20px 15px 10px;
   padding: 20px 30px;
   border-radius: 8px;
   background-color: rgb(55, 54, 54, 0.8);
@@ -253,4 +253,15 @@
   a {
     color: inherit;
   }
+}
+
+.library-option-text {
+  color: rgb(200, 200, 200);
+  font-size: small;
+}
+
+.paper-option-container-3 {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
 }

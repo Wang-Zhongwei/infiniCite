@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<!-- add manage share button -->
+
 <h1> <i class="bi bi-folder-fill icon large"></i> {{data.name}}</h1>
 <div class="results">
   {% for paper in data.papers %}
@@ -44,13 +44,41 @@
         </div>
         {% if user.is_authenticated %}
         <div class="paper-options-container-2">
-          <div class="function-icon-container" title="Manage Paper">
-            <input type="hidden" value="{{paper.paperId}}" id="manage-paper-{{paper.paperId}}">
-            {{ paper.libraries | json_script:"librariesData" }}
-            <i class="bi bi-folder-symlink-fill icon" onclick="managePaperOnClick(`{{paper.paperId}}`)"></i>
+          <div class="paper-option-container-3">
+            <div class="function-icon-container" title="Manage Paper">
+              <input type="hidden" value="{{paper.paperId}}" id="manage-paper-{{paper.paperId}}">
+              {{ paper.libraries | json_script:"librariesData" }}
+              <i class="bi bi-folder-symlink-fill icon" onclick="managePaperOnClick(`{{paper.paperId}}`)"></i>
+            </div>
+            {% with num_libraries=paper.libraries|length %}
+            {% if num_libraries > 3 %}
+            {% for library in paper.libraries|slice:":3" %}
+            <span class="library-option-text">
+              <a href="{% url 'paper:library-paper-list' library_pk=library.id %}">
+                {{ library.name }}
+              </a>
+              {% if not forloop.last %} &#x2022 {% endif %}
+            </span>
+            {% endfor %}
+            <span class="library-option-text"> +{{ num_libraries|add:"-3" }}</span>
+            {% else %}
+            {% for library in paper.libraries %}
+            <span class="library-option-text">
+              <a href="{% url 'paper:library-paper-list' library_pk=library.id %}">
+                {{library.name }}
+              </a>
+              {% if not forloop.last %} &#x2022 {% endif %}
+            </span>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
           </div>
-          <div class="function-icon-container" title="Remove from library">
-            <i class="bi bi-bookmark-dash-fill icon" onclick="removePaperOnClick('{{ paper.paperId }}', `{{ data.id }}`)"></i>
+          <div class="paper-option-container-3">
+            <div class="function-icon-container" title="Remove from library">
+              <i class="bi bi-bookmark-dash-fill icon"
+                onclick="removePaperOnClick('{{ paper.paperId }}', `{{ data.id }}`)"></i>
+            </div>
+            <span class="library-option-text">Remove</span>
           </div>
         </div>
         {% endif %}
@@ -70,7 +98,7 @@
         <div class="local-network">Paper Specifics</div>
         <p>
           <i class="bi bi-calendar icon small"></i>
-          Year: {{ paper.year }}
+          Year: {{ paper.publicationDate }}
         </p>
         <p>
           <i class="bi bi-blockquote-left icon large"></i>

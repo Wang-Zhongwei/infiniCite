@@ -1248,7 +1248,7 @@
         "kind": 6,
         "importPath": "paper.serializers",
         "description": "paper.serializers",
-        "peekOfCode": "class PaperSerializer(serializers.ModelSerializer):\n    libraries = PaperLibrarySerializer(many=True, read_only=True)\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',\n                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes', 'libraries']\nclass LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:",
+        "peekOfCode": "class PaperSerializer(serializers.ModelSerializer):\n    libraries = PaperLibrarySerializer(many=True, read_only=True)\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',\n                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes', 'fieldsOfStudy', 'libraries']\nclass LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:",
         "detail": "paper.serializers",
         "documentation": {}
     },
@@ -1302,7 +1302,7 @@
         "kind": 6,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "class LibraryPaperView(View):\n    def get(self, request, *args, **kwargs):\n        library = get_object_or_404(Library, pk=kwargs['library_pk'])\n        serializer = LibrarySerializer(library)\n        return render(request, 'paper/library-papers.html', {'data': serializer.data})\nclass AllPapersView(View):\n    def get(self, request, *args, **kwargs):\n        account = request.user.account\n        papers = Paper.objects.filter(libraries__owner=account).distinct()\n        serializer = PaperSerializer(papers, many=True)",
+        "peekOfCode": "class LibraryPaperView(View):\n    def get(self, request, *args, **kwargs):\n        library = get_object_or_404(Library, pk=kwargs['library_pk'])\n        order_by = request.GET.get('order_by', 'title')  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = 'title'\n        papers = library.papers.order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)\n        return render(request, 'paper/library-papers.html', {'data': {'name': library.name, 'papers': serializer.data}})\nclass AllPapersView(View):",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1311,7 +1311,7 @@
         "kind": 6,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "class AllPapersView(View):\n    def get(self, request, *args, **kwargs):\n        account = request.user.account\n        papers = Paper.objects.filter(libraries__owner=account).distinct()\n        serializer = PaperSerializer(papers, many=True)\n        return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})\n# TODO: add login required\nclass LibraryViewSet(viewsets.ModelViewSet):\n    queryset = Library.objects.all()\n    serializer_class = LibrarySerializer",
+        "peekOfCode": "class AllPapersView(View):\n    def get(self, request, *args, **kwargs):\n        account = request.user.account\n        order_by = request.GET.get('order_by', 'title')  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = 'title'\n        papers = Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)\n        return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})\n# TODO: add login required",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1438,6 +1438,15 @@
         "importPath": "paper.views",
         "description": "paper.views",
         "peekOfCode": "RECORDS_PER_PAGE = 10\ndef index(request):\n    form = SearchForm()\n    return render(request, 'paper/index.html', {'form': form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']\n            page = form.cleaned_data['page'] or 1",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "VALID_ORDER_BYS",
+        "kind": 5,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "VALID_ORDER_BYS = ['title', 'publicationDate', 'citationCount', 'referenceCount']\n# TODO: test order by\nclass LibraryPaperView(View):\n    def get(self, request, *args, **kwargs):\n        library = get_object_or_404(Library, pk=kwargs['library_pk'])\n        order_by = request.GET.get('order_by', 'title')  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = 'title'\n        papers = library.papers.order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)",
         "detail": "paper.views",
         "documentation": {}
     },

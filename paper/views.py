@@ -100,16 +100,27 @@ def autocomplete(request):
     else:
         return redirect('index')  # redirect to index view
 
+VALID_ORDER_BYS = ['title', 'publicationDate', 'citationCount', 'referenceCount']
+# TODO: test order by
 class LibraryPaperView(View):
     def get(self, request, *args, **kwargs):
         library = get_object_or_404(Library, pk=kwargs['library_pk'])
-        serializer = LibrarySerializer(library)
-        return render(request, 'paper/library-papers.html', {'data': serializer.data})
+        order_by = request.GET.get('order_by', 'title')  # default to ordering by title
+        if order_by not in VALID_ORDER_BYS:
+            order_by = 'title'
+
+        papers = library.papers.order_by(order_by)
+        serializer = PaperSerializer(papers, many=True)
+        return render(request, 'paper/library-papers.html', {'data': {'name': library.name, 'papers': serializer.data}})
 
 class AllPapersView(View):
     def get(self, request, *args, **kwargs):
         account = request.user.account
-        papers = Paper.objects.filter(libraries__owner=account).distinct()
+        order_by = request.GET.get('order_by', 'title')  # default to ordering by title
+        if order_by not in VALID_ORDER_BYS:
+            order_by = 'title'
+
+        papers = Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)
         serializer = PaperSerializer(papers, many=True)
         return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})
 
@@ -238,6 +249,7 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             tldr=paper_data['tldr']['text'] if paper_data['tldr'] is not None else '',
             publicationDate=paper_data['publicationDate'],
             publicationTypes=paper_data['publicationTypes'],
+            fieldsOfStudy=paper_data['fieldsOfStudy'],
             # TODO: handle authors and publicationVenue saving in the database
         )
         if save:

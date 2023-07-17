@@ -12,7 +12,7 @@ class PaperSerializer(serializers.ModelSerializer):
         model = Paper
         fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', 
                   'citationCount', 'openAccessPdf',
-                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes', 'libraries']
+                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes', 'fieldsOfStudy', 'libraries']
 
 class LibrarySerializer(serializers.ModelSerializer):
     papers = PaperSerializer(many=True, read_only=True)
