@@ -1,3 +1,5 @@
+/** @format */
+
 // @ts-nocheck
 const libraryList = document.querySelector(".library-list");
 let selectedPaperId = "";
@@ -6,7 +8,10 @@ function toggleLibraryCheckBox(showCheckbox, librariesToCheckIds = []) {
   libraryList.querySelectorAll("input").forEach((input) => {
     if (showCheckbox) {
       input.removeAttribute("hidden");
-      if (librariesToCheckIds.includes(parseInt(input.value)) || librariesToCheckIds.includes(input.value)) {
+      if (
+        librariesToCheckIds.includes(parseInt(input.value)) ||
+        librariesToCheckIds.includes(input.value)
+      ) {
         input.checked = true;
       } else {
         input.checked = false;
@@ -63,18 +68,18 @@ function confirmBtnOnClick() {
   }
 
   oldLibraryIds = getOldLibraryIds(selectedPaperId);
-  if (oldLibraryIds.length > 0) {
-    batchRemove(selectedPaperId, oldLibraryIds);
-  }
-
   newLibraryIds = getNewLibraryIds();
-  if (newLibraryIds.length === 0) {
-    alert("No library selected!");
-  } else {
-    batchSave(selectedPaperId, newLibraryIds);
-    toggleLibraryCheckBox(false);
-    alert("Paper saved!");
-  }
+
+  const toDeleteLibraryIds = oldLibraryIds.filter(
+    (id) => !newLibraryIds.includes(id)
+  );
+  const toSaveLibraryIds = newLibraryIds.filter(
+    (id) => !oldLibraryIds.includes(id)
+  );
+  batchRemove(selectedPaperId, toDeleteLibraryIds);
+  batchSave(selectedPaperId, toSaveLibraryIds);
+  toggleLibraryCheckBox(false);
+  alert("Success!");
 }
 
 function getOldLibraryIds(paperId) {
@@ -90,13 +95,13 @@ function getOldLibraryIds(paperId) {
 }
 
 function getNewLibraryIds() {
-  const libraryIds = [];
+  const newLibraryIds = [];
   libraryList.querySelectorAll("input").forEach((input) => {
     if (input.checked) {
-      libraryIds.push(input.value);
+      newLibraryIds.push(Number(input.value));
     }
   });
-  return libraryIds;
+  return newLibraryIds;
 }
 
 function savePaper(id) {
@@ -105,9 +110,22 @@ function savePaper(id) {
   selectedPaperId = id;
 }
 
-function managePaperClickHandler(paperId) {
+function managePaperOnClick(paperId) {
   oldLibraryIds = getOldLibraryIds(paperId);
   managePaper(paperId, oldLibraryIds);
+}
+
+function removePaperOnClick(paperId, libraryId) {
+  if (libraryId) {
+    const libraryName = document.getElementById(`library-checkbox-${libraryId}`).title;
+    if (confirm(`Are you sure you want to remove this paper from ${libraryName}?`)) {
+      removePaper(paperId, libraryId);
+    }
+  } else {
+    if (confirm("Are you sure you want to remove this paper from all libraries?")) {
+      batchRemove(paperId, getOldLibraryIds(paperId));
+    }
+  }
 }
 
 function managePaper(id, oldLibraryIds) {
@@ -123,14 +141,16 @@ function batchRemove(paperId, libraryIds) {
       libraryIds: libraryIds,
     }),
     headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
-  }).catch((err) => {
+  })
+  .then(modifyPaperLibraryList(paperId, libraryIds))
+  .catch((err) => {
     console.log(err);
     alert("Error deleting paper!");
   });
 }
 
 function removePaper(paperId, libraryId) {
-  fetch(`/api/paper/${paperId}/libraries/${libraryId}/`, {
+  fetch(`/api/libraries/${libraryId}/papers/${paperId}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
   })
@@ -159,7 +179,7 @@ function modifyPaperLibraryList(paperId, libraryIds) {
     const newLibraries = libraryIds.map((libraryId) => {
       return {
         id: libraryId,
-        name: oldLibraries.find((library) => library.id === libraryId)?.name || document.getElementById(`library-checkbox-${libraryId}`).title,
+        name: document.getElementById(`library-checkbox-${libraryId}`).title,
       };
     });
     script.textContent = JSON.stringify(newLibraries);

@@ -47,10 +47,10 @@
           <div class="function-icon-container" title="Manage Paper">
             <input type="hidden" value="{{paper.paperId}}" id="manage-paper-{{paper.paperId}}">
             {{ paper.libraries | json_script:"librariesData" }}
-            <i class="bi bi-folder-symlink-fill icon" onclick="managePaperClickHandler(`{{paper.paperId}}`)"></i>
+            <i class="bi bi-folder-symlink-fill icon" onclick="managePaperOnClick(`{{paper.paperId}}`)"></i>
           </div>
           <div class="function-icon-container" title="Remove from library">
-            <i class="bi bi-bookmark-dash-fill icon" onclick="removePaper('{{ paper.paperId }}', `{{ data.id }}`)"></i>
+            <i class="bi bi-bookmark-dash-fill icon" onclick="removePaperOnClick('{{ paper.paperId }}', `{{ data.id }}`)"></i>
           </div>
         </div>
         {% endif %}

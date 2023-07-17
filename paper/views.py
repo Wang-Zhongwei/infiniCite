@@ -100,6 +100,19 @@ def autocomplete(request):
     else:
         return redirect('index')  # redirect to index view
 
+class LibraryPaperView(View):
+    def get(self, request, *args, **kwargs):
+        library = get_object_or_404(Library, pk=kwargs['library_pk'])
+        serializer = LibrarySerializer(library)
+        return render(request, 'paper/library-papers.html', {'data': serializer.data})
+
+class AllPapersView(View):
+    def get(self, request, *args, **kwargs):
+        account = request.user.account
+        papers = Paper.objects.filter(libraries__owner=account).distinct()
+        serializer = PaperSerializer(papers, many=True)
+        return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})
+
 # TODO: add login required
 class LibraryViewSet(viewsets.ModelViewSet):
     queryset = Library.objects.all()
@@ -155,19 +168,6 @@ class LibraryPaperViewSet(viewsets.ViewSet):
     paper_query_params = {
         'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
     }
-
-    # TODO: move these two methods to a View class because ViewSet is for CRUD API 
-    def list(self, request, *args, **kwargs):
-        library = get_object_or_404(Library, pk=kwargs['library_pk'])
-        serializer = self.serializer_class(library)
-        return render(request, 'paper/library-papers.html', {'data': serializer.data})
-
-    @action(detail=False, methods=['get'])
-    def all_papers(self, request, *args, **kwargs):
-        account = request.user.account
-        papers = self.queryset.filter(libraries__owner=account)
-        serializer = self.paper_serializer_class(papers, many=True)
-        return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})
     
     def create(self, request, *args, **kwargs):
         papers = [self.get_paper(id) for id in request.data['ids']]
@@ -202,6 +202,19 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         for library_id in library_ids:
             library = self.library_queryset.get(pk=library_id)
             library.papers.add(paper)
+
+        return Response({'status': 'success'})
+    
+    def remove_from_libraries(self, request, *args, **kwargs):
+        paperId = kwargs['paper_pk']
+        paper = self.get_paper(paperId)
+        if paper is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
+        
+        library_ids = request.data.get('libraryIds', [])
+        for library_id in library_ids:
+            library = self.library_queryset.get(pk=library_id)
+            library.papers.remove(paper)
 
         return Response({'status': 'success'})
     
