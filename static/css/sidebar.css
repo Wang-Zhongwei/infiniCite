@@ -174,6 +174,7 @@ span {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .function-icon-container:hover {
@@ -411,4 +412,14 @@ span {
   align-self: stretch;
   flex-shrink: 0;
   position: relative;
+}
+
+a.library-link {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 13px;
+  /* text-decoration: none; */
 }

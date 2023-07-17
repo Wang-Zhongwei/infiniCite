@@ -3,11 +3,14 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'paper/css/result-page.css'%}">
+<link rel="stylesheet" href="{%static 'paper/css/library-papers.css'%}">
 {% endblock %}
 
 {% block content %}
+<!-- add manage share button -->
+<h1> <i class="bi bi-folder-fill icon large"></i> {{data.name}}</h1>
 <div class="results">
-  {% for paper in papers.data %}
+  {% for paper in data.papers %}
   <div class="paper" style="display: flex; justify-content: space-between;" paper-id="{{ paper.paperId }}">
     <div class="paper-left">
       <h2>
@@ -22,7 +25,6 @@
       </div>
       <div class="publication-venue">
         <a href="{{paper.publicationVenue.url}}">
-
           {{ paper.publicationVenue.name }}
         </a>
       </div>
@@ -41,11 +43,22 @@
           {% endfor %}
         </div>
         {% if user.is_authenticated %}
-        <div class="function-icon-container">
-          <i class="bi bi-bookmark-plus" onclick="savePaper('{{ paper.paperId }}')"></i>
+        <div class="paper-options-container-2">
+          <div class="function-icon-container" title="Manage Paper">
+            <input type="hidden" value="{{paper.paperId}}" id="manage-paper-{{paper.paperId}}">
+            {{ paper.libraries | json_script:"librariesData" }}
+            <i class="bi bi-folder-symlink-fill icon" onclick="managePaperClickHandler(`{{paper.paperId}}`)"></i>
+          </div>
+          <div class="function-icon-container" title="Remove from library">
+            <i class="bi bi-bookmark-dash-fill icon" onclick="removePaper('{{ paper.paperId }}', `{{ data.id }}`)"></i>
+          </div>
         </div>
         {% endif %}
+
+        {% if data.abc %}
+        {% endif %}
       </div>
+
       <p class="abstract">
         {{ paper.abstract }}
       </p>
@@ -96,9 +109,9 @@
     </div>
   </div>
   {% empty %}
-  <!--TODO: something wrong placeholder -->
-  <!-- TODO: 404 error page, 500 error page -->
-  <p>No papers found.</p>
+  <h2 class="empty-result">Your library {{data.name}} is empty!</h2>
+  <!-- svg for 404 page on dribble -->
+  <!-- Recommended paper based on collection name -->
   {% endfor %}
   {% include 'pagination.html' with page=page query=query total_pages=total_pages searchPaper=searchPaper%}
 </div>

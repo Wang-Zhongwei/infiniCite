@@ -201,6 +201,14 @@
   margin-bottom: 0.5em;
 }
 
+.paper-options-container-2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
 .local-network {
   display: flex;
   flex-direction: row;

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.views.generic import TemplateView
 
 # Create your views here.
 from .forms import SearchForm
@@ -14,6 +16,7 @@ from .models import Library, Paper
 from .serializers import LibrarySerializer, PaperSerializer
 from user.serializers import AccountSerializer
 from .exceptions import *
+from rest_framework.decorators import action
 
 BASE_URL = 'http://api.semanticscholar.org/graph/v1'
 RECORDS_PER_PAGE = 10
@@ -142,14 +145,30 @@ class LibraryViewSet(viewsets.ModelViewSet):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 class LibraryPaperViewSet(viewsets.ViewSet):
-    library_queryset = Library.objects.all()
     queryset = Paper.objects.all()
+    paper_serializer_class = PaperSerializer
+    
+    library_queryset = Library.objects.all()
     serializer_class = LibrarySerializer
     paper_query_params = {
         'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
     }
 
+    # TODO: move these two methods to a View class because ViewSet is for CRUD API 
+    def list(self, request, *args, **kwargs):
+        library = get_object_or_404(Library, pk=kwargs['library_pk'])
+        serializer = self.serializer_class(library)
+        return render(request, 'paper/library-papers.html', {'data': serializer.data})
+
+    @action(detail=False, methods=['get'])
+    def all_papers(self, request, *args, **kwargs):
+        account = request.user.account
+        papers = self.queryset.filter(libraries__owner=account)
+        serializer = self.paper_serializer_class(papers, many=True)
+        return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})
+    
     def create(self, request, *args, **kwargs):
         papers = [self.get_paper(id) for id in request.data['ids']]
         library = get_object_or_404(Library, pk=kwargs['library_pk'])
@@ -205,7 +224,8 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             embedding=paper_data['embedding']['vector'] if paper_data['embedding'] is not None else [],
             tldr=paper_data['tldr']['text'] if paper_data['tldr'] is not None else '',
             publicationDate=paper_data['publicationDate'],
-            # TODO: handle authors saving in the database
+            publicationTypes=paper_data['publicationTypes'],
+            # TODO: handle authors and publicationVenue saving in the database
         )
         if save:
             paper.save()

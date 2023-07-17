@@ -675,6 +675,22 @@
         "documentation": {}
     },
     {
+        "label": "View",
+        "importPath": "django.views",
+        "description": "django.views",
+        "isExtraImport": true,
+        "detail": "django.views",
+        "documentation": {}
+    },
+    {
+        "label": "TemplateView",
+        "importPath": "django.views.generic",
+        "description": "django.views.generic",
+        "isExtraImport": true,
+        "detail": "django.views.generic",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -737,6 +753,14 @@
         "description": "user.serializers",
         "isExtraImport": true,
         "detail": "user.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "action",
+        "importPath": "rest_framework.decorators",
+        "description": "rest_framework.decorators",
+        "isExtraImport": true,
+        "detail": "rest_framework.decorators",
         "documentation": {}
     },
     {
@@ -1211,11 +1235,20 @@
         "documentation": {}
     },
     {
+        "label": "PaperLibrarySerializer",
+        "kind": 6,
+        "importPath": "paper.serializers",
+        "description": "paper.serializers",
+        "peekOfCode": "class PaperLibrarySerializer(serializers.ModelSerializer):\n    class Meta: \n        model = Library \n        fields = ['id', 'name']\nclass PaperSerializer(serializers.ModelSerializer):\n    libraries = PaperLibrarySerializer(many=True, read_only=True)\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',",
+        "detail": "paper.serializers",
+        "documentation": {}
+    },
+    {
         "label": "PaperSerializer",
         "kind": 6,
         "importPath": "paper.serializers",
         "description": "paper.serializers",
-        "peekOfCode": "class PaperSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',\n                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes']\nclass LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:\n        model = Library",
+        "peekOfCode": "class PaperSerializer(serializers.ModelSerializer):\n    libraries = PaperLibrarySerializer(many=True, read_only=True)\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',\n                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes', 'libraries']\nclass LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:",
         "detail": "paper.serializers",
         "documentation": {}
     },
@@ -1242,7 +1275,7 @@
         "kind": 5,
         "importPath": "paper.urls",
         "description": "paper.urls",
-        "peekOfCode": "app_name = 'paper'\nrouter = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),",
+        "peekOfCode": "app_name = 'paper'\nrouter = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\n# TODO: add unshare endpoint\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),",
         "detail": "paper.urls",
         "documentation": {}
     },
@@ -1251,7 +1284,7 @@
         "kind": 5,
         "importPath": "paper.urls",
         "description": "paper.urls",
-        "peekOfCode": "router = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),\n    path('api/libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'post': 'create'}), name='library-paper-add'),",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\n# TODO: add unshare endpoint\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),",
         "detail": "paper.urls",
         "documentation": {}
     },
@@ -1260,7 +1293,7 @@
         "kind": 5,
         "importPath": "paper.urls",
         "description": "paper.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),\n    path('api/libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'post': 'create'}), name='library-paper-add'),\n    path('api/libraries/<int:library_pk>/papers/<str:pk>/', LibraryPaperViewSet.as_view({'delete': 'destroy'}), name='library-paper-remove'),\n    path('api/libraries/<int:library_pk>/papers/<str:pk>/move/', LibraryPaperViewSet.as_view({'post': 'move'}), name='library-paper-move'),",
+        "peekOfCode": "urlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/', include(router.urls)),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),\n    path('libraries/papers', LibraryPaperViewSet.as_view({'get': 'all_papers'}), name='library-all-papers'),\n    path('libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'get': 'list'}), name='library-paper-list'),\n    path('api/libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'post': 'create'}), name='library-paper-add'),",
         "detail": "paper.urls",
         "documentation": {}
     },
@@ -1278,7 +1311,7 @@
         "kind": 6,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "class LibraryPaperViewSet(viewsets.ViewSet):\n    library_queryset = Library.objects.all()\n    queryset = Paper.objects.all()\n    serializer_class = LibrarySerializer\n    paper_query_params = {\n        'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',\n    }\n    def create(self, request, *args, **kwargs):\n        papers = [self.get_paper(id) for id in request.data['ids']]\n        library = get_object_or_404(Library, pk=kwargs['library_pk'])",
+        "peekOfCode": "class LibraryPaperViewSet(viewsets.ViewSet):\n    queryset = Paper.objects.all()\n    paper_serializer_class = PaperSerializer\n    library_queryset = Library.objects.all()\n    serializer_class = LibrarySerializer\n    paper_query_params = {\n        'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',\n    }\n    # TODO: move these two methods to a View class because ViewSet is for CRUD API \n    def list(self, request, *args, **kwargs):",
         "detail": "paper.views",
         "documentation": {}
     },
