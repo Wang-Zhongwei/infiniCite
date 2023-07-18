@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.views.generic import TemplateView
 
 # Create your views here.
 from .forms import SearchForm
@@ -14,6 +16,7 @@ from .models import Library, Paper
 from .serializers import LibrarySerializer, PaperSerializer
 from user.serializers import AccountSerializer
 from .exceptions import *
+from rest_framework.decorators import action
 
 BASE_URL = 'http://api.semanticscholar.org/graph/v1'
 RECORDS_PER_PAGE = 10
@@ -97,6 +100,30 @@ def autocomplete(request):
     else:
         return redirect('index')  # redirect to index view
 
+VALID_ORDER_BYS = ['title', 'publicationDate', 'citationCount', 'referenceCount']
+# TODO: test order by
+class LibraryPaperView(View):
+    def get(self, request, *args, **kwargs):
+        library = get_object_or_404(Library, pk=kwargs['library_pk'])
+        order_by = request.GET.get('order_by', 'title')  # default to ordering by title
+        if order_by not in VALID_ORDER_BYS:
+            order_by = 'title'
+
+        papers = library.papers.order_by(order_by)
+        serializer = PaperSerializer(papers, many=True)
+        return render(request, 'paper/library-papers.html', {'data': {'name': library.name, 'papers': serializer.data}})
+
+class AllPapersView(View):
+    def get(self, request, *args, **kwargs):
+        account = request.user.account
+        order_by = request.GET.get('order_by', 'title')  # default to ordering by title
+        if order_by not in VALID_ORDER_BYS:
+            order_by = 'title'
+
+        papers = Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)
+        serializer = PaperSerializer(papers, many=True)
+        return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})
+
 # TODO: add login required
 class LibraryViewSet(viewsets.ModelViewSet):
     queryset = Library.objects.all()
@@ -142,14 +169,17 @@ class LibraryViewSet(viewsets.ModelViewSet):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 class LibraryPaperViewSet(viewsets.ViewSet):
-    library_queryset = Library.objects.all()
     queryset = Paper.objects.all()
+    paper_serializer_class = PaperSerializer
+    
+    library_queryset = Library.objects.all()
     serializer_class = LibrarySerializer
     paper_query_params = {
         'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',
     }
-
+    
     def create(self, request, *args, **kwargs):
         papers = [self.get_paper(id) for id in request.data['ids']]
         library = get_object_or_404(Library, pk=kwargs['library_pk'])
@@ -173,19 +203,31 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             
         return paper
 
-    # def add_to_libraries(self, request, *args, **kwargs):
-    #     paperId = kwargs['paper_pk']
-    #     paper = self.get_paper(paperId)
-    #     if paper is None:
-    #         return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
+    def add_to_libraries(self, request, *args, **kwargs):
+        paperId = kwargs['paper_pk']
+        paper = self.get_paper(paperId)
+        if paper is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
 
-    #     library_ids = request.data.get('ids', [])
-    #     paper = self.get_object()
-    #     for library_id in library_ids:
-    #         library = self.library_queryset.get(pk=library_id)
-    #         library.papers.add(paper)
+        library_ids = request.data.get('libraryIds', [])
+        for library_id in library_ids:
+            library = self.library_queryset.get(pk=library_id)
+            library.papers.add(paper)
 
-    #     return Response({'status': 'success'})
+        return Response({'status': 'success'})
+    
+    def remove_from_libraries(self, request, *args, **kwargs):
+        paperId = kwargs['paper_pk']
+        paper = self.get_paper(paperId)
+        if paper is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': 'Paper not found'})
+        
+        library_ids = request.data.get('libraryIds', [])
+        for library_id in library_ids:
+            library = self.library_queryset.get(pk=library_id)
+            library.papers.remove(paper)
+
+        return Response({'status': 'success'})
     
     def get_paper_thru_api(self, id, save=True):
         response = requests.get(f'{BASE_URL}/paper/{id}', params=self.paper_query_params)
@@ -206,7 +248,9 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             embedding=paper_data['embedding']['vector'] if paper_data['embedding'] is not None else [],
             tldr=paper_data['tldr']['text'] if paper_data['tldr'] is not None else '',
             publicationDate=paper_data['publicationDate'],
-            # TODO: handle authors saving in the database
+            publicationTypes=paper_data['publicationTypes'],
+            fieldsOfStudy=paper_data['fieldsOfStudy'],
+            # TODO: handle authors and publicationVenue saving in the database
         )
         if save:
             paper.save()
