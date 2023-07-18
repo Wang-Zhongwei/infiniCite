@@ -79,19 +79,28 @@
       <div>
         <div class="divider"></div>
         <div class="local-network">Local Network Visualization</div>
-        <form action="{% url 'paper:graph' %}" class="button">
+        <script>
+          function createGraph(id){
+            const type = document.querySelector('input[name=graphType-' + id + ']:checked').value;
+            alert(id);
+            document.getElementById('graph-section-' + id).innerHTML = '<iframe src=\'http://127.0.0.1:8000/graph/?paperId=' + id + '&graphType=' + type + '\'width=\'100%\'></iframe>';
+            
+          }
+        </script>
+        <form id="form-{{ paper.paperId }}" action="javascript:createGraph('{{ paper.paperId }}');" class="button">
           <input type="hidden" name="paperId" value="{{ paper.paperId }}">
           <div>
-            <input type="radio" id="citation-graph" name="graphType" value="citations" checked>
+            <input type="radio" id="citation-graph" name="graphType-{{ paper.paperId }}" value="citations" checked>
             <label for="citation-graph" style="font-size: smaller;">Citation Graph</label>
           </div>
           <div>
-            <input type="radio" id="reference-graph" name="graphType" value="references">
+            <input type="radio" id="reference-graph" name="graphType-{{ paper.paperId }}" value="references">
             <label for="reference-graph" style="font-size: smaller;">Reference Graph</label>
           </div>
           <div class="view-button-container">
             <button class="view-button" type="submit">View</button>
           </div>
+          <div id="graph-section-{{ paper.paperId }}" name="graph-section"></div>
         </form>
       </div>
     </div>
