@@ -81,7 +81,6 @@
         <script>
           function createGraph(id){
             const type = document.querySelector('input[name=graphType-' + id + ']:checked').value;
-            alert(id);
             document.getElementById('graph-section-' + id).innerHTML = '<iframe src=\'http://127.0.0.1:8000/graph/?paperId=' + id + '&graphType=' + type + '\'width=\'100%\'></iframe>';
             
           }
