@@ -49,6 +49,7 @@
       <p class="abstract">
         {{ paper.abstract }}
       </p>
+      <div id="graph-section-{{ paper.paperId }}" name="graph-section"></div>
     </div>
     <div style="clear: both;"></div>
 
@@ -81,7 +82,7 @@
         <script>
           function createGraph(id){
             const type = document.querySelector('input[name=graphType-' + id + ']:checked').value;
-            document.getElementById('graph-section-' + id).innerHTML = '<iframe src=\'http://127.0.0.1:8000/graph/?paperId=' + id + '&graphType=' + type + '\'width=\'100%\'></iframe>';
+            document.getElementById('graph-section-' + id).innerHTML = '<iframe src=\'http://127.0.0.1:8000/graph/?paperId=' + id + '&graphType=' + type + '\'width=\'100%\' height=\'400px\'></iframe>';
             
           }
         </script>
@@ -98,7 +99,7 @@
           <div class="view-button-container">
             <button class="btn btn-primary view-button" type="submit">View</button>
           </div>
-          <div id="graph-section-{{ paper.paperId }}" name="graph-section"></div>
+          
         </form>
       </div>
     </div>
