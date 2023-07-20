@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'user/css/index.css'%}">
+  <title>InfiniCite Login</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>InfiniCite</h1>
+    </div>
+    <div class="login-container">
+      <h2>Login</h2>
+      <p>Please use the following form to log in. If you don't have an account, <a href="{% url 'user:register' %}">register here</a>.</p>
+      <p>Invalid login information. Please try again.</p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="submit-button">
+          <input type="submit" value="Log in">
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

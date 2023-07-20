@@ -1,6 +1,8 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'user'
 urlpatterns = [
@@ -14,4 +16,7 @@ urlpatterns = [
     path('reset/complete', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     # TODO: change url path to `api/user/search`
     path('api/search/', views.AccountViewSet.as_view({'post': 'search'}), name='search'),
+    path('edit/', views.edit, name='edit'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
