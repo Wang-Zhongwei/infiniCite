@@ -3,4 +3,5 @@ from django.contrib.auth.models import User
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    affiliation = models.CharField(max_length=255, blank=True, default='')
+    affiliation = models.CharField(max_length=255, blank=True, default='', null=True)
+    picture = models.ImageField(null=True, blank=True, upload_to='media')

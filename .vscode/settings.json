@@ -1,27 +1,21 @@
 {
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.python"
-    },
-    "python.formatting.provider": "none",
-    "python.testing.unittestArgs": [
-        "-v",
-        "-s",
-        "./paper",
-        "-p",
-        "test*.py"
-    ],
-    "python.testing.pytestEnabled": false,
-    "python.testing.unittestEnabled": true,
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "server": "infinitecite.covgjpmlgmrq.us-east-1.rds.amazonaws.com",
-            "port": 5432,
-            "askForPassword": true,
-            "driver": "PostgreSQL",
-            "name": "connection0",
-            "database": "infinicite",
-            "username": "jonathan"
-        }
-    ],
+  "python.testing.unittestArgs": ["-v", "-s", "./paper", "-p", "test*.py"],
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "infinitecite.covgjpmlgmrq.us-east-1.rds.amazonaws.com",
+      "port": 5432,
+      "askForPassword": true,
+      "driver": "PostgreSQL",
+      "name": "connection0",
+      "database": "testdb",
+      "username": "jonathan"
+    }
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none"
 }

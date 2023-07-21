@@ -41,86 +41,6 @@
         "documentation": {}
     },
     {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -273,7 +193,7 @@
         "documentation": {}
     },
     {
-        "label": "viewsets",
+        "label": "status",
         "importPath": "rest_framework",
         "description": "rest_framework",
         "isExtraImport": true,
@@ -281,7 +201,7 @@
         "documentation": {}
     },
     {
-        "label": "status",
+        "label": "viewsets",
         "importPath": "rest_framework",
         "description": "rest_framework",
         "isExtraImport": true,
@@ -353,6 +273,104 @@
         "documentation": {}
     },
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenue",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenue",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenue",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "importPath": "author.models",
+        "description": "author.models",
+        "isExtraImport": true,
+        "detail": "author.models",
+        "documentation": {}
+    },
+    {
+        "label": "SemanticAPIException",
+        "importPath": "paper.exceptions",
+        "description": "paper.exceptions",
+        "isExtraImport": true,
+        "detail": "paper.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "SemanticAPIException",
+        "importPath": "paper.exceptions",
+        "description": "paper.exceptions",
+        "isExtraImport": true,
+        "detail": "paper.exceptions",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -370,22 +388,6 @@
     },
     {
         "label": "render",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
-        "isExtraImport": true,
-        "detail": "django.shortcuts",
-        "documentation": {}
-    },
-    {
-        "label": "render",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
-        "isExtraImport": true,
-        "detail": "django.shortcuts",
-        "documentation": {}
-    },
-    {
-        "label": "redirect",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -401,7 +403,7 @@
         "documentation": {}
     },
     {
-        "label": "render",
+        "label": "redirect",
         "importPath": "django.shortcuts",
         "description": "django.shortcuts",
         "isExtraImport": true,
@@ -417,12 +419,19 @@
         "documentation": {}
     },
     {
-        "label": "os",
-        "kind": 6,
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
         "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
         "documentation": {}
     },
     {
@@ -539,6 +548,30 @@
         "documentation": {}
     },
     {
+        "label": "Document",
+        "importPath": "django_elasticsearch_dsl",
+        "description": "django_elasticsearch_dsl",
+        "isExtraImport": true,
+        "detail": "django_elasticsearch_dsl",
+        "documentation": {}
+    },
+    {
+        "label": "fields",
+        "importPath": "django_elasticsearch_dsl",
+        "description": "django_elasticsearch_dsl",
+        "isExtraImport": true,
+        "detail": "django_elasticsearch_dsl",
+        "documentation": {}
+    },
+    {
+        "label": "registry",
+        "importPath": "django_elasticsearch_dsl.registries",
+        "description": "django_elasticsearch_dsl.registries",
+        "isExtraImport": true,
+        "detail": "django_elasticsearch_dsl.registries",
+        "documentation": {}
+    },
+    {
         "label": "Any",
         "importPath": "typing",
         "description": "typing",
@@ -603,30 +636,6 @@
         "documentation": {}
     },
     {
-        "label": "Author",
-        "importPath": "author.models",
-        "description": "author.models",
-        "isExtraImport": true,
-        "detail": "author.models",
-        "documentation": {}
-    },
-    {
-        "label": "PublicationVenue",
-        "importPath": "author.models",
-        "description": "author.models",
-        "isExtraImport": true,
-        "detail": "author.models",
-        "documentation": {}
-    },
-    {
-        "label": "Author",
-        "importPath": "author.models",
-        "description": "author.models",
-        "isExtraImport": true,
-        "detail": "author.models",
-        "documentation": {}
-    },
-    {
         "label": "Account",
         "importPath": "user.models",
         "description": "user.models",
@@ -648,6 +657,70 @@
         "description": "user.models",
         "isExtraImport": true,
         "detail": "user.models",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleAuthorSerializer",
+        "importPath": "author.serializers",
+        "description": "author.serializers",
+        "isExtraImport": true,
+        "detail": "author.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "SimplePublicationVenueSerializer",
+        "importPath": "author.serializers",
+        "description": "author.serializers",
+        "isExtraImport": true,
+        "detail": "author.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "AuthorService",
+        "importPath": "author.services",
+        "description": "author.services",
+        "isExtraImport": true,
+        "detail": "author.services",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenueService",
+        "importPath": "author.services",
+        "description": "author.services",
+        "isExtraImport": true,
+        "detail": "author.services",
+        "documentation": {}
+    },
+    {
+        "label": "AuthorService",
+        "importPath": "author.services",
+        "description": "author.services",
+        "isExtraImport": true,
+        "detail": "author.services",
+        "documentation": {}
+    },
+    {
+        "label": "Paper",
+        "importPath": "paper.models",
+        "description": "paper.models",
+        "isExtraImport": true,
+        "detail": "paper.models",
+        "documentation": {}
+    },
+    {
+        "label": "Paper",
+        "importPath": "paper.models",
+        "description": "paper.models",
+        "isExtraImport": true,
+        "detail": "paper.models",
+        "documentation": {}
+    },
+    {
+        "label": "Library",
+        "importPath": "paper.models",
+        "description": "paper.models",
+        "isExtraImport": true,
+        "detail": "paper.models",
         "documentation": {}
     },
     {
@@ -664,39 +737,6 @@
         "description": "rest_framework.routers",
         "isExtraImport": true,
         "detail": "rest_framework.routers",
-        "documentation": {}
-    },
-    {
-        "label": "login_required",
-        "importPath": "django.contrib.auth.decorators",
-        "description": "django.contrib.auth.decorators",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.decorators",
-        "documentation": {}
-    },
-    {
-        "label": "View",
-        "importPath": "django.views",
-        "description": "django.views",
-        "isExtraImport": true,
-        "detail": "django.views",
-        "documentation": {}
-    },
-    {
-        "label": "TemplateView",
-        "importPath": "django.views.generic",
-        "description": "django.views.generic",
-        "isExtraImport": true,
-        "detail": "django.views.generic",
-        "documentation": {}
-    },
-    {
-        "label": "requests",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "requests",
-        "description": "requests",
-        "detail": "requests",
         "documentation": {}
     },
     {
@@ -724,6 +764,14 @@
         "documentation": {}
     },
     {
+        "label": "View",
+        "importPath": "django.views",
+        "description": "django.views",
+        "isExtraImport": true,
+        "detail": "django.views",
+        "documentation": {}
+    },
+    {
         "label": "Response",
         "importPath": "rest_framework.response",
         "description": "rest_framework.response",
@@ -732,35 +780,11 @@
         "documentation": {}
     },
     {
-        "label": "AccountSerializer",
-        "importPath": "user.serializers",
-        "description": "user.serializers",
+        "label": "PaperService",
+        "importPath": "paper.services",
+        "description": "paper.services",
         "isExtraImport": true,
-        "detail": "user.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "UserSerializer",
-        "importPath": "user.serializers",
-        "description": "user.serializers",
-        "isExtraImport": true,
-        "detail": "user.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "AccountSerializer",
-        "importPath": "user.serializers",
-        "description": "user.serializers",
-        "isExtraImport": true,
-        "detail": "user.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "action",
-        "importPath": "rest_framework.decorators",
-        "description": "rest_framework.decorators",
-        "isExtraImport": true,
-        "detail": "rest_framework.decorators",
+        "detail": "paper.services",
         "documentation": {}
     },
     {
@@ -796,19 +820,19 @@
         "documentation": {}
     },
     {
-        "label": "Paper",
-        "importPath": "paper.models",
-        "description": "paper.models",
+        "label": "UserSerializer",
+        "importPath": "user.serializers",
+        "description": "user.serializers",
         "isExtraImport": true,
-        "detail": "paper.models",
+        "detail": "user.serializers",
         "documentation": {}
     },
     {
-        "label": "Library",
-        "importPath": "paper.models",
-        "description": "paper.models",
+        "label": "AccountSerializer",
+        "importPath": "user.serializers",
+        "description": "user.serializers",
         "isExtraImport": true,
-        "detail": "paper.models",
+        "detail": "user.serializers",
         "documentation": {}
     },
     {
@@ -834,26 +858,8 @@
         "kind": 6,
         "importPath": "author.migrations.0001_initial",
         "description": "author.migrations.0001_initial",
-        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Author',\n            fields=[\n                ('authorId', models.CharField(max_length=255, primary_key=True, serialize=False)),\n                ('externalIds', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, size=None)),",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = []\n    operations = [\n        migrations.CreateModel(\n            name=\"Author\",\n            fields=[\n                (\n                    \"authorId\",\n                    models.CharField(max_length=255, primary_key=True, serialize=False),",
         "detail": "author.migrations.0001_initial",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "author.migrations.0002_alter_author_affiliations_alter_author_externalids",
-        "description": "author.migrations.0002_alter_author_affiliations_alter_author_externalids",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('author', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='author',\n            name='affiliations',\n            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, default=list, size=None),\n        ),",
-        "detail": "author.migrations.0002_alter_author_affiliations_alter_author_externalids",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "author.migrations.0003_publicationvenue",
-        "description": "author.migrations.0003_publicationvenue",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('author', '0002_alter_author_affiliations_alter_author_externalids'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='PublicationVenue',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('name', models.CharField(max_length=255)),",
-        "detail": "author.migrations.0003_publicationvenue",
         "documentation": {}
     },
     {
@@ -870,7 +876,7 @@
         "kind": 6,
         "importPath": "author.models",
         "description": "author.models",
-        "peekOfCode": "class Author(models.Model):\n    authorId = models.CharField(max_length=255, primary_key=True)\n    externalIds = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    name= models.CharField(max_length=255)\n    affiliations = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    paperCount = models.IntegerField()\n    citationCount = models.IntegerField()\n    hIndex = models.IntegerField()\nclass PublicationVenue(models.Model):\n    name = models.CharField(max_length=255)",
+        "peekOfCode": "class Author(models.Model):\n    authorId = models.CharField(max_length=255, primary_key=True)\n    externalIds = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    name = models.CharField(max_length=255)\n    affiliations = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    paperCount = models.IntegerField(blank=True, null=True)\n    citationCount = models.IntegerField(blank=True, null=True)\n    hIndex = models.IntegerField(blank=True, null=True)\nclass PublicationVenue(models.Model):\n    id = models.CharField(max_length=255, primary_key=True)",
         "detail": "author.models",
         "documentation": {}
     },
@@ -879,7 +885,7 @@
         "kind": 6,
         "importPath": "author.models",
         "description": "author.models",
-        "peekOfCode": "class PublicationVenue(models.Model):\n    name = models.CharField(max_length=255)\n    type = models.CharField(max_length=255)\n    url = models.URLField(blank=True)\n    alternate_names = ArrayField(models.CharField(max_length=255), blank=True, default=list)",
+        "peekOfCode": "class PublicationVenue(models.Model):\n    id = models.CharField(max_length=255, primary_key=True)\n    name = models.CharField(max_length=255)\n    type = models.CharField(max_length=255, null=True)\n    url = models.URLField(blank=True, null=True)\n    alternate_names = ArrayField(models.CharField(max_length=255), blank=True, default=list)",
         "detail": "author.models",
         "documentation": {}
     },
@@ -888,8 +894,53 @@
         "kind": 6,
         "importPath": "author.serializers",
         "description": "author.serializers",
-        "peekOfCode": "class AuthorSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Author\n        fields = ['authorId', 'externalIds', 'name', 'affiliations', \n                  'paperCount', 'citationCount', 'hIndex']",
+        "peekOfCode": "class AuthorSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Author\n        fields = [\n            \"authorId\",\n            \"externalIds\",\n            \"name\",\n            \"affiliations\",\n            \"paperCount\",\n            \"citationCount\",",
         "detail": "author.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleAuthorSerializer",
+        "kind": 6,
+        "importPath": "author.serializers",
+        "description": "author.serializers",
+        "peekOfCode": "class SimpleAuthorSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Author\n        fields = [\"authorId\", \"name\"]\nclass PublicationVenueSerialzier(serializers.ModelSerializer):\n    class Meta:\n        model = PublicationVenue\n        fields = [\"id\", \"name\", \"type\", \"url\", \"alternate_names\"]\nclass SimplePublicationVenueSerializer(serializers.ModelSerializer):\n    class Meta:",
+        "detail": "author.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenueSerialzier",
+        "kind": 6,
+        "importPath": "author.serializers",
+        "description": "author.serializers",
+        "peekOfCode": "class PublicationVenueSerialzier(serializers.ModelSerializer):\n    class Meta:\n        model = PublicationVenue\n        fields = [\"id\", \"name\", \"type\", \"url\", \"alternate_names\"]\nclass SimplePublicationVenueSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = PublicationVenue\n        fields = [\"id\", \"name\", \"url\"]",
+        "detail": "author.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "SimplePublicationVenueSerializer",
+        "kind": 6,
+        "importPath": "author.serializers",
+        "description": "author.serializers",
+        "peekOfCode": "class SimplePublicationVenueSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = PublicationVenue\n        fields = [\"id\", \"name\", \"url\"]",
+        "detail": "author.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "AuthorService",
+        "kind": 6,
+        "importPath": "author.services",
+        "description": "author.services",
+        "peekOfCode": "class AuthorService:\n    BASE_URL = \"http://api.semanticscholar.org/graph/v1/author\"\n    queryset = Author.objects.all()\n    FULL_AUTHOR_FIELDS = \"authorId,name,affiliations,paperCount,citationCount,hIndex\"\n    BASIC_AUTHOR_FIELDS = \"authorId,name\"\n    RECORDS_PER_PAGE = 15\n    def get_author_or_create(\n        self, author_data, should_save=True, is_simple_author=True\n    ):\n        if is_simple_author:",
+        "detail": "author.services",
+        "documentation": {}
+    },
+    {
+        "label": "PublicationVenueService",
+        "kind": 6,
+        "importPath": "author.services",
+        "description": "author.services",
+        "peekOfCode": "class PublicationVenueService:\n    queryset = PublicationVenue.objects.all()\n    def get_publicationVenue_or_create(self, data):\n        return self.queryset.get_or_create(\n            id=data[\"id\"],\n            name=data[\"name\"],\n            type=data.get(\"type\", None),\n            alternate_names=data.get(\"alternate_names\", None),\n            url=data.get(\"url\", None),\n        )[0]",
+        "detail": "author.services",
         "documentation": {}
     },
     {
@@ -897,7 +948,7 @@
         "kind": 5,
         "importPath": "config.db_config",
         "description": "config.db_config",
-        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql',\n        'NAME': 'infinicite',\n        'USER': 'jonathan',\n        'PASSWORD': 'Wzw314156',\n        'HOST': 'infinitecite.covgjpmlgmrq.us-east-1.rds.amazonaws.com',\n        'PORT': '5432',\n    }\n}",
+        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql',\n        'NAME': 'testdb',\n        'USER': 'jonathan',\n        'PASSWORD': 'Wzw314156',\n        'HOST': 'infinitecite.covgjpmlgmrq.us-east-1.rds.amazonaws.com',\n        'PORT': '5432',\n    }\n}",
         "detail": "config.db_config",
         "documentation": {}
     },
@@ -915,7 +966,7 @@
         "kind": 5,
         "importPath": "config.elastic_config",
         "description": "config.elastic_config",
-        "peekOfCode": "ELASTICSEARCH_DSL = {\n    'default': {\n        'hosts': 'https://t1jf62gab6:pk88yw88m9@infinite-search-4352159232.us-east-1.bonsaisearch.net:443'  \n    },\n}",
+        "peekOfCode": "ELASTICSEARCH_DSL = {\n    'default': {\n        # 'hosts': 'https://t1jf62gab6:pk88yw88m9@infinite-search-4352159232.us-east-1.bonsaisearch.net:443'  # bonsai\n        'hosts': 'https://elastic:eQ0rzsXrkaNGwyQaIwPPeasI@my-deployment-ed3d76.es.us-central1.gcp.cloud.es.io' # elastic cloud\n    },\n}",
         "detail": "config.elastic_config",
         "documentation": {}
     },
@@ -926,6 +977,15 @@
         "description": "infiniCite.asgi",
         "peekOfCode": "application = get_asgi_application()",
         "detail": "infiniCite.asgi",
+        "documentation": {}
+    },
+    {
+        "label": "ELASTICSEARCH_DSL",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "ELASTICSEARCH_DSL = ELASTICSEARCH_DSL\n# Build paths inside the project like this: BASE_DIR / 'subdir'.\nBASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = SECRET_KEY\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = []",
+        "detail": "infiniCite.settings",
         "documentation": {}
     },
     {
@@ -960,7 +1020,7 @@
         "kind": 5,
         "importPath": "infiniCite.settings",
         "description": "infiniCite.settings",
-        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    # 'django_elasticsearch_dsl',",
+        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'django_elasticsearch_dsl',",
         "detail": "infiniCite.settings",
         "documentation": {}
     },
@@ -969,7 +1029,7 @@
         "kind": 5,
         "importPath": "infiniCite.settings",
         "description": "infiniCite.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    # 'django_elasticsearch_dsl',\n    'paper',\n    'user',",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'django_elasticsearch_dsl',\n    'paper',\n    'user',",
         "detail": "infiniCite.settings",
         "documentation": {}
     },
@@ -978,7 +1038,16 @@
         "kind": 5,
         "importPath": "infiniCite.settings",
         "description": "infiniCite.settings",
-        "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\nROOT_URLCONF = 'infiniCite.urls'",
+        "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\nX_FRAME_OPTIONS = \"SAMEORIGIN\"",
+        "detail": "infiniCite.settings",
+        "documentation": {}
+    },
+    {
+        "label": "X_FRAME_OPTIONS",
+        "kind": 5,
+        "importPath": "infiniCite.settings",
+        "description": "infiniCite.settings",
+        "peekOfCode": "X_FRAME_OPTIONS = \"SAMEORIGIN\"\nROOT_URLCONF = 'infiniCite.urls'\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [os.path.join(BASE_DIR, 'templates')],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',",
         "detail": "infiniCite.settings",
         "documentation": {}
     },
@@ -1140,35 +1209,8 @@
         "kind": 6,
         "importPath": "paper.migrations.0001_initial",
         "description": "paper.migrations.0001_initial",
-        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        ('author', '0001_initial'),\n        ('user', '0001_initial'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Paper',\n            fields=[",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        (\"user\", \"__first__\"),\n        (\"author\", \"__first__\"),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Paper\",\n            fields=[",
         "detail": "paper.migrations.0001_initial",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "paper.migrations.0002_alter_library_papers_alter_library_sharedwith_and_more",
-        "description": "paper.migrations.0002_alter_library_papers_alter_library_sharedwith_and_more",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('user', '0002_account_affiliation'),\n        ('paper', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='library',\n            name='papers',\n            field=models.ManyToManyField(blank=True, default=list, related_name='libraries', to='paper.paper'),",
-        "detail": "paper.migrations.0002_alter_library_papers_alter_library_sharedwith_and_more",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "paper.migrations.0003_paper_fieldsofstudy",
-        "description": "paper.migrations.0003_paper_fieldsofstudy",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('paper', '0002_alter_library_papers_alter_library_sharedwith_and_more'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='paper',\n            name='fieldsOfStudy',\n            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, default=list, size=None),\n        ),",
-        "detail": "paper.migrations.0003_paper_fieldsofstudy",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "paper.migrations.0004_paper_publicationtypes_paper_publicationvenue",
-        "description": "paper.migrations.0004_paper_publicationtypes_paper_publicationvenue",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('author', '0003_publicationvenue'),\n        ('paper', '0003_paper_fieldsofstudy'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='paper',\n            name='publicationTypes',\n            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=255), blank=True, default=list, size=None),",
-        "detail": "paper.migrations.0004_paper_publicationtypes_paper_publicationvenue",
         "documentation": {}
     },
     {
@@ -1199,6 +1241,15 @@
         "documentation": {}
     },
     {
+        "label": "PaperDocument",
+        "kind": 6,
+        "importPath": "paper.documents",
+        "description": "paper.documents",
+        "peekOfCode": "class PaperDocument(Document):\n    authors = fields.NestedField(properties={\n        'authorId': fields.TextField(),\n        'name': fields.TextField(),\n        'affiliations': fields.TextField(),\n        'paperCount': fields.IntegerField(),\n        'citationCount': fields.IntegerField(),\n        'hIndex': fields.IntegerField(),\n    })\n    publicationVenue = fields.NestedField(properties={",
+        "detail": "paper.documents",
+        "documentation": {}
+    },
+    {
         "label": "SemanticAPIException",
         "kind": 6,
         "importPath": "paper.exceptions",
@@ -1221,7 +1272,7 @@
         "kind": 6,
         "importPath": "paper.models",
         "description": "paper.models",
-        "peekOfCode": "class Paper(models.Model):\n    paperId= models.CharField(max_length=255, primary_key=True)\n    url = models.URLField(blank=True)\n    title = models.CharField(max_length=255)\n    abstract = models.TextField(blank=True, default='')\n    fieldsOfStudy = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    referenceCount = models.IntegerField()\n    citationCount = models.IntegerField()\n    openAccessPdf = models.URLField(blank=True, default='')\n    embedding = ArrayField(models.FloatField(), blank=True, default=list)",
+        "peekOfCode": "class Paper(models.Model):\n    paperId= models.CharField(max_length=255, primary_key=True)\n    url = models.URLField(blank=True, null=True)\n    title = models.CharField(max_length=255)\n    abstract = models.TextField(blank=True, null=True)\n    fieldsOfStudy = ArrayField(models.CharField(max_length=255), blank=True, default=list)\n    referenceCount = models.IntegerField(null=True)\n    citationCount = models.IntegerField(null=True)\n    openAccessPdf = models.URLField(blank=True, null=True)\n    embedding = ArrayField(models.FloatField(), blank=True, null=True)",
         "detail": "paper.models",
         "documentation": {}
     },
@@ -1235,11 +1286,11 @@
         "documentation": {}
     },
     {
-        "label": "PaperLibrarySerializer",
+        "label": "SimpleLibrarySerializer",
         "kind": 6,
         "importPath": "paper.serializers",
         "description": "paper.serializers",
-        "peekOfCode": "class PaperLibrarySerializer(serializers.ModelSerializer):\n    class Meta: \n        model = Library \n        fields = ['id', 'name']\nclass PaperSerializer(serializers.ModelSerializer):\n    libraries = PaperLibrarySerializer(many=True, read_only=True)\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',",
+        "peekOfCode": "class SimpleLibrarySerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Library\n        fields = [\"id\", \"name\"]\nclass PaperSerializer(serializers.ModelSerializer):\n    libraries = SimpleLibrarySerializer(many=True, read_only=True)\n    authors = SimpleAuthorSerializer(many=True, read_only=True)\n    publicationVenue = SimplePublicationVenueSerializer()\n    class Meta:\n        model = Paper",
         "detail": "paper.serializers",
         "documentation": {}
     },
@@ -1248,7 +1299,7 @@
         "kind": 6,
         "importPath": "paper.serializers",
         "description": "paper.serializers",
-        "peekOfCode": "class PaperSerializer(serializers.ModelSerializer):\n    libraries = PaperLibrarySerializer(many=True, read_only=True)\n    class Meta:\n        model = Paper\n        fields = ['paperId', 'url', 'title', 'abstract', 'referenceCount', \n                  'citationCount', 'openAccessPdf',\n                  'publicationDate', 'authors', 'publicationVenue', 'publicationTypes', 'fieldsOfStudy', 'libraries']\nclass LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:",
+        "peekOfCode": "class PaperSerializer(serializers.ModelSerializer):\n    libraries = SimpleLibrarySerializer(many=True, read_only=True)\n    authors = SimpleAuthorSerializer(many=True, read_only=True)\n    publicationVenue = SimplePublicationVenueSerializer()\n    class Meta:\n        model = Paper\n        fields = [\n            \"paperId\",\n            \"url\",\n            \"title\",",
         "detail": "paper.serializers",
         "documentation": {}
     },
@@ -1257,8 +1308,17 @@
         "kind": 6,
         "importPath": "paper.serializers",
         "description": "paper.serializers",
-        "peekOfCode": "class LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:\n        model = Library\n        fields = ['id', 'name', 'owner', 'papers', 'sharedWith']",
+        "peekOfCode": "class LibrarySerializer(serializers.ModelSerializer):\n    papers = PaperSerializer(many=True, read_only=True)\n    class Meta:\n        model = Library\n        fields = [\"id\", \"name\", \"owner\", \"papers\", \"sharedWith\"]",
         "detail": "paper.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "PaperService",
+        "kind": 6,
+        "importPath": "paper.services",
+        "description": "paper.services",
+        "peekOfCode": "class PaperService:\n    BASE_URL = \"http://api.semanticscholar.org/graph/v1/paper\"\n    queryset = Paper.objects.all()\n    RECORDS_PER_PAGE = 10\n    BASIC_PAPER_FIELDS = \"paperId,title,abstract,year,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors\"\n    FULL_PAPER_FIELDS = \"paperId,title,abstract,year,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate,references\"\n    author_service = AuthorService()\n    publicationVenueService = PublicationVenueService()\n    def get_paper_by_id(self, id):\n        try:",
+        "detail": "paper.services",
         "documentation": {}
     },
     {
@@ -1275,7 +1335,7 @@
         "kind": 5,
         "importPath": "paper.urls",
         "description": "paper.urls",
-        "peekOfCode": "app_name = 'paper'\nrouter = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\n# TODO: add unshare endpoint\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('libraries/papers', AllPapersView.as_view(), name='library-all-papers'),\n    path('libraries/<int:library_pk>/papers/', LibraryPaperView.as_view(), name='library-paper-list'),",
+        "peekOfCode": "app_name = \"paper\"\nrouter = DefaultRouter()\nrouter.register(r\"libraries\", LibraryViewSet)\n# TODO: add unshare endpoint\nurlpatterns = [\n    path(\"\", views.index, name=\"index\"),\n    path(\"search/\", views.search, name=\"search\"),\n    path(\"graph/\", views.graph, name=\"graph\"),\n    path(\"libraries/papers\", PaperView.as_view(), name=\"library-all-papers\"),\n    path(",
         "detail": "paper.urls",
         "documentation": {}
     },
@@ -1284,7 +1344,7 @@
         "kind": 5,
         "importPath": "paper.urls",
         "description": "paper.urls",
-        "peekOfCode": "router = DefaultRouter()\nrouter.register(r'libraries', LibraryViewSet)\n# TODO: add unshare endpoint\nurlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('libraries/papers', AllPapersView.as_view(), name='library-all-papers'),\n    path('libraries/<int:library_pk>/papers/', LibraryPaperView.as_view(), name='library-paper-list'),\n    path('api/', include(router.urls)),",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"libraries\", LibraryViewSet)\n# TODO: add unshare endpoint\nurlpatterns = [\n    path(\"\", views.index, name=\"index\"),\n    path(\"search/\", views.search, name=\"search\"),\n    path(\"graph/\", views.graph, name=\"graph\"),\n    path(\"libraries/papers\", PaperView.as_view(), name=\"library-all-papers\"),\n    path(\n        \"libraries/<int:library_pk>/papers/\",",
         "detail": "paper.urls",
         "documentation": {}
     },
@@ -1293,25 +1353,25 @@
         "kind": 5,
         "importPath": "paper.urls",
         "description": "paper.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', views.index, name='index'),\n    path('search/', views.search, name='search'),\n    path('graph/', views.graph, name='graph'),\n    path('libraries/papers', AllPapersView.as_view(), name='library-all-papers'),\n    path('libraries/<int:library_pk>/papers/', LibraryPaperView.as_view(), name='library-paper-list'),\n    path('api/', include(router.urls)),\n    path('api/autocomplete/', views.autocomplete, name='autocomplete'),\n    path('api/libraries/<int:library_pk>/share/', LibraryViewSet.as_view({'post': 'share'}), name='library-share'),\n    path('api/libraries/<int:library_pk>/papers/', LibraryPaperViewSet.as_view({'post': 'create'}), name='library-paper-add'),",
+        "peekOfCode": "urlpatterns = [\n    path(\"\", views.index, name=\"index\"),\n    path(\"search/\", views.search, name=\"search\"),\n    path(\"graph/\", views.graph, name=\"graph\"),\n    path(\"libraries/papers\", PaperView.as_view(), name=\"library-all-papers\"),\n    path(\n        \"libraries/<int:library_pk>/papers/\",\n        LibraryView.as_view(),\n        name=\"library-paper-list\",\n    ),",
         "detail": "paper.urls",
         "documentation": {}
     },
     {
-        "label": "LibraryPaperView",
+        "label": "LibraryView",
         "kind": 6,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "class LibraryPaperView(View):\n    def get(self, request, *args, **kwargs):\n        library = get_object_or_404(Library, pk=kwargs['library_pk'])\n        order_by = request.GET.get('order_by', 'title')  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = 'title'\n        papers = library.papers.order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)\n        return render(request, 'paper/library-papers.html', {'data': {'name': library.name, 'papers': serializer.data}})\nclass AllPapersView(View):",
+        "peekOfCode": "class LibraryView(View):\n    def get(self, request, *args, **kwargs):\n        library = get_object_or_404(Library, pk=kwargs[\"library_pk\"])\n        order_by = request.GET.get(\"order_by\", \"title\")  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = \"title\"\n        papers = library.papers.order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)\n        return render(\n            request,",
         "detail": "paper.views",
         "documentation": {}
     },
     {
-        "label": "AllPapersView",
+        "label": "PaperView",
         "kind": 6,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "class AllPapersView(View):\n    def get(self, request, *args, **kwargs):\n        account = request.user.account\n        order_by = request.GET.get('order_by', 'title')  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = 'title'\n        papers = Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)\n        return render(request, 'paper/library-papers.html', {'data': {'name': 'All papers', 'papers': serializer.data}})\n# TODO: add login required",
+        "peekOfCode": "class PaperView(View):\n    def get(self, request, *args, **kwargs):\n        account = request.user.account\n        order_by = request.GET.get(\"order_by\", \"title\")  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = \"title\"\n        papers = (\n            Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)\n        )\n        serializer = PaperSerializer(papers, many=True)",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1320,16 +1380,16 @@
         "kind": 6,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "class LibraryViewSet(viewsets.ModelViewSet):\n    queryset = Library.objects.all()\n    serializer_class = LibrarySerializer\n    account_queryset = Account.objects.all()\n    def create(self, request, *args, **kwargs):\n        userId = request.user.id\n        # TODO: create account when user is created\n        try: \n            owner = self.account_queryset.get(user_id=userId)\n        except:",
+        "peekOfCode": "class LibraryViewSet(viewsets.ModelViewSet):\n    queryset = Library.objects.all()\n    serializer_class = LibrarySerializer\n    account_queryset = Account.objects.all()\n    def create(self, request, *args, **kwargs):\n        userId = request.user.id\n        # TODO: create account when user is created\n        try:\n            owner = self.account_queryset.get(user_id=userId)\n        except:",
         "detail": "paper.views",
         "documentation": {}
     },
     {
-        "label": "LibraryPaperViewSet",
+        "label": "PaperViewSet",
         "kind": 6,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "class LibraryPaperViewSet(viewsets.ViewSet):\n    queryset = Paper.objects.all()\n    paper_serializer_class = PaperSerializer\n    library_queryset = Library.objects.all()\n    serializer_class = LibrarySerializer\n    paper_query_params = {\n        'fields': 'paperId,title,abstract,year,journal,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate',\n    }\n    def create(self, request, *args, **kwargs):\n        papers = [self.get_paper(id) for id in request.data['ids']]",
+        "peekOfCode": "class PaperViewSet(viewsets.ViewSet):\n    queryset = Paper.objects.all()\n    library_queryset = Library.objects.all()\n    serializer_class = LibrarySerializer\n    paper_service = PaperService()\n    def create(self, request, *args, **kwargs):\n        papers = [self.paper_service.get_paper_by_id(id) for id in request.data[\"ids\"]]\n        library = get_object_or_404(Library, pk=kwargs[\"library_pk\"])\n        for paper in papers:\n            if paper is None:",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1338,7 +1398,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def index(request):\n    form = SearchForm()\n    return render(request, 'paper/index.html', {'form': form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']\n            page = form.cleaned_data['page'] or 1\n            searchPaper = form.cleaned_data['searchPaper']",
+        "peekOfCode": "def index(request):\n    form = SearchForm()\n    return render(request, \"paper/index.html\", {\"form\": form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data[\"query\"]\n            page = form.cleaned_data[\"page\"] or 1\n            searchPaper = form.cleaned_data[\"searchPaper\"]",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1347,7 +1407,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']\n            page = form.cleaned_data['page'] or 1\n            searchPaper = form.cleaned_data['searchPaper']\n            return handle_search(request, query, page, searchPaper)\n        else:\n            return render(request, 'paper/index.html', {'form': form})",
+        "peekOfCode": "def search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data[\"query\"]\n            page = form.cleaned_data[\"page\"] or 1\n            searchPaper = form.cleaned_data[\"searchPaper\"]\n            return handle_search(request, query, page, searchPaper)\n        else:\n            return render(request, \"paper/index.html\", {\"form\": form})",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1356,7 +1416,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def handle_search(request, query, page, searchPaper):\n    if query:\n        if searchPaper:\n            return search_papers(request, query, page)\n        else:\n            return search_authors(request, query, page)\n    else:\n        return redirect('paper:index')\ndef search_papers(request, query, page):\n    params = {",
+        "peekOfCode": "def handle_search(request, query, page, searchPaper):\n    if query:\n        if searchPaper:\n            return search_papers(request, query, page)\n        else:\n            return search_authors(request, query, page)\n    else:\n        return redirect(\"paper:index\")\ndef search_papers(request, query, page=1):\n    data = paper_service.search_external_papers(query, page)",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1365,7 +1425,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def search_papers(request, query, page):\n    params = {\n        'query': query,\n        'limit': RECORDS_PER_PAGE,\n        'offset': (page - 1) * RECORDS_PER_PAGE,\n        'fields': 'paperId,title,abstract,year,publicationTypes,journal,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors'\n    }\n    response = requests.get(f'{BASE_URL}/paper/search', params=params)\n    data = response.json()\n    total = data.get('total', 0)",
+        "peekOfCode": "def search_papers(request, query, page=1):\n    data = paper_service.search_external_papers(query, page)\n    total = data.get(\"total\", 0)\n    total_pages = total // paper_service.RECORDS_PER_PAGE + 1\n    # Calculate the range of pages to show\n    start = max(1, page - 3)\n    end = min(total_pages, page + 3) + 1\n    pages_to_show = range(start, end)\n    return render(\n        request,",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1374,7 +1434,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def search_authors(request, query, page):\n    params = {\n        'query': query,\n        'limit': RECORDS_PER_PAGE,\n        'offset': (page - 1) * RECORDS_PER_PAGE,\n        'fields': 'authorId,name,affiliations,paperCount,citationCount,hIndex'\n    }\n    response = requests.get(f'{BASE_URL}/author/search', params=params)\n    data = response.json()\n    total = data.get('total', 0)",
+        "peekOfCode": "def search_authors(request, query, page):\n    data = author_service.search_external_authors(query, page)\n    total = data.get(\"total\", 0)\n    total_pages = total // author_service.RECORDS_PER_PAGE + 1\n    # Calculate the range of pages to show\n    start = max(1, page - 3)\n    end = min(total_pages, page + 3) + 1\n    pages_to_show = range(start, end)\n    return render(\n        request,",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1383,7 +1443,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def autocomplete(request):\n    query = request.GET.get('query', '')\n    print('query', query)\n    if query:\n        # Call the API with the search input\n        params = {\n            'query': query,\n        }\n        response = requests.get(f'{BASE_URL}/paper/autocomplete', params=params)\n        return JsonResponse(response.json(), safe=False)",
+        "peekOfCode": "def autocomplete(request):\n    query = request.GET.get('query')\n    if query:\n        # Call the API with the search input\n        return JsonResponse(paper_service.autocomplete(query), safe=False)\n    else:\n        return redirect(\"index\")  # redirect to index view\nVALID_ORDER_BYS = [\"title\", \"publicationDate\", \"citationCount\", \"referenceCount\"]\n# TODO: test order by\nclass LibraryView(View):",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1392,7 +1452,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def get_paper_info(paper_id, params={'fields': 'paperId,authors,year,title,citationCount'}):\n    return requests.get(f'{BASE_URL}/paper/{paper_id}/', params=params).json()\ndef get_paper_connections(paper_id, graph_type, params={'fields': 'paperId,intents'}):\n    return requests.get(f'{BASE_URL}/paper/{paper_id}/{graph_type}', params=params).json()['data']\ndef create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == 'citations':\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\":edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\":edge_type}\ndef graph(request):",
+        "peekOfCode": "def get_paper_info(\n    paper_id, params={\"fields\": \"paperId,authors,year,title,citationCount\"}\n):\n    return requests.get(f\"{BASE_URL}/paper/{paper_id}/\", params=params).json()\ndef get_paper_connections(paper_id, graph_type, params={\"fields\": \"paperId,intents\"}):\n    return requests.get(\n        f\"{BASE_URL}/paper/{paper_id}/{graph_type}\", params=params\n    ).json()[\"data\"]\ndef create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == \"citations\":",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1401,7 +1461,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def get_paper_connections(paper_id, graph_type, params={'fields': 'paperId,intents'}):\n    return requests.get(f'{BASE_URL}/paper/{paper_id}/{graph_type}', params=params).json()['data']\ndef create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == 'citations':\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\":edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\":edge_type}\ndef graph(request):\n    paper_id = request.GET.get('paperId', '')\n    graph_type = request.GET.get('graphType', 'citations')",
+        "peekOfCode": "def get_paper_connections(paper_id, graph_type, params={\"fields\": \"paperId,intents\"}):\n    return requests.get(\n        f\"{BASE_URL}/paper/{paper_id}/{graph_type}\", params=params\n    ).json()[\"data\"]\ndef create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == \"citations\":\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\": edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\": edge_type}\n# TODO: check if paper is in library, then show local graph using elasticsearch ",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1410,7 +1470,7 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == 'citations':\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\":edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\":edge_type}\ndef graph(request):\n    paper_id = request.GET.get('paperId', '')\n    graph_type = request.GET.get('graphType', 'citations')\n    if graph_type == 'citations':\n        nbr_name = 'citingPaper'",
+        "peekOfCode": "def create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):\n    if graph_type == \"citations\":\n        return {\"source\": high_deg_nbr, \"target\": low_deg_nbr, \"type\": edge_type}\n    else:\n        return {\"source\": low_deg_nbr, \"target\": high_deg_nbr, \"type\": edge_type}\n# TODO: check if paper is in library, then show local graph using elasticsearch \ndef graph(request):\n    paper_id = request.GET.get(\"paperId\", \"\")\n    graph_type = request.GET.get(\"graphType\", \"citations\")\n    if graph_type == \"citations\":",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1419,25 +1479,25 @@
         "kind": 2,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "def graph(request):\n    paper_id = request.GET.get('paperId', '')\n    graph_type = request.GET.get('graphType', 'citations')\n    if graph_type == 'citations':\n        nbr_name = 'citingPaper'\n    else:\n        nbr_name = 'citedPaper'\n    if not paper_id:\n        return redirect('index')\n    params = {'fields': 'paperId,authors,year,title,citationCount,isInfluential,intents'}",
+        "peekOfCode": "def graph(request):\n    paper_id = request.GET.get(\"paperId\", \"\")\n    graph_type = request.GET.get(\"graphType\", \"citations\")\n    if graph_type == \"citations\":\n        nbr_name = \"citingPaper\"\n    else:\n        nbr_name = \"citedPaper\"\n    if not paper_id:\n        return redirect(\"index\")\n    params = {",
         "detail": "paper.views",
         "documentation": {}
     },
     {
-        "label": "BASE_URL",
+        "label": "paper_service",
         "kind": 5,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "BASE_URL = 'http://api.semanticscholar.org/graph/v1'\nRECORDS_PER_PAGE = 10\ndef index(request):\n    form = SearchForm()\n    return render(request, 'paper/index.html', {'form': form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']",
+        "peekOfCode": "paper_service = PaperService()\nauthor_service = AuthorService()\ndef index(request):\n    form = SearchForm()\n    return render(request, \"paper/index.html\", {\"form\": form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data[\"query\"]",
         "detail": "paper.views",
         "documentation": {}
     },
     {
-        "label": "RECORDS_PER_PAGE",
+        "label": "author_service",
         "kind": 5,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "RECORDS_PER_PAGE = 10\ndef index(request):\n    form = SearchForm()\n    return render(request, 'paper/index.html', {'form': form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data['query']\n            page = form.cleaned_data['page'] or 1",
+        "peekOfCode": "author_service = AuthorService()\ndef index(request):\n    form = SearchForm()\n    return render(request, \"paper/index.html\", {\"form\": form})\ndef search(request):\n    if request.method == \"GET\":\n        form = SearchForm(request.GET)\n        if form.is_valid():\n            query = form.cleaned_data[\"query\"]\n            page = form.cleaned_data[\"page\"] or 1",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1446,7 +1506,16 @@
         "kind": 5,
         "importPath": "paper.views",
         "description": "paper.views",
-        "peekOfCode": "VALID_ORDER_BYS = ['title', 'publicationDate', 'citationCount', 'referenceCount']\n# TODO: test order by\nclass LibraryPaperView(View):\n    def get(self, request, *args, **kwargs):\n        library = get_object_or_404(Library, pk=kwargs['library_pk'])\n        order_by = request.GET.get('order_by', 'title')  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = 'title'\n        papers = library.papers.order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)",
+        "peekOfCode": "VALID_ORDER_BYS = [\"title\", \"publicationDate\", \"citationCount\", \"referenceCount\"]\n# TODO: test order by\nclass LibraryView(View):\n    def get(self, request, *args, **kwargs):\n        library = get_object_or_404(Library, pk=kwargs[\"library_pk\"])\n        order_by = request.GET.get(\"order_by\", \"title\")  # default to ordering by title\n        if order_by not in VALID_ORDER_BYS:\n            order_by = \"title\"\n        papers = library.papers.order_by(order_by)\n        serializer = PaperSerializer(papers, many=True)",
+        "detail": "paper.views",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_URL",
+        "kind": 5,
+        "importPath": "paper.views",
+        "description": "paper.views",
+        "peekOfCode": "BASE_URL = \"http://api.semanticscholar.org/graph/v1\"\ndef get_paper_info(\n    paper_id, params={\"fields\": \"paperId,authors,year,title,citationCount\"}\n):\n    return requests.get(f\"{BASE_URL}/paper/{paper_id}/\", params=params).json()\ndef get_paper_connections(paper_id, graph_type, params={\"fields\": \"paperId,intents\"}):\n    return requests.get(\n        f\"{BASE_URL}/paper/{paper_id}/{graph_type}\", params=params\n    ).json()[\"data\"]\ndef create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):",
         "detail": "paper.views",
         "documentation": {}
     },
@@ -1455,17 +1524,17 @@
         "kind": 6,
         "importPath": "user.migrations.0001_initial",
         "description": "user.migrations.0001_initial",
-        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Account',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name=\"Account\",\n            fields=[\n                (",
         "detail": "user.migrations.0001_initial",
         "documentation": {}
     },
     {
         "label": "Migration",
         "kind": 6,
-        "importPath": "user.migrations.0002_account_affiliation",
-        "description": "user.migrations.0002_account_affiliation",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('user', '0001_initial'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='account',\n            name='affiliation',\n            field=models.CharField(blank=True, default='', max_length=255),\n        ),",
-        "detail": "user.migrations.0002_account_affiliation",
+        "importPath": "user.migrations.0002_account_picture_alter_account_affiliation",
+        "description": "user.migrations.0002_account_picture_alter_account_affiliation",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        (\"user\", \"0001_initial\"),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name=\"account\",\n            name=\"picture\",\n            field=models.ImageField(blank=True, null=True, upload_to=\"media\"),\n        ),",
+        "detail": "user.migrations.0002_account_picture_alter_account_affiliation",
         "documentation": {}
     },
     {
@@ -1500,7 +1569,7 @@
         "kind": 6,
         "importPath": "user.models",
         "description": "user.models",
-        "peekOfCode": "class Account(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE)\n    affiliation = models.CharField(max_length=255, blank=True, default='')",
+        "peekOfCode": "class Account(models.Model):\n    user = models.OneToOneField(User, on_delete=models.CASCADE)\n    affiliation = models.CharField(max_length=255, blank=True, default='', null=True)\n    picture = models.ImageField(null=True, blank=True, upload_to='media')",
         "detail": "user.models",
         "documentation": {}
     },

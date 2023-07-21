@@ -27,7 +27,7 @@ Copy
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'infinicite',
+        'NAME': '<dbname>',
         'USER': '<username>',
         'PASSWORD': '<password>',
         'HOST': '<host>',
