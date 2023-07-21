@@ -1,3 +1,4 @@
+import django.conf
 from django.http import JsonResponse
 import requests
 from django.shortcuts import get_object_or_404, redirect, render
@@ -16,14 +17,15 @@ from .exceptions import *
 from .forms import SearchForm
 from .models import Library, Paper
 from .serializers import LibrarySerializer, PaperSerializer
+from infiniCite.settings import ELASTICSEARCH_CLIENT as es
 
+VALID_SORT_BYS = ["title", "publicationDate", "citationCount", "referenceCount"]
 paper_service = PaperService()
 author_service = AuthorService()
 
 def index(request):
     form = SearchForm()
     return render(request, "paper/index.html", {"form": form})
-
 
 def search(request):
     if request.method == "GET":
@@ -98,7 +100,7 @@ def search_authors(request, query, page):
 
 
 def autocomplete(request):
-    query = request.GET.get('query')
+    query = request.GET.get("query")
     if query:
         # Call the API with the search input
         return JsonResponse(paper_service.autocomplete(query), safe=False)
@@ -106,16 +108,15 @@ def autocomplete(request):
         return redirect("index")  # redirect to index view
 
 
-VALID_ORDER_BYS = ["title", "publicationDate", "citationCount", "referenceCount"]
 # TODO: test order by
 class LibraryView(View):
     def get(self, request, *args, **kwargs):
         library = get_object_or_404(Library, pk=kwargs["library_pk"])
-        order_by = request.GET.get("order_by", "title")  # default to ordering by title
-        if order_by not in VALID_ORDER_BYS:
-            order_by = "title"
+        sort_by = request.GET.get("sort_by", "title")  # default to ordering by title
+        if sort_by not in VALID_SORT_BYS:
+            sort_by = "title"
 
-        papers = library.papers.order_by(order_by)
+        papers = library.papers.order_by(sort_by)
         serializer = PaperSerializer(papers, many=True)
         return render(
             request,
@@ -128,12 +129,10 @@ class PaperView(View):
     def get(self, request, *args, **kwargs):
         account = request.user.account
         order_by = request.GET.get("order_by", "title")  # default to ordering by title
-        if order_by not in VALID_ORDER_BYS:
+        if order_by not in VALID_SORT_BYS:
             order_by = "title"
 
-        papers = (
-            Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)
-        )
+        papers = Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)
         serializer = PaperSerializer(papers, many=True)
         return render(
             request,
@@ -216,9 +215,7 @@ class PaperViewSet(viewsets.ViewSet):
         paperId = kwargs["paper_pk"]
         paper = self.paper_service.get_paper_by_id(paperId)
         if paper is None:
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST, data={"error": "Paper not found"}
-            )
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Paper not found"})
 
         library_ids = request.data.get("libraryIds", [])
         for library_id in library_ids:
@@ -231,9 +228,7 @@ class PaperViewSet(viewsets.ViewSet):
         paperId = kwargs["paper_pk"]
         paper = self.paper_service.get_paper_by_id(paperId)
         if paper is None:
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST, data={"error": "Paper not found"}
-            )
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Paper not found"})
 
         library_ids = request.data.get("libraryIds", [])
         for library_id in library_ids:
@@ -267,18 +262,86 @@ class PaperViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK,
         )
 
+    def search(self, request, *args, **kwargs):
+        query_params = request.query_params
+        query = query_params.get("query", None)
+        sort_by = query_params.get("sort_by", None)
+
+        body = request.data
+        is_title_only = body.get("is_title_only", False)
+        library_ids = body.get("library_ids", None)
+
+        if not library_ids:
+            library_ids = list(
+                self.library_queryset.filter(owner=request.user.account).values_list(
+                    "id", flat=True
+                )
+            )
+        if sort_by not in VALID_SORT_BYS or sort_by == "title":
+            sort_by = None
+
+        # use es to search for papers
+        papers = es.search(
+            index="paper-index",
+            body={
+                "_source": {
+                    "excludes": [
+                        "embedding",
+                        "tldr",
+                    ]  # exclude fields that won't be displayed in the frontend
+                },
+                "query": {
+                    "bool": {
+                        "must": [
+                            {
+                                "multi_match": {
+                                    "query": query,
+                                    "fields": ["title", "abstract", "tldr", "authors"]
+                                    if not is_title_only
+                                    else ["title"],
+                                }
+                            },
+                            {
+                                "nested": {  # if necessary set libraries type as nested
+                                    "path": "libraries",
+                                    "query": {
+                                        "bool": {
+                                            "filter": {"terms": {"libraries.id": library_ids}}
+                                        },
+                                    },
+                                },
+                            },
+                        ],
+                    }
+                },
+                "size": 20,  # limit to 20 results
+                "from": 0,  # start from the first result
+                "sort": [
+                    {"_score": {"order": "desc"}},
+                    {sort_by: {"order": "asc"}} if sort_by else {"citationCount": {"order": "desc"}},
+                ],
+            },
+        )
+
+        # get the hits from the response
+        hits = papers["hits"]["hits"]
+
+        # return
+        return Response(hits, status=status.HTTP_200_OK)
+
+    def semantic_search(self, request, *args, **kwargs):
+        pass
+
 # TODO: move it to paper service class
 BASE_URL = "http://api.semanticscholar.org/graph/v1"
-def get_paper_info(
-    paper_id, params={"fields": "paperId,authors,year,title,citationCount"}
-):
+
+
+def get_paper_info(paper_id, params={"fields": "paperId,authors,year,title,citationCount"}):
     return requests.get(f"{BASE_URL}/paper/{paper_id}/", params=params).json()
 
 
 def get_paper_connections(paper_id, graph_type, params={"fields": "paperId,intents"}):
-    return requests.get(
-        f"{BASE_URL}/paper/{paper_id}/{graph_type}", params=params
-    ).json()["data"]
+    return requests.get(f"{BASE_URL}/paper/{paper_id}/{graph_type}", params=params).json()["data"]
 
 
 def create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):
@@ -287,7 +350,8 @@ def create_edge(low_deg_nbr, high_deg_nbr, edge_type, graph_type):
     else:
         return {"source": low_deg_nbr, "target": high_deg_nbr, "type": edge_type}
 
-# TODO: check if paper is in library, then show local graph using elasticsearch 
+
+# TODO: check if paper is in library, then show local graph using elasticsearch
 def graph(request):
     paper_id = request.GET.get("paperId", "")
     graph_type = request.GET.get("graphType", "citations")
@@ -299,16 +363,13 @@ def graph(request):
     if not paper_id:
         return redirect("index")
 
-    params = {
-        "fields": "paperId,authors,year,title,citationCount,isInfluential,intents"
-    }
+    params = {"fields": "paperId,authors,year,title,citationCount,isInfluential,intents"}
 
     origin = get_paper_info(paper_id)
     first_deg_nbrs = get_paper_connections(paper_id, graph_type, params)
 
     nodes = [origin] + [
-        {**paper[nbr_name], "isInfluencial": paper["isInfluential"]}
-        for paper in first_deg_nbrs
+        {**paper[nbr_name], "isInfluencial": paper["isInfluential"]} for paper in first_deg_nbrs
     ]
     ids_set = set([paper["paperId"] for paper in nodes[1:]])
     edges = [

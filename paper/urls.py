@@ -47,4 +47,9 @@ urlpatterns = [
         ),
         name="paper-batch-operations",
     ),
+    path(
+        "api/paper/search/",
+        PaperViewSet.as_view({"get": "search"}),
+        name="paper-search",
+    )
 ]

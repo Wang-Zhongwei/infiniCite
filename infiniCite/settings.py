@@ -14,13 +14,26 @@ from pathlib import Path
 from config.django_config import SECRET_KEY
 from config.elastic_config import ELASTICSEARCH_DSL
 import os
+from elasticsearch import Elasticsearch
+# from transformers import AutoTokenizer, AutoModel
+
+# # load model and tokenizer
+# TOKENIZER = AutoTokenizer.from_pretrained("allenai/specter2")
+
+# # load base model
+# MODEL = AutoModel.from_pretrained("allenai/specter2")
+
+# # load the adapter(s) as per the required task, provide an identifier for the adapter in load_as argument and activate it
+# MODEL.load_adapter(
+#     "allenai/specter2_adhoc_query", source="hf", load_as="adhoc_query", set_active=True
+# )
 
 # configure elasticsearch
 ELASTICSEARCH_DSL = ELASTICSEARCH_DSL
+ELASTICSEARCH_CLIENT = Elasticsearch([ELASTICSEARCH_DSL["default"]["hosts"]])
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -37,51 +50,51 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_elasticsearch_dsl',
-    'paper',
-    'user',
-    'author'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django_elasticsearch_dsl",
+    "paper",
+    "user",
+    "author",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
-ROOT_URLCONF = 'infiniCite.urls'
+ROOT_URLCONF = "infiniCite.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'paper.context_processors.library_data',
-                'paper.context_processors.shared_library_data'
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "paper.context_processors.library_data",
+                "paper.context_processors.shared_library_data",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'infiniCite.wsgi.application'
+WSGI_APPLICATION = "infiniCite.wsgi.application"
 
 
 # Database
@@ -89,8 +102,8 @@ WSGI_APPLICATION = 'infiniCite.wsgi.application'
 
 # DATABASE CONFIGURATION IS NOT PUBLIC!!!
 from config.db_config import DATABASES
-DATABASES = DATABASES
 
+DATABASES = DATABASES
 
 
 # Password validation
@@ -98,16 +111,16 @@ DATABASES = DATABASES
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -115,9 +128,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -128,38 +141,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-PAPER_DIR = BASE_DIR / 'paper'
-STATIC_URL = '/static/'
+PAPER_DIR = BASE_DIR / "paper"
+STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [
-    PAPER_DIR / 'static',
-    BASE_DIR / 'static'
-]
+STATICFILES_DIRS = [PAPER_DIR / "static", BASE_DIR / "static"]
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # settings.py
 
-# configure logging 
+# configure logging
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'django.log'),
-            'maxBytes': 1024 * 1024 * 5,  # 5 MB
-            'backupCount': 5,
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "django.log"),
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 5,
         },
     },
-    'root': {
-        'handlers': ['file'],
-        'level': 'DEBUG',
+    "root": {
+        "handlers": ["file"],
+        "level": "DEBUG",
     },
 }
 
