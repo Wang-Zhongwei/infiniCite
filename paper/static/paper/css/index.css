@@ -90,10 +90,11 @@
   margin-bottom: 5px;
 }
 
-.search-bar li:hover {
+
+
+.search-bar .autocomplete-active .highlighted {
   background-color: #aaa;
 }
-
 
 .paperTitle {
   /* Your styles for the paper title */
