@@ -42,14 +42,17 @@ urlpatterns = [
     ),
     path(
         "api/paper/<str:paper_pk>/libraries/",
-        PaperViewSet.as_view(
-            {"post": "add_to_libraries", "delete": "remove_from_libraries"}
-        ),
+        PaperViewSet.as_view({"post": "add_to_libraries", "delete": "remove_from_libraries"}),
         name="paper-batch-operations",
     ),
     path(
         "api/paper/search/",
-        PaperViewSet.as_view({"get": "search"}),
+        PaperViewSet.as_view({"get": "search"}),  # later change to post
         name="paper-search",
-    )
+    ),
+    path(
+        "api/paper/semantic-search/",
+        PaperViewSet.as_view({"get": "semantic_search"}),
+        name="paper-semantic-search",
+    ),
 ]

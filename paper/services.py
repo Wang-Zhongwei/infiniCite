@@ -5,7 +5,7 @@ from author.models import Author
 from author.services import AuthorService, PublicationVenueService
 
 from paper.exceptions import SemanticAPIException
-from paper.models import Paper
+from paper.models import Library, Paper
 
 
 class PaperService:
@@ -40,18 +40,14 @@ class PaperService:
 
         if response.status_code != 200:
             # You might want to add more specific error handling here
-            raise SemanticAPIException(
-                f"Semantic API returned status code {response.status_code}"
-            )
+            raise SemanticAPIException(f"Semantic API returned status code {response.status_code}")
 
         paper_data = response.json()
         paper = self.queryset.update_or_create(
             paperId=paper_data["paperId"],
             url=paper_data["url"],
             title=paper_data["title"],
-            abstract=paper_data["abstract"]
-            if paper_data["abstract"] is not None
-            else "",
+            abstract=paper_data["abstract"] if paper_data["abstract"] is not None else "",
             referenceCount=paper_data["referenceCount"],
             citationCount=paper_data["citationCount"],
             openAccessPdf=paper_data["openAccessPdf"]["url"]
@@ -62,52 +58,22 @@ class PaperService:
             else [],
             tldr=paper_data["tldr"]["text"] if paper_data["tldr"] is not None else "",
             publicationDate=paper_data["publicationDate"],
-            publicationTypes=paper_data["publicationTypes"],
+            publicationTypes=paper_data["publicationTypes"]
+            if paper_data["publicationTypes"] is not None
+            else [],
             fieldsOfStudy=paper_data["fieldsOfStudy"],
         )[0]
-        # TODO: handle authors and publicationVenue saving in the database
-        # if should_save:
-        #     references_data = paper_data.get("references", None)
-        #     if references_data:
-        #         references = [
-        #             self.queryset.get_or_create(
-        #                 paperId=reference["paperId"], title=reference["title"]
-        #             )[0]
-        #             for reference in references_data
-        #             if reference["paperId"] is not None
-        #         ]
-        #         paper.references.add(*references)
-
-        #     authors_data = paper_data.get("authors", None)
-        #     if authors_data:
-        #         authors = [
-        #             self.author_service.get_author_or_create(
-        #                 author_data, is_simple_author=True
-        #             )
-        #             for author_data in authors_data
-        #             if author_data["authorId"] is not None
-        #         ]
-        #         paper.authors.add(*authors)
-
-        #     publicationVenue_data = paper_data["publicationVenue"]
-        #     if publicationVenue_data.get("id", None) is not None:
-        #         publicationVenue = (
-        #             self.publicationVenueService.get_publicationVenue_or_create(
-        #                 publicationVenue_data
-        #             )
-        #         )
-        #         paper.publicationVenue = publicationVenue
-
-        #     paper.save()
-        # return paper
         if should_save:
-            references_data = list(filter(
-                lambda ref: ref["paperId"] is not None, paper_data.get("references", []) 
-            ))
-            authors_data = list(filter(
-                lambda author: author["authorId"] is not None, paper_data.get("authors", [])
-            ))
+            references_data = list(
+                filter(lambda ref: ref["paperId"] is not None, paper_data.get("references", []))
+            )
+            authors_data = list(
+                filter(
+                    lambda author: author["authorId"] is not None, paper_data.get("authors", [])
+                )
+            )
 
+            # add references
             references_ids = [ref["paperId"] for ref in references_data]
             existing_references = self.queryset.filter(paperId__in=references_ids)
             existing_reference_ids = set([ref.paperId for ref in existing_references])
@@ -119,10 +85,9 @@ class PaperService:
                 ]
             )
 
+            # add authors
             authors_ids = [author["authorId"] for author in authors_data]
-            existing_authors = self.author_service.queryset.filter(
-                authorId__in=authors_ids
-            )
+            existing_authors = self.author_service.queryset.filter(authorId__in=authors_ids)
             existing_author_ids = set([author.authorId for author in existing_authors])
             new_authors = self.author_service.queryset.bulk_create(
                 [
@@ -138,11 +103,9 @@ class PaperService:
 
             # Add publicationVenue to paper
             publicationVenue_data = paper_data["publicationVenue"]
-            if publicationVenue_data.get("id", None) is not None:
-                publicationVenue = (
-                    self.publicationVenueService.get_publicationVenue_or_create(
-                        publicationVenue_data
-                    )
+            if publicationVenue is not None and "id" in publicationVenue:
+                publicationVenue = self.publicationVenueService.get_publicationVenue_or_create(
+                    publicationVenue_data
                 )
                 paper.publicationVenue = publicationVenue
 

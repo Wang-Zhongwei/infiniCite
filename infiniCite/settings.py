@@ -15,18 +15,18 @@ from config.django_config import SECRET_KEY
 from config.elastic_config import ELASTICSEARCH_DSL
 import os
 from elasticsearch import Elasticsearch
-# from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModel
 
-# # load model and tokenizer
-# TOKENIZER = AutoTokenizer.from_pretrained("allenai/specter2")
+# load model and tokenizer
+TOKENIZER = AutoTokenizer.from_pretrained("allenai/specter2")
 
-# # load base model
-# MODEL = AutoModel.from_pretrained("allenai/specter2")
+# load base model
+MODEL = AutoModel.from_pretrained("allenai/specter2")
 
-# # load the adapter(s) as per the required task, provide an identifier for the adapter in load_as argument and activate it
-# MODEL.load_adapter(
-#     "allenai/specter2_adhoc_query", source="hf", load_as="adhoc_query", set_active=True
-# )
+# load the adapter(s) as per the required task, provide an identifier for the adapter in load_as argument and activate it
+MODEL.load_adapter(
+    "allenai/specter2_adhoc_query", source="hf", load_as="adhoc_query", set_active=True
+)
 
 # configure elasticsearch
 ELASTICSEARCH_DSL = ELASTICSEARCH_DSL

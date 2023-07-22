@@ -18,14 +18,18 @@ from .forms import SearchForm
 from .models import Library, Paper
 from .serializers import LibrarySerializer, PaperSerializer
 from infiniCite.settings import ELASTICSEARCH_CLIENT as es
+from infiniCite.settings import MODEL as model
+from infiniCite.settings import TOKENIZER as tokenizer
 
 VALID_SORT_BYS = ["title", "publicationDate", "citationCount", "referenceCount"]
 paper_service = PaperService()
 author_service = AuthorService()
 
+
 def index(request):
     form = SearchForm()
     return render(request, "paper/index.html", {"form": form})
+
 
 def search(request):
     if request.method == "GET":
@@ -263,12 +267,38 @@ class PaperViewSet(viewsets.ViewSet):
         )
 
     def search(self, request, *args, **kwargs):
+        hits = self._perform_search(request, is_semantic=False)
+        return Response(hits, status=status.HTTP_200_OK)
+
+    def semantic_search(self, request, *args, **kwargs):
+        hits = self._perform_search(request, is_semantic=True)
+        return Response(hits, status=status.HTTP_200_OK)
+
+    def _embed_queries(self, queries):
+        inputs = tokenizer(
+            queries,
+            padding=True,
+            truncation=True,
+            return_tensors="pt",
+            return_token_type_ids=False,
+            max_length=512,
+        )
+
+        outputs = model(**inputs)
+        # take the first token in the batch as the embedding aka cls token
+        embeddings = outputs.last_hidden_state[:, 0, :].detach().numpy()
+        return embeddings
+
+    def _perform_search(self, request, is_semantic):
         query_params = request.query_params
         query = query_params.get("query", None)
         sort_by = query_params.get("sort_by", None)
+        is_descent = "desc" in query_params
 
         body = request.data
+        is_fuzzy = body.get("is_fuzzy", True)
         is_title_only = body.get("is_title_only", False)
+        including_shared_libraries = body.get("including_shared_libraries", True)
         library_ids = body.get("library_ids", None)
 
         if not library_ids:
@@ -276,61 +306,87 @@ class PaperViewSet(viewsets.ViewSet):
                 self.library_queryset.filter(owner=request.user.account).values_list(
                     "id", flat=True
                 )
+            ) + list(
+                self.library_queryset.filter(sharedWith=request.user.account).values_list(
+                    "id", flat=True
+                )
+                if including_shared_libraries
+                else []
             )
-        if sort_by not in VALID_SORT_BYS or sort_by == "title":
-            sort_by = None
 
-        # use es to search for papers
-        papers = es.search(
-            index="paper-index",
-            body={
-                "_source": {
-                    "excludes": [
-                        "embedding",
-                        "tldr",
-                    ]  # exclude fields that won't be displayed in the frontend
-                },
-                "query": {
-                    "bool": {
-                        "must": [
-                            {
-                                "multi_match": {
-                                    "query": query,
-                                    "fields": ["title", "abstract", "tldr", "authors"]
-                                    if not is_title_only
-                                    else ["title"],
-                                }
-                            },
-                            {
-                                "nested": {  # if necessary set libraries type as nested
-                                    "path": "libraries",
-                                    "query": {
-                                        "bool": {
-                                            "filter": {"terms": {"libraries.id": library_ids}}
-                                        },
-                                    },
+        if sort_by not in VALID_SORT_BYS or sort_by == "title":
+            sort_by = "citationCount"  # default ordering
+
+        query_config = {
+            "_source": {
+                "excludes": [
+                    "embedding",
+                    "tldr",
+                ]  # exclude fields that won't be displayed in the frontend
+            },
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "nested": {  # if necessary set libraries type as nested
+                                "path": "libraries",
+                                "query": {
+                                    "bool": {"filter": {"terms": {"libraries.id": library_ids}}},
                                 },
                             },
-                        ],
-                    }
-                },
-                "size": 20,  # limit to 20 results
-                "from": 0,  # start from the first result
-                "sort": [
-                    {"_score": {"order": "desc"}},
-                    {sort_by: {"order": "asc"}} if sort_by else {"citationCount": {"order": "desc"}},
-                ],
+                        },
+                    ],
+                }
             },
-        )
+            "size": 30,  # limit to 30 results
+            "from": 0,  # start from the first result
+            "sort": [
+                {"_score": {"order": "desc"}},
+                {sort_by: {"order": "desc" if is_descent else "asc"}},
+            ],
+        }
 
-        # get the hits from the response
-        hits = papers["hits"]["hits"]
+        if is_semantic:
+            embedding = self._embed_queries([query])
+            query_config["query"]["bool"]["must"].extend(
+                [
+                    {"exists": {"field": "embedding"}},
+                    {
+                        "script_score": {
+                            "query": {"match_all": {}},
+                            "script": {
+                                "source": "cosineSimilarity(params.query_vector, 'embedding') + 1.0",
+                                "params": {"query_vector": list(embedding[0])},
+                            },
+                        },
+                    },
+                ]
+            )
+        else:
+            query_config["query"]["bool"]["must"].extend(
+                [
+                    {
+                        "multi_match": {
+                            "query": query,
+                            "fields": ["title", "abstract", "tldr", "authors.name"], # TODO: authors.name is not working
+                            "fuzziness": "AUTO" if is_fuzzy else 0,
+                        }
+                    }
+                    if not is_title_only
+                    else {"match": {"title": {"query": query, "fuzziness": "AUTO"}}},
+                ]
+            )
+            query_config["highlight"] = {
+                "fields": {
+                    "title": {},
+                    "abstract": {},
+                    "authors": {},
+                }
+            }
 
-        # return
-        return Response(hits, status=status.HTTP_200_OK)
+        results = es.search(index="paper-index", body=query_config)
+        return results["hits"]["hits"]
 
-    def semantic_search(self, request, *args, **kwargs):
-        pass
 
 # TODO: move it to paper service class
 BASE_URL = "http://api.semanticscholar.org/graph/v1"
