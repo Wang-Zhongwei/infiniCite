@@ -14,7 +14,7 @@
       "askForPassword": true,
       "driver": "PostgreSQL",
       "name": "connection0",
-      "database": "testdb",
+      "database": "test",
       "username": "jonathan"
     }
   ]

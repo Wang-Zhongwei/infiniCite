@@ -37,7 +37,7 @@
     <div class="dropdown">
 
       <div class="link">
-        <a href="{%url 'paper:library-all-papers' %}" class="library-link">
+        <a href="{%url 'paper:library-all-papers' %}" class="link-block">
           <i class="bi bi-collection icon"></i>
           <div class="label">Library</div>
         </a>
@@ -139,9 +139,10 @@
         <!-- TODO: hide remaining content by ... if library name is too long -->
         <div class="library-list">
           {% for library in libraries %}
-          <a href="{% url 'paper:library-paper-list' library_pk=library.id %}">
+          <a href="{% url 'paper:library-paper-list' library_pk=library.id %}" class="link-block">
             <div class="link3">
-              <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" title="{{library.name}}" hidden>
+              <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}"
+                title="{{library.name}}" hidden>
               <i class="bi bi-folder icon small"></i>
               <div class="label3">{{library.name}}</div>
 
@@ -290,9 +291,12 @@
       <div class="overline2">Settings</div>
     </div>
 
+
     <div class="link">
-      <i class="bi bi-gear icon"></i>
-      <div class="label"><a href="user/edit">Settings</a></div>
+      <a href="{% url 'user:edit' %}" class="link-block">
+        <i class="bi bi-gear icon"></i>
+        <div class="label">Settings</div>
+      </a>
     </div>
   </div>
 

@@ -28,5 +28,5 @@ class UserEditForm(forms.ModelForm):
 class AccountEditForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ('field', 'picture')
+        fields = ('affiliation', 'picture')
         

@@ -103,7 +103,7 @@ class PaperService:
 
             # Add publicationVenue to paper
             publicationVenue_data = paper_data["publicationVenue"]
-            if publicationVenue is not None and "id" in publicationVenue:
+            if publicationVenue_data is not None and "id" in publicationVenue_data:
                 publicationVenue = self.publicationVenueService.get_publicationVenue_or_create(
                     publicationVenue_data
                 )
