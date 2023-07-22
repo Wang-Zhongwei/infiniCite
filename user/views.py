@@ -3,13 +3,13 @@ from paper.models import Paper, Library
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, AccountEditForm
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from user.serializers import UserSerializer, AccountSerializer
 from .models import Account
 from rest_framework import viewsets
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     # Get the user id
@@ -56,11 +56,11 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Authenticated Successfully')
+                    return render(request, 'paper/index.html', {'form': form})
                 else:
                     return HttpResponse('Disabled account')
             else:
-                return HttpResponse('Invalid login')
+                return render(request, 'user/login_fail.html', {'form': form})
     else:
         form = LoginForm()
         return render(request, 'user/login.html', {'form': form})
@@ -75,9 +75,22 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
-            # create associated account 
             Account.objects.create(user=new_user)
+            # create associated account 
             return render(request, 'user/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
     return render(request, 'user/register.html', {'user_form': user_form})
+
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        account_form = AccountEditForm(instance=request.user.account, data=request.POST, files=request.FILES)
+        if user_form.is_valid() and account_form.is_valid():
+            user_form.save()
+            account_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+        account_form = AccountEditForm(instance=request.user.account)
+    return render(request, 'user/edit.html', {'user_form': user_form, 'account_form': account_form})

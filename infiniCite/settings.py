@@ -174,3 +174,8 @@ LOGGING = {
 }
 
 # SESSION_COOKIE_AGE=86400
+
+
+# Added for pillow to work
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

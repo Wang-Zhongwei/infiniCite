@@ -2,14 +2,16 @@
 <link rel="stylesheet" href="{% static 'css/sidebar.css'%}">
 <div class="sidebar">
   <div class="profile">
-    <img class="avatar" src="https://i.imgur.com/hczKIze.jpg" />
+    {% if request.user.is_authenticated %}
+    <img class="avatar" src={{ request.user.account.picture.url }} />
 
     <div class="content">
-      {% if request.user.is_authenticated %}
+
       <div class="title"><span>{{ request.user.first_name }} {{request.user.last_name}}</span></div>
       <div class="overline"><span>{{ request.user.account.affiliation }}</span></div>
-      {% endif %}
+
     </div>
+    {% endif %}
   </div>
 
   <div class="navigation nav-main">
@@ -290,7 +292,7 @@
 
     <div class="link">
       <i class="bi bi-gear icon"></i>
-      <div class="label">Settings</div>
+      <div class="label"><a href="user/edit">Settings</a></div>
     </div>
   </div>
 
