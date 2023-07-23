@@ -259,20 +259,20 @@ document.querySelector('.search-level input').addEventListener('keypress', funct
       is_title_Only: titleOnly,
       library_ids: libraryID,
     };
+    console.log(titleOnly);
+    console.log(libraryID);
 
     const params = new URLSearchParams({
-      query: queryParam,
-      sort_by: selectedSort
+      query: queryParam1,
+      sort_by: selectedSort,
+      is_title_Only: titleOnly,
+      library_ids: libraryID,
     });
+    console.log(queryParam1);
+    console.log(selectedSort);
 
-    fetch('http://your-server.com/endpoint?' + params, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // If you are using Django and you need to include the CSRF token
-        'X-CSRFToken': csrftoken
-      },
-      body: JSON.stringify(body1)
+    fetch(`/api/paper/search/?` + params, {
+      method: 'GET',
     })
       .then(response => response.json())
       .then(data => console.log(data))
