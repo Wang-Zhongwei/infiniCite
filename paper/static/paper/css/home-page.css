@@ -1,0 +1,68 @@
+.papers-list {
+  display: flex;
+  justify-content: center;
+  color: #ddd;
+  margin-left: -35px;
+}
+
+.authors {
+  font: 500 14px/16px "Inter", sans-serif;
+  color: #ddd;
+}
+
+.abstract {
+  color: #2e3743;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 2px;
+}
+
+.paper {
+  text-align: justify;
+  /* Spread the text evenly across the line */
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 25px 35px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  /* Separate the children containers */
+  max-height: 400px;
+  overflow: auto;
+}
+
+.libraries {
+  background: linear-gradient(225deg, transparent 50%, #d9dadb 0), linear-gradient(45deg, #fff, #fff), linear-gradient(135deg, #fff, #fff), linear-gradient(225deg, transparent, #fff 0);
+  background-position: 100% 0, 0 0, 100% 100%, 100% 0;
+  background-repeat: no-repeat;
+  background-size: 0 0, 0 0, 0 0, 100% 100%;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .1));
+  display: flex;
+  padding: 24px 30px;
+}
+
+.paper h2 {
+  border: none;
+  color: unset;
+  font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+  font-size: unset;
+  font-size: 18px;
+  font-weight: unset;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 0;
+  padding: 0;
+  color: #2e3743;
+}
+
+.libraries h3 {
+  font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+  border: none;
+  color: #2e3743;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 16px 0;
+  padding: 0;
+  border-bottom: 1px solid #e0e0e0;
+}

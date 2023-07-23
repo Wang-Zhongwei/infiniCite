@@ -55,4 +55,5 @@ urlpatterns = [
         PaperViewSet.as_view({"get": "semantic_search"}),
         name="paper-semantic-search",
     ),
+    path("paper/home_page.html", views.home_page, name="home_page"),
 ]

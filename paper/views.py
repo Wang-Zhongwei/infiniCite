@@ -1,6 +1,7 @@
 import django.conf
 from django.http import JsonResponse
 import requests
+import json
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from rest_framework import status, viewsets
@@ -110,6 +111,30 @@ def autocomplete(request):
         return JsonResponse(paper_service.autocomplete(query), safe=False)
     else:
         return redirect("index")  # redirect to index view
+    
+def home_page(request):
+    account = request.user.account
+    libraries = Library.objects.filter(owner=account)
+    list_libraryPaperRec = []
+    for library in libraries:
+        libraryName = library.name
+        libraryPapers = library.papers.all().values()
+        libraryPapersIds = []
+        for paper in libraryPapers:
+            libraryPapersIds.append(paper['paperId'])
+        if len(libraryPapersIds) > 0:          
+            recommendation = getRecommendation(libraryPapersIds)
+            list_libraryPaperRec.append((libraryName, recommendation))
+    print(list_libraryPaperRec)
+    return render(request, 'paper/home_page.html', {'library_paper_recommendations': list_libraryPaperRec})
+
+def getRecommendation(Ids):
+    RECOMMENDATION = 'http://api.semanticscholar.org/recommendations/v1/papers/?limit=1&fields=authors,title,abstract,publicationTypes,url,publicationVenue'
+    body = {
+        'positivePaperIds': Ids,
+    }
+    response = requests.request("POST", RECOMMENDATION, data = json.dumps(body))
+    return response.json()
 
 
 # TODO: test order by
