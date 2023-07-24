@@ -1,7 +1,7 @@
 # BEGIN: 5d8f9a2b8d7c
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import LibraryViewSet, PaperViewSet, PaperView, LibraryView
+from .views import LibraryViewSet, LibraryPaperViewSet, PaperView, LibraryView
 from . import views
 
 app_name = "paper"
@@ -22,37 +22,39 @@ urlpatterns = [
     path("api/autocomplete/", views.autocomplete, name="autocomplete"),
     path(
         "api/libraries/<int:library_pk>/share/",
-        LibraryViewSet.as_view({"post": "share"}),
+        LibraryViewSet.as_view({"post": "share", "delete": "share"}),
         name="library-share",
     ),
     path(
         "api/libraries/<int:library_pk>/papers/",
-        PaperViewSet.as_view({"post": "create"}),
+        LibraryPaperViewSet.as_view({"post": "create"}),
         name="library-paper-add",
     ),
     path(
         "api/libraries/<int:library_pk>/papers/<str:pk>/",
-        PaperViewSet.as_view({"delete": "destroy"}),
+        LibraryPaperViewSet.as_view({"delete": "destroy"}),
         name="library-paper-remove",
     ),
     path(
         "api/libraries/<int:library_pk>/papers/<str:pk>/move/",
-        PaperViewSet.as_view({"post": "move"}),
+        LibraryPaperViewSet.as_view({"post": "move"}),
         name="library-paper-move",
     ),
     path(
         "api/paper/<str:paper_pk>/libraries/",
-        PaperViewSet.as_view({"post": "add_to_libraries", "delete": "remove_from_libraries"}),
+        LibraryPaperViewSet.as_view(
+            {"post": "add_to_libraries", "delete": "remove_from_libraries"}
+        ),
         name="paper-batch-operations",
     ),
     path(
         "api/paper/search/",
-        PaperViewSet.as_view({"get": "search"}),  # later change to post
+        LibraryPaperViewSet.as_view({"get": "search"}),  # later change to post
         name="paper-search",
     ),
     path(
         "api/paper/semantic-search/",
-        PaperViewSet.as_view({"get": "semantic_search"}),
+        LibraryPaperViewSet.as_view({"get": "semantic_search"}),
         name="paper-semantic-search",
     ),
     path("paper/home_page.html", views.home_page, name="home_page"),

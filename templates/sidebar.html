@@ -161,7 +161,6 @@
                     <i class="bi bi-trash icon small"></i>
                     &nbsp; Delete
                   </div>
-                  <!-- TODO: duplicate papers along with library -->
                   <div class="dropdown-item library-option duplicate" onclick="handleDuplicateLibrary(event)">
                     <i class="bi bi-files icon small"></i>
                     &nbsp; Duplicate
@@ -190,11 +189,13 @@
         <div class="shared-library-list">
           {% for library in shared_libraries %}
           <!-- TODO: add manage shared library options -->
-          <div class="link3 shared-library-list">
-            <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
-            <i class="bi bi-globe-asia-australia icon small"></i>
-            <div class="label3"><label for="library-checkbox-{{library.id}}"></label>{{library.name}}</div>
-          </div>
+          <a href="{% url 'paper:library-paper-list' library_pk=library.id %}" class="link-block">
+            <div class="link3 shared-library-list">
+              <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden checked>
+              <i class="bi bi-globe-asia-australia icon small"></i>
+              <div class="label3"><label for="library-checkbox-{{library.id}}"></label>{{library.name}}</div>
+            </div>
+          </a>
           {% endfor %}
         </div>
 
@@ -254,7 +255,7 @@
           }
 
           // library share action
-          function handleLibraryShare(event) {
+          function handleShareLibrary(event) {
             event.preventDefault();
             const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
             const email = prompt('Enter the email of the user you want to share the library with:');

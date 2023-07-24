@@ -1,11 +1,11 @@
-import django.conf
-from django.http import JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse
 import requests
 import json
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from rest_framework import status, viewsets
 from rest_framework.response import Response
+from paper.serializers import LibrarySerializer
 
 
 from paper.services import PaperService
@@ -21,6 +21,11 @@ from .serializers import LibrarySerializer, PaperSerializer
 from infiniCite.settings import ELASTICSEARCH_CLIENT as es
 from infiniCite.settings import MODEL as model
 from infiniCite.settings import TOKENIZER as tokenizer
+
+from functools import wraps
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404
+from .models import Library
 
 VALID_SORT_BYS = ["title", "publicationDate", "citationCount", "referenceCount"]
 paper_service = PaperService()
@@ -49,14 +54,17 @@ def search(request):
 def handle_search(request, query, page, searchPaper):
     if query:
         if searchPaper:
-            return search_papers(request, query, page)
+            context = search_papers(query, page)
+            return render(request, "paper/paper-results.html", context)
         else:
-            return search_authors(request, query, page)
+            context = search_authors(query, page)
+            return render(request, "paper/author-results.html", context)
     else:
         return redirect("paper:index")
 
 
-def search_papers(request, query, page=1):
+
+def search_papers(query, page=1):
     data = paper_service.search_external_papers(query, page)
     total = data.get("total", 0)
     total_pages = total // paper_service.RECORDS_PER_PAGE + 1
@@ -66,21 +74,17 @@ def search_papers(request, query, page=1):
     end = min(total_pages, page + 3) + 1
     pages_to_show = range(start, end)
 
-    return render(
-        request,
-        "paper/paper-results.html",
-        {
-            "papers": data,
-            "page": page,
-            "query": query,
-            "total_pages": total_pages,
-            "pages_to_show": pages_to_show,
-            "searchPaper": True,
-        },
-    )
+    return {
+        "papers": data,
+        "page": page,
+        "query": query,
+        "total_pages": total_pages,
+        "pages_to_show": pages_to_show,
+        "searchPaper": True,
+    }
 
 
-def search_authors(request, query, page):
+def search_authors(query, page=1):
     data = author_service.search_external_authors(query, page)
     total = data.get("total", 0)
     total_pages = total // author_service.RECORDS_PER_PAGE + 1
@@ -90,18 +94,15 @@ def search_authors(request, query, page):
     end = min(total_pages, page + 3) + 1
     pages_to_show = range(start, end)
 
-    return render(
-        request,
-        "paper/author-results.html",
-        {
-            "authors": data,
-            "page": page,
-            "query": query,
-            "total_pages": total_pages,
-            "pages_to_show": pages_to_show,
-            "searchPaper": False,
-        },
-    )
+    return {
+        "authors": data,
+        "page": page,
+        "query": query,
+        "total_pages": total_pages,
+        "pages_to_show": pages_to_show,
+        "searchPaper": False,
+    }
+
 
 
 def autocomplete(request):
@@ -137,16 +138,59 @@ def getRecommendation(Ids):
     return response.json()
 
 
+def check_library_access(permission_required):
+    """
+    A decorator function that checks if the user has access to a library.
+
+    Args:
+        permission_required (str): The permission required to access the library. Can be "read" or "edit".
+
+    Returns:
+        function: The decorated view function.
+    """
+
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(self, request, *args, **kwargs):
+            library_pk = kwargs.get("library_pk")
+
+            if library_pk:
+                library = Library.objects.get(pk=library_pk)
+                if permission_required == "read":
+                    if (
+                        library.owner != request.user.account
+                        and request.user.account not in library.sharedWith.all()
+                    ):
+                        return HttpResponseForbidden(
+                            "You do not have read access to this library."
+                        )
+                elif permission_required == "edit":
+                    if library.owner != request.user.account:
+                        return HttpResponseForbidden(
+                            "You do not have edit access to this library."
+                        )
+                else:
+                    return HttpResponseForbidden("Invalid permission.")
+
+            return view_func(self, request, *args, **kwargs)
+
+        return _wrapped_view
+
+    return decorator
+
+
 # TODO: test order by
 class LibraryView(View):
+    @check_library_access("read")
     def get(self, request, *args, **kwargs):
         library = get_object_or_404(Library, pk=kwargs["library_pk"])
+
         sort_by = request.GET.get("sort_by", "title")  # default to ordering by title
         if sort_by not in VALID_SORT_BYS:
             sort_by = "title"
 
         papers = library.papers.order_by(sort_by)
-        serializer = PaperSerializer(papers, many=True)
+        serializer = PaperSerializer(papers, many=True, context={"request": request})
         return render(
             request,
             "paper/library-papers.html",
@@ -161,8 +205,10 @@ class PaperView(View):
         if order_by not in VALID_SORT_BYS:
             order_by = "title"
 
-        papers = Paper.objects.filter(libraries__owner=account).distinct().order_by(order_by)
-        serializer = PaperSerializer(papers, many=True)
+        papers = (
+            paper_service.queryset.filter(libraries__owner=account).distinct().order_by(order_by)
+        )
+        serializer = PaperSerializer(papers, many=True, context={"request": request})
         return render(
             request,
             "paper/library-papers.html",
@@ -180,21 +226,20 @@ class LibraryViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         userId = request.user.id
-        # TODO: create account when user is created
-        try:
-            owner = self.account_queryset.get(user_id=userId)
-        except:
-            # create an account if not exist
-            self.account_queryset.create(user_id=userId)
+        owner = self.account_queryset.get(user_id=userId)
 
         # create a library
         library = self.queryset.create(owner=owner, name=request.data["name"])
-        serializer = self.serializer_class(library)
+        paper_ids = list(map(lambda paper: paper["paperId"], request.data["papers"]))
+        library.papers.set(paper_ids)
+
+        serializer = self.serializer_class(library, context={"request": request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    @check_library_access("edit")
     def share(self, request, *args, **kwargs):
         """
-        Shares a library with an account.
+        Shares or unshares a library with an account.
 
         Args:
             request: The HTTP request object.
@@ -202,7 +247,7 @@ class LibraryViewSet(viewsets.ModelViewSet):
             **kwargs: Arbitrary keyword arguments.
 
         Returns:
-            A Response object with a status code of 200 if the library was successfully shared, or a status code of 404 if either the library or account was not found.
+            A Response object with a status code of 200 if the library was successfully shared or unshared, or a status code of 404 if either the library or account was not found.
         """
         library_pk = kwargs["library_pk"]
         account_id = request.data["account_id"]
@@ -212,13 +257,16 @@ class LibraryViewSet(viewsets.ModelViewSet):
         lib = self.queryset.get(pk=library_pk)
         acc = self.account_queryset.get(pk=account_id)
         if lib and acc:
-            lib.sharedWith.add(acc)
+            if request.method == "POST":
+                lib.sharedWith.add(acc)
+            elif request.method == "DELETE":
+                lib.sharedWith.remove(acc)
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class PaperViewSet(viewsets.ViewSet):
+class LibraryPaperViewSet(viewsets.ViewSet):
     queryset = Paper.objects.all()
     library_queryset = Library.objects.all()
 
@@ -226,19 +274,26 @@ class PaperViewSet(viewsets.ViewSet):
 
     paper_service = PaperService()
 
+    @check_library_access("edit")
     def create(self, request, *args, **kwargs):
+        """
+        Adds multiple papers to a library.
+
+        Args:
+            request: The HTTP request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            A Response object with a status code of 201 if the papers were successfully added to the library, or a status code of 400 if any of the papers were not found.
+        """
         papers = [self.paper_service.get_paper_by_id(id) for id in request.data["ids"]]
         library = get_object_or_404(Library, pk=kwargs["library_pk"])
-        for paper in papers:
-            if paper is None:
-                return Response(
-                    status=status.HTTP_400_BAD_REQUEST,
-                    data={"error": "Paper not found"},
-                )
-            library.papers.add(paper)
+        library.papers.add(*papers)
         # TODO: check if just the primary key of the paper is returned otherwise do not return data
         serializer = self.serializer_class(library)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
     def add_to_libraries(self, request, *args, **kwargs):
         paperId = kwargs["paper_pk"]
@@ -253,6 +308,7 @@ class PaperViewSet(viewsets.ViewSet):
 
         return Response({"status": "success"})
 
+    @check_library_access("edit")
     def remove_from_libraries(self, request, *args, **kwargs):
         paperId = kwargs["paper_pk"]
         paper = self.paper_service.get_paper_by_id(paperId)
@@ -266,12 +322,14 @@ class PaperViewSet(viewsets.ViewSet):
 
         return Response({"status": "success"})
 
+    @check_library_access("edit")
     def destroy(self, request, *args, **kwargs):
         library = get_object_or_404(Library, pk=kwargs["library_pk"])
         paper = get_object_or_404(self.queryset, pk=kwargs["pk"])
         library.papers.remove(paper)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @check_library_access("edit")
     def move(self, request, *args, **kwargs):
         source_library = get_object_or_404(Library, pk=kwargs["library_pk"])
         target_library = get_object_or_404(Library, pk=request.data["targetLibraryId"])
@@ -393,7 +451,12 @@ class PaperViewSet(viewsets.ViewSet):
                     {
                         "multi_match": {
                             "query": query,
-                            "fields": ["title", "abstract", "tldr", "authors.name"], # TODO: authors.name is not working
+                            "fields": [
+                                "title",
+                                "abstract",
+                                "tldr",
+                                "authors.name",
+                            ],  # TODO: authors.name is not working
                             "fuzziness": "AUTO" if is_fuzzy else 0,
                         }
                     }

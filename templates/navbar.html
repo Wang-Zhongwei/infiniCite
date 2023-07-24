@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 <div class="navbar navbar-expand-lg">
   {% if user.is_authenticated %}
-    <div class="function-icon-container" id="menu-icon-container" data-menu-icon-btn>
-      <i class="bi bi-layout-sidebar icon"></i>
-    </div>
+  <div class="function-icon-container" id="menu-icon-container" data-menu-icon-btn>
+    <i class="bi bi-layout-sidebar icon"></i>
+  </div>
   {% endif %}
   <a class="navbar-brand" href="/">
     <img src="{%static 'assets/star-1.svg'%}" alt="logo" height="30" width="30">
@@ -16,29 +16,41 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-5">
       <li class="nav-item dropdown">
         <a class="nav-link" href="#">About</a>
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
-      <input id="search-box" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    {% if request.path != '/' %}
+    <form class="form-inline my-2 my-lg-0 nav-search-bar" action="{% url 'paper:search'%}">
+      <div class="autocompletion-container">
+        <input name="query" id="query-field" class="form-control search-box" type="text" placeholder="Search"
+          aria-label="Search" value="{{ query }}">
+        <ul id="autocomplete-results" class="autocomplete-active"></ul>
+      </div>
+      {% if searchPaper is null %}
+      <input type="hidden" name="searchPaper" value="true" id="paper-search">
+      {% else %}
+      <input type="hidden" name="searchPaper" value="{{ searchPaper }}" id="paper-search">
+      {% endif %}
+      <button class="btn btn-outline-success my-2 my-sm-0 ml-2" type="submit">Search</button>
     </form>
+    {% endif %}
 
     <ul class="navbar-nav ml-auto">
       {% if user.is_authenticated %}
       <li class="nav-item dropdown">
         <div class="dropdown">
-          <button type="button" class="btn btn-primary dropdown-toggle" role="menu" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-primary dropdown-toggle" role="menu" id="navbarDropdown"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle"></i> Account
           </button>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a>
-            <a class="dropdown-item" href="user/edit">Settings</a>
+            <a class="dropdown-item" href="{% url 'user:edit' %}">Settings</a>
           </div>
-        </div>        
+        </div>
       </li>
       {% else %}
       <li class="nav-item dropdown">

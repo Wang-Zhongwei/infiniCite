@@ -1,5 +1,6 @@
+from os import read
 from rest_framework import serializers
-
+from django.db.models import Q
 from author.serializers import SimpleAuthorSerializer, SimplePublicationVenueSerializer
 
 from .models import Library, Paper
@@ -12,9 +13,9 @@ class SimpleLibrarySerializer(serializers.ModelSerializer):
 
 
 class PaperSerializer(serializers.ModelSerializer):
-    libraries = SimpleLibrarySerializer(many=True, read_only=True)
+    libraries = serializers.SerializerMethodField()
     authors = SimpleAuthorSerializer(many=True, read_only=True)
-    publicationVenue = SimplePublicationVenueSerializer()
+    publicationVenue = SimplePublicationVenueSerializer(read_only=True)
 
     class Meta:
         model = Paper
@@ -33,6 +34,14 @@ class PaperSerializer(serializers.ModelSerializer):
             "fieldsOfStudy",
             "libraries",
         ]
+
+    def get_libraries(self, obj):
+        request = self.context.get("request")
+        return SimpleLibrarySerializer(
+            obj.libraries.filter(Q(owner__user=request.user) | Q(sharedWith__user=request.user)),
+            many=True,
+            read_only=True,
+        ).data
 
 
 class LibrarySerializer(serializers.ModelSerializer):
