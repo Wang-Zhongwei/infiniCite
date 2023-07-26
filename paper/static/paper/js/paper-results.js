@@ -2,25 +2,28 @@
 
 // @ts-nocheck
 const libraryList = document.querySelector(".library-list");
+const sharedLibraryList = document.querySelector(".shared-library-list");
 let selectedPaperId = "";
 
 function toggleLibraryCheckBox(showCheckbox, librariesToCheckIds = []) {
-  libraryList.querySelectorAll("input").forEach((input) => {
-    if (showCheckbox) {
-      input.removeAttribute("hidden");
-      if (
-        librariesToCheckIds.includes(parseInt(input.value)) ||
-        librariesToCheckIds.includes(input.value)
-      ) {
-        input.checked = true;
+  for (const list of [libraryList, sharedLibraryList]) {
+    list.querySelectorAll("input").forEach((input) => {
+      if (showCheckbox) {
+        input.removeAttribute("hidden");
+        if (
+          librariesToCheckIds.includes(parseInt(input.value)) ||
+          librariesToCheckIds.includes(input.value)
+        ) {
+          input.checked = true;
+        } else {
+          input.checked = false;
+        }
       } else {
         input.checked = false;
+        input.setAttribute("hidden", "");
       }
-    } else {
-      input.checked = false;
-      input.setAttribute("hidden", "");
-    }
-  });
+    });
+  }
   // display the confirm button
   const confirmBtn = document.querySelector(".confirm-save-to-libraries-btn");
   const cancelBtn = document.querySelector(".cancel-save-to-libraries-btn");
@@ -92,8 +95,12 @@ function confirmBtnOnClick() {
   const toSaveLibraryIds = newLibraryIds.filter(
     (id) => !oldLibraryIds.includes(id)
   );
-  batchRemove(selectedPaperId, toDeleteLibraryIds);
-  batchSave(selectedPaperId, toSaveLibraryIds);
+  if (toDeleteLibraryIds.length > 0) {
+    batchRemove(selectedPaperId, toDeleteLibraryIds);
+  }
+  if (toSaveLibraryIds.length > 0) {
+    batchSave(selectedPaperId, toSaveLibraryIds);
+  }
   toggleLibraryCheckBox(false);
   alert("Success!");
   toggleSidebarDimming(false);

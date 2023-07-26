@@ -230,7 +230,7 @@ class LibraryViewSet(viewsets.ModelViewSet):
 
         # create a library
         library = self.queryset.create(owner=owner, name=request.data["name"])
-        paper_ids = list(map(lambda paper: paper["paperId"], request.data["papers"]))
+        paper_ids = list(map(lambda paper: paper["paperId"], request.data.get("papers", [])))
         library.papers.set(paper_ids)
 
         serializer = self.serializer_class(library, context={"request": request})
@@ -384,7 +384,9 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         including_shared_libraries = body.get("including_shared_libraries", True)
         library_ids = body.get("library_ids", None)
 
-        if not library_ids:
+        is_superuser = request.user.is_superuser
+
+        if not library_ids and not is_superuser:
             library_ids = list(
                 self.library_queryset.filter(owner=request.user.account).values_list(
                     "id", flat=True
@@ -417,7 +419,7 @@ class LibraryPaperViewSet(viewsets.ViewSet):
                                     "bool": {"filter": {"terms": {"libraries.id": library_ids}}},
                                 },
                             },
-                        },
+                        } if not is_superuser else {"match_all": {}},
                     ],
                 }
             },

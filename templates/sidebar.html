@@ -176,6 +176,19 @@
           </a>
           {% endfor %}
         </div>
+        <div class="divider"></div>
+        <div class="shared-library-list">
+          {% for library in shared_libraries %}
+          <!-- TODO: add manage shared library options -->
+          <a href="{% url 'paper:library-paper-list' library_pk=library.id %}" class="link-block">
+            <div class="link3 shared-library-list">
+              <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
+              <i class="bi bi-globe-asia-australia icon small"></i>
+              <div class="label3"><label for="library-checkbox-{{library.id}}"></label>{{library.name}}</div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
         <div class="confirm-save-to-libraries-container">
           <div class="cancel-save-to-libraries-btn" title="cancel save paper" onclick="cancelBtnOnClick()" hidden>
             cancel
@@ -185,20 +198,6 @@
             confirm
           </button>
         </div>
-        <div class="divider"></div>
-        <div class="shared-library-list">
-          {% for library in shared_libraries %}
-          <!-- TODO: add manage shared library options -->
-          <a href="{% url 'paper:library-paper-list' library_pk=library.id %}" class="link-block">
-            <div class="link3 shared-library-list">
-              <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden checked>
-              <i class="bi bi-globe-asia-australia icon small"></i>
-              <div class="label3"><label for="library-checkbox-{{library.id}}"></label>{{library.name}}</div>
-            </div>
-          </a>
-          {% endfor %}
-        </div>
-
         <script>
           // TODO: maybe refactor the four actions 
           // library rename action

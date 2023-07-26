@@ -5,7 +5,7 @@ from author.models import Author
 from author.services import AuthorService, PublicationVenueService
 
 from paper.exceptions import SemanticAPIException
-from paper.models import Library, Paper
+from paper.models import Paper
 
 
 class PaperService:
@@ -61,7 +61,7 @@ class PaperService:
             publicationTypes=paper_data["publicationTypes"]
             if paper_data["publicationTypes"] is not None
             else [],
-            fieldsOfStudy=paper_data["fieldsOfStudy"],
+            fieldsOfStudy=paper_data.get("fieldsOfStudy") if paper_data.get("fieldsOfStudy") else [],
         )[0]
         if should_save:
             references_data = list(

@@ -4,28 +4,49 @@ from author.models import Author, PublicationVenue
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import Field
 
+
 class DenseVectorField(DEDField, Field):
-    name = 'dense_vector'
+    name = "dense_vector"
+
     def __init__(self, attr=None, **kwargs):
         dims = 768
-        super(DenseVectorField, self).__init__(attr=attr, dims=dims, **kwargs)
+        index = True
+        similarity = "l2_norm"
+        super(DenseVectorField, self).__init__(
+            attr=attr, dims=dims, index=index, similarity=similarity, **kwargs
+        )
+
+
+class RankFeatureField(DEDField, Field):
+    name = "rank_features"
+
+    def __init__(self, attr=None, **kwargs):
+        positive_score_impact = True
+        super(RankFeatureField, self).__init__(
+            attr=attr, positive_score_impact=positive_score_impact, **kwargs
+        )
+
 
 @registry.register_document
 class PaperDocument(Document):
+    # ml = fields.NestedField(
+    #     attr="ml",
+    #     properties={
+    #         "token": RankFeatureField(),
+    #     },
+    # )
+
     authors = fields.NestedField(
         properties={
-            "authorId": fields.TextField(),
-            "name": fields.TextField(),
-            "affiliations": fields.TextField(),
-            "paperCount": fields.IntegerField(),
-            "citationCount": fields.IntegerField(),
-            "hIndex": fields.IntegerField(),
+            "authorId": fields.KeywordField(),
+            "name": fields.TextField(fields={"keyword": fields.KeywordField()}),
         }
     )
 
     publicationVenue = fields.NestedField(
         properties={
-            "name": fields.TextField(),
+            "id": fields.KeywordField(),
+            "name": fields.TextField(fields={"keyword": fields.KeywordField()}),
             "type": fields.TextField(),
             "url": fields.TextField(),
             "alternate_names": fields.TextField(),
@@ -34,15 +55,35 @@ class PaperDocument(Document):
 
     libraries = fields.NestedField(
         properties={
-            "id": fields.TextField(),
+            "id": fields.KeywordField(),
             "name": fields.TextField(),
         }
     )
 
+    references = fields.NestedField(
+        properties={
+            "paperId": fields.KeywordField(),
+            "title": fields.TextField(),
+        }
+    )
+
+    citations = fields.NestedField(
+        properties={
+            "paperId": fields.KeywordField(),
+            "title": fields.TextField(),
+        }
+    )
+
     fieldsOfStudy = fields.ListField(fields.TextField())
-    embedding = DenseVectorField(attr='embedding')
+    embedding = DenseVectorField(attr="embedding")
     publicationTypes = fields.ListField(fields.TextField())
     publicationDate = fields.DateField()
+    title = fields.TextField(
+        fields={
+            "keyword": fields.KeywordField(),
+            "suggest": fields.CompletionField(),
+        }
+    )
 
     class Index:
         name = "paper-index"
@@ -50,9 +91,7 @@ class PaperDocument(Document):
     class Django:
         model = Paper
         fields = [
-            "paperId",
             "url",
-            "title",
             "abstract",
             "referenceCount",
             "citationCount",
@@ -72,6 +111,10 @@ class PaperDocument(Document):
     # this is optional but allows you to perform custom indexing
     def prepare_libraries(self, instance):
         return [{"id": library.id, "name": library.name} for library in instance.libraries.all()]
+
+    def prepare(self, instance):
+        data = super().prepare(instance)
+        return data
 
     def get_instances_from_related(self, related_instance):
         """If related_models is set, define how to retrieve the Paper instance(s) from the related model."""

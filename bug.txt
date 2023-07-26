@@ -1,2 +1,0 @@
-django.db.utils.IntegrityError: null value in column "publicationTypes" of relation "paper_paper" violates not-null constraint
-DETAIL:  Failing row contains (a2c68b2ffd053c451c4a283141b3c25f3f70e91c, https://www.semanticscholar.org/paper/a2c68b2ffd053c451c4a283141..., Laser Beam Propagation Through Random Media, Random Processes and Random Fields Optical Turbulence in the Atm..., {Physics}, 0, 3769, https://www.spiedigitallibrary.org/samples/PM152.pdf, {-0.8875422477722168,-4.732326507568359,1.4570066928863525,2.753..., , 1998-06-01, null, null).
