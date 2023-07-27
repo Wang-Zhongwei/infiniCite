@@ -41,12 +41,12 @@
       <div class="modal-content">
 
         <div class ="toggle-level">
-          <div role="button" tabindex="0" id="semanticButton">
+          <div role="button" tabindex="0" id="semanticButton" class="searchButton">
             <i class="bi bi-option"></i>
             Semantic Search
           </div>
 
-          <div role="button" tabindex="0" id="semanticButton">
+          <div role="button" tabindex="0" id="naturalLangButton" class="searchButton">
             <i class="bi bi-option"></i>
             Natural Language Search
           </div>
@@ -118,10 +118,6 @@
             </div>
           </div>
 
-          <div role="button" tabindex="0" id="semanticButton">
-            <i class="bi bi-option"></i>
-            SemanticSearch
-          </div>
 
         </div>
 
@@ -397,28 +393,41 @@
 
     // semantic search button
     document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('semanticButton').addEventListener('click', function() {
-      this.classList.toggle('active');
+    var buttons = document.getElementsByClassName('searchButton');
+    for (var j = 0; j < buttons.length; j++) {
+        buttons[j].addEventListener('click', function() {
+            var wasActive = this.classList.contains('active');
 
-      var btnGroups = document.getElementsByClassName('btn-group');
-      for (var i = 0; i < btnGroups.length; i++) {
-        if(btnGroups[i].style.display === 'none'){
-          btnGroups[i].style.display = '';
-        }else{
-          btnGroups[i].style.display = 'none';
-        }
-      }
-      
-      var otherButtons = document.querySelectorAll('#myButton, #authorButton');
-      for (var i = 0; i < otherButtons.length; i++) {
-        if(otherButtons[i].style.display === 'none'){
-          otherButtons[i].style.display = '';
-        }else{
-          otherButtons[i].style.display = 'none';
-        }
-      }
-    });
-  });
+            // Remove 'active' class from all buttons
+            for (var k = 0; k < buttons.length; k++) {
+                buttons[k].classList.remove('active');
+            }
+            // If the button wasn't active before, add 'active' class to it
+            if (!wasActive) {
+                this.classList.add('active');
+            }
+
+            var btnGroups = document.getElementsByClassName('btn-group');
+            for (var i = 0; i < btnGroups.length; i++) {
+                if(!this.classList.contains('active')){
+                    btnGroups[i].style.display = '';
+                }else{
+                    btnGroups[i].style.display = 'none';
+                }
+            }
+            
+            var otherButtons = document.querySelectorAll('#myButton, #authorButton');
+            for (var i = 0; i < otherButtons.length; i++) {
+                if(!this.classList.contains('active')){
+                    otherButtons[i].style.display = '';
+                }else{
+                    otherButtons[i].style.display = 'none';
+                }
+            }
+        });
+    }
+});
+
   </script>
   {% block js %}
   {% endblock %}
