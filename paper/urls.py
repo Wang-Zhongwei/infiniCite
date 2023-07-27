@@ -57,5 +57,10 @@ urlpatterns = [
         LibraryPaperViewSet.as_view({"get": "semantic_search"}),
         name="paper-semantic-search",
     ),
+    path(
+        "api/paper/natural-language-search/",
+        LibraryPaperViewSet.as_view({"get": "natural_language_search"}),
+        name="paper-natural-language-search",
+    ),
     path("paper/home_page.html", views.home_page, name="home_page"),
 ]

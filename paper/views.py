@@ -1,4 +1,6 @@
+from email.errors import MessageError
 from django.http import HttpResponseForbidden, JsonResponse
+from numpy import size
 import requests
 import json
 from django.shortcuts import get_object_or_404, redirect, render
@@ -21,6 +23,7 @@ from .serializers import LibrarySerializer, PaperSerializer
 from infiniCite.settings import ELASTICSEARCH_CLIENT as es
 from infiniCite.settings import MODEL as model
 from infiniCite.settings import TOKENIZER as tokenizer
+from infiniCite.settings import OPENAI_CLIENT as oa
 
 from functools import wraps
 from django.http import HttpResponseForbidden
@@ -63,7 +66,6 @@ def handle_search(request, query, page, searchPaper):
         return redirect("paper:index")
 
 
-
 def search_papers(query, page=1):
     data = paper_service.search_external_papers(query, page)
     total = data.get("total", 0)
@@ -104,7 +106,6 @@ def search_authors(query, page=1):
     }
 
 
-
 def autocomplete(request):
     query = request.GET.get("query")
     if query:
@@ -112,7 +113,8 @@ def autocomplete(request):
         return JsonResponse(paper_service.autocomplete(query), safe=False)
     else:
         return redirect("index")  # redirect to index view
-    
+
+
 def home_page(request):
     account = request.user.account
     libraries = Library.objects.filter(owner=account)
@@ -122,19 +124,22 @@ def home_page(request):
         libraryPapers = library.papers.all().values()
         libraryPapersIds = []
         for paper in libraryPapers:
-            libraryPapersIds.append(paper['paperId'])
-        if len(libraryPapersIds) > 0:          
+            libraryPapersIds.append(paper["paperId"])
+        if len(libraryPapersIds) > 0:
             recommendation = getRecommendation(libraryPapersIds)
             list_libraryPaperRec.append((libraryName, recommendation))
     print(list_libraryPaperRec)
-    return render(request, 'paper/home_page.html', {'library_paper_recommendations': list_libraryPaperRec})
+    return render(
+        request, "paper/home_page.html", {"library_paper_recommendations": list_libraryPaperRec}
+    )
+
 
 def getRecommendation(Ids):
-    RECOMMENDATION = 'http://api.semanticscholar.org/recommendations/v1/papers/?limit=1&fields=authors,title,abstract,publicationTypes,url,publicationVenue'
+    RECOMMENDATION = "http://api.semanticscholar.org/recommendations/v1/papers/?limit=1&fields=authors,title,abstract,publicationTypes,url,publicationVenue"
     body = {
-        'positivePaperIds': Ids,
+        "positivePaperIds": Ids,
     }
-    response = requests.request("POST", RECOMMENDATION, data = json.dumps(body))
+    response = requests.request("POST", RECOMMENDATION, data=json.dumps(body))
     return response.json()
 
 
@@ -294,7 +299,6 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(library)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
     def add_to_libraries(self, request, *args, **kwargs):
         paperId = kwargs["paper_pk"]
         paper = self.paper_service.get_paper_by_id(paperId)
@@ -350,12 +354,68 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         )
 
     def search(self, request, *args, **kwargs):
-        hits = self._perform_search(request, is_semantic=False)
+        params = self._get_params_from_request(request)
+        params.update(self._get_auth_params_from_request(request))
+
+        hits = self._perform_search(params, is_semantic=False)
         return Response(hits, status=status.HTTP_200_OK)
 
     def semantic_search(self, request, *args, **kwargs):
-        hits = self._perform_search(request, is_semantic=True)
+        params = self._get_params_from_request(request)
+        params.update(self._get_auth_params_from_request(request))
+
+        hits = self._perform_search(params, is_semantic=True)
         return Response(hits, status=status.HTTP_200_OK)
+
+    def natural_language_search(self, request, *args, **kwargs):
+        prompt = request.query_params.get("prompt", None)
+        if not prompt:
+            raise ValueError("No message provided in the request body")
+
+        # do traditional search first
+        try:
+            params = self._get_params_from_llm(prompt)
+        except NoFunctionCallError as e:
+            return Response(
+                {"error": str(e), "summary": "Sorry this does not seem like a query. Try changing how you frame your question?"}, status=status.HTTP_400_BAD_REQUEST
+            )  # TODO: prompt user to modify input
+
+        params.update(self._get_auth_params_from_request(request))
+
+        hits = self._perform_search(params, is_semantic=False)
+
+        summary = self.summarize_results(prompt, hits)
+        return Response({
+            "summary": summary,
+            "source": hits,
+        }, status=status.HTTP_200_OK)
+
+    def summarize_results(self, prompt, results):
+        messages = [
+            {
+                "role": "user",
+                "content": f"""Write a summary collated from this collection of key points extracted from an academic paper.
+                        The summary should highlight the core argument, conclusions and evidence, and answer the user's query.\n
+                        User query: {prompt}\n
+                        The summary should be structured in bulleted lists following the headings Core Argument, Evidence, and Conclusions. Include url as reference if url is present. \n""",
+            }
+        ]
+
+        for i, result in enumerate(results):
+            messages.append(
+                {
+                    "role": "system",
+                    "content": f"""{i + 1}-th result has score {result["_score"]}\n
+                        title: {result["_source"]['title']}\n
+                        abstract: {result["_source"]['abstract']}\n
+                        tldr: {result["_source"]['tldr']}\n
+                        url: {result["_source"]["url"]}""",
+                }
+            )
+
+        response = oa.create(model="gpt-3.5-turbo", messages=messages, temperature=0.3)
+        print(response)
+        return response.choices[0].message.content
 
     def _embed_queries(self, queries):
         inputs = tokenizer(
@@ -372,18 +432,8 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         embeddings = outputs.last_hidden_state[:, 0, :].detach().numpy()
         return embeddings
 
-    def _perform_search(self, request, is_semantic):
-        query_params = request.query_params
-        query = query_params.get("query", None)
-        sort_by = query_params.get("sort_by", None)
-        is_descent = "desc" in query_params
-
-        body = request.data
-        is_fuzzy = body.get("is_fuzzy", True)
-        is_title_only = body.get("is_title_only", False)
-        including_shared_libraries = body.get("including_shared_libraries", True)
-        library_ids = body.get("library_ids", None)
-
+    def _get_auth_params_from_request(self, request):
+        library_ids = request.data.get("library_ids", None)
         is_superuser = request.user.is_superuser
 
         if not library_ids and not is_superuser:
@@ -395,39 +445,157 @@ class LibraryPaperViewSet(viewsets.ViewSet):
                 self.library_queryset.filter(sharedWith=request.user.account).values_list(
                     "id", flat=True
                 )
-                if including_shared_libraries
-                else []
             )
+        return {
+            "library_ids": library_ids,
+            "is_superuser": is_superuser,
+        }
 
-        if sort_by not in VALID_SORT_BYS or sort_by == "title":
+    def _get_params_from_request(self, request):
+        query_params = request.query_params
+        query = query_params.get("query", None)
+        sort_by = query_params.get("sort_by", None)
+        order = query_params.get("order", "desc")
+
+        body = request.data
+        is_fuzzy = body.get("is_fuzzy", True)
+        is_title_only = body.get("is_title_only", False)
+        _from = body.get("from", 0)
+        size = body.get("size", 20)
+
+        if sort_by not in VALID_SORT_BYS:
             sort_by = "citationCount"  # default ordering
+        elif sort_by == "title":
+            sort_by = "title.keyword"
+
+        if order not in ["asc", "desc"]:
+            order = "desc"
+
+        return {
+            "query": query,
+            "sort_by": sort_by,
+            "order": order,
+            "is_fuzzy": is_fuzzy,
+            "is_title_only": is_title_only,
+            "size": size,
+            "from": _from,
+        }
+
+    def _get_params_from_llm(self, prompt):
+        default_params = {
+            "is_fuzzy": True,
+            "is_title_only": False,
+            "order": "desc",
+            "sort_by": "citationCount",
+            "from": 0,
+            "size": 5,
+        }
+
+        completion = oa.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant to researchers"},
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
+            ],
+            functions=[
+                {
+                    "name": "search",
+                    "description": "Search function that queries elasticsearch for articles based on the given parameters",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {"type": "string", "description": "The search query"},
+                            "is_title_only": {
+                                "type": "boolean",
+                                "description": "Whether to search only in the title of the articles",
+                            },
+                            "is_fuzzy": {
+                                "type": "boolean",
+                                "description": "Whether to use fuzzy search or not",
+                            },
+                            "sort_by": {
+                                "type": "string",
+                                "enum": [
+                                    "title.keyword",
+                                    "publicationDate",
+                                    "citationCount",
+                                    "referenceCount",
+                                ],
+                                "description": "The field to sort the results by",
+                            },
+                            "order": {
+                                "type": "string",
+                                "enum": ["asc", "desc"],
+                                "description": "The order to sort the results in",
+                            },
+                            "from": {
+                                "type": "integer",
+                                "description": "The index of the first result to return",
+                            },
+                            "size": {
+                                "type": "integer",
+                                "description": "The number of results to return",
+                            },
+                        },
+                        "required": ["query"],
+                    },
+                }
+            ],
+        )
+        choice = completion.choices[0]
+        if choice.finish_reason == "function_call":
+            default_params.update(json.loads(choice.message.function_call.arguments))
+            return default_params
+        else:
+            raise NoFunctionCallError("No function call was made")
+
+    def _perform_search(self, params, is_semantic):
+        query = params.get("query")
+        sort_by = params.get("sort_by")
+        order = params.get("order")
+        is_fuzzy = params.get("is_fuzzy")
+        is_title_only = params.get("is_title_only")
+        size = params.get("size")
+        _from = params.get("from")
+
+        library_ids = params.get("library_ids")
+        is_superuser = params.get("is_superuser")
 
         query_config = {
             "_source": {
                 "excludes": [
                     "embedding",
-                    "tldr",
-                ]  # exclude fields that won't be displayed in the frontend
+                ]
             },
             "query": {
                 "bool": {
                     "must": [
                         {
-                            "nested": {  # if necessary set libraries type as nested
+                            "nested": {
                                 "path": "libraries",
                                 "query": {
-                                    "bool": {"filter": {"terms": {"libraries.id": library_ids}}},
+                                    "bool": {
+                                        "filter": {
+                                            "terms": {"libraries.id": library_ids, "boost": 0.0}
+                                        }
+                                    },
                                 },
                             },
-                        } if not is_superuser else {"match_all": {}},
+                        }
+                        if not is_superuser
+                        else {"match_all": {"boost": 0.0}},
                     ],
+                    "should": [],
                 }
             },
-            "size": 30,  # limit to 30 results
-            "from": 0,  # start from the first result
+            "size": size,
+            "from": _from,
             "sort": [
                 {"_score": {"order": "desc"}},
-                {sort_by: {"order": "desc" if is_descent else "asc"}},
+                {sort_by: {"order": order}},
             ],
         }
 
@@ -435,12 +603,12 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             embedding = self._embed_queries([query])
             query_config["query"]["bool"]["must"].extend(
                 [
-                    {"exists": {"field": "embedding"}},
+                    {"exists": {"field": "embedding", "boost": 0.0}},
                     {
                         "script_score": {
                             "query": {"match_all": {}},
                             "script": {
-                                "source": "cosineSimilarity(params.query_vector, 'embedding') + 1.0",
+                                "source": "(cosineSimilarity(params.query_vector, 'embedding') + 1.0) / 2.0",
                                 "params": {"query_vector": list(embedding[0])},
                             },
                         },
@@ -448,7 +616,7 @@ class LibraryPaperViewSet(viewsets.ViewSet):
                 ]
             )
         else:
-            query_config["query"]["bool"]["must"].extend(
+            query_config["query"]["bool"]["should"].extend(
                 [
                     {
                         "multi_match": {
@@ -457,20 +625,35 @@ class LibraryPaperViewSet(viewsets.ViewSet):
                                 "title",
                                 "abstract",
                                 "tldr",
-                                "authors.name",
-                            ],  # TODO: authors.name is not working
+                            ],
                             "fuzziness": "AUTO" if is_fuzzy else 0,
+                            "boost": 0.6,
                         }
-                    }
-                    if not is_title_only
-                    else {"match": {"title": {"query": query, "fuzziness": "AUTO"}}},
+                    },
+                    {
+                        "nested": {
+                            "path": "authors",
+                            "query": {
+                                "match": {
+                                    "authors.name": {
+                                        "query": query,
+                                        "fuzziness": "AUTO" if is_fuzzy else 0,
+                                    }
+                                }
+                            },
+                            "boost": 0.4,
+                        }
+                    },
                 ]
+                if not is_title_only
+                else [{"match": {"title": {"query": query, "fuzziness": "AUTO"}}}],
             )
             query_config["highlight"] = {
                 "fields": {
                     "title": {},
                     "abstract": {},
-                    "authors": {},
+                    "tldr": {},
+                    "authors.name": {},
                 }
             }
 
