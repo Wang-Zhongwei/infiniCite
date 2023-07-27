@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'paper/css/home-page.css'%}">
+{% endblock %}
+
+{% block content %}
+{% for library, recommendations in library_paper_recommendations %}
+<div class="libraries">
+  <h3>New Recommendation for {{ library }}</h3>
+  <ul class="papers-list">
+    {% for recommendation in recommendations.recommendedPapers %}
+    <li class="paper" paper-id="{{ paper.paperId }}">
+      <div class="paperInRecommendation">
+        <h2>
+          <a href="{{ recommendation.url }}">
+            {{ recommendation.title }}
+          </a>
+        </h2>
+        <div class="authors">
+          {% for author in recommendation.authors %}
+          {{ author.name }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div class="publication-venue">
+          <a href="{{recommendation.publicationVenue.url}}">
+            {{ recommendation.publicationVenue.name }}
+          </a>
+        </div>
+        <div class="paper-options-container">
+          <div class="types">
+            {% for type in recommendation.publicationTypes %}
+            <span class="type-tag">
+              {% if type == 'JournalArticle' %}
+              Journal
+              {% else %}
+              {{ type }}
+              {% endif %}
+            </span>
+            {% endfor %}
+          </div>
+          {% if user.is_authenticated %}
+          <div class="function-icon-container">
+            <i class="bi bi-bookmark-plus" onclick="savePaper('{{ recommendation.paperId }}')"></i>
+          </div>
+          {% endif %}
+        </div>
+        <p class="abstract">
+          {{ recommendation.abstract }}
+        </p>
+        <div id="graph-section-{{ paper.paperId }}" name="graph-section"></div>
+      </div>
+</div>
+</li> 
+{% endfor %}
+</ul>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'paper/js/paper-results.js' %}"></script>
+{% endblock %}

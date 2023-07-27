@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from config.django_config import SECRET_KEY
 from config.elastic_config import ELASTICSEARCH_DSL
+from config.api_keys import OPENAI_API_KEY
 import os
+import openai
 from elasticsearch import Elasticsearch
 from transformers import AutoTokenizer, AutoModel
 
@@ -40,6 +42,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = SECRET_KEY
+
+openai.api_key = OPENAI_API_KEY
+OPENAI_CLIENT = openai.ChatCompletion
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -174,7 +179,6 @@ LOGGING = {
 }
 
 # SESSION_COOKIE_AGE=86400
-
 
 # Added for pillow to work
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

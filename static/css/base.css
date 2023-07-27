@@ -81,7 +81,6 @@ main {
   background-color: rgb(0, 0, 0);
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
 }
 
 .modal .modal-content{
@@ -92,17 +91,17 @@ main {
   margin-bottom: 0px;
   top: 50px;
   width: 75%;
-  height: 90px;
-  min-height: 50px;
+  min-height: 90px;
   max-height: 80vh;
   transform: translate3d(0px, 0px, 0px);
-  max-width: 660px;
+  max-width: 760px;
   opacity: 90%;
   margin: auto;
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 1s;
   animation-name: animatetop;
   animation-duration: 1s;
+  border-color: rgb(255, 255, 255,0.4);
 }
 
 
@@ -149,7 +148,6 @@ color: rgb(251, 249, 249,0.4);
   height: 2px;
   position: relative;
   opacity: 20%;
-  margin-bottom: 5px;
 }
 
 .toggle-level .btn-group button, .modal .modal-content .toggle-level div[role="button"] {
@@ -176,6 +174,8 @@ color: rgb(251, 249, 249,0.4);
 }
 
 .modal .modal-content .toggle-level{
+  padding-top: 8px;
+  padding-bottom: 8px;
   align-items: center;
   justify-content: center;
 }
@@ -212,9 +212,29 @@ color: rgb(251, 249, 249,0.4);
 
 .btn-group .dropdown-menu input[type="text"] {
   font-size: 13px;
-  padding: 9px;
+  padding: 8px;
 }
 
 .btn-group .dropdown-menu .dropdown-item i {
   margin-left: 0px;
+}
+
+.modal .modal-content .autosearch-level{
+  background-color:rgb(37,37,37); ;
+  border-radius: 12px;
+
+}
+
+.modal .modal-content .autosearch-level ul{
+  margin-left: -10px;
+  margin-bottom: 10px;
+}
+
+.modal .modal-content .autosearch-level li{
+  color: rgb(248, 245, 245,0.4);
+  font-size: 15px;
+}
+
+.modal .modal-content .autosearch-level li:hover{
+  background-color: #aaa;
 }

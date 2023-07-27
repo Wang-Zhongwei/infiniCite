@@ -1,3 +1,4 @@
+// @ts-nocheck
 // get the data
 
 const nodes = JSON.parse(document.getElementById('nodes').textContent);

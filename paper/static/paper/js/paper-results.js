@@ -2,25 +2,28 @@
 
 // @ts-nocheck
 const libraryList = document.querySelector(".library-list");
+const sharedLibraryList = document.querySelector(".shared-library-list");
 let selectedPaperId = "";
 
 function toggleLibraryCheckBox(showCheckbox, librariesToCheckIds = []) {
-  libraryList.querySelectorAll("input").forEach((input) => {
-    if (showCheckbox) {
-      input.removeAttribute("hidden");
-      if (
-        librariesToCheckIds.includes(parseInt(input.value)) ||
-        librariesToCheckIds.includes(input.value)
-      ) {
-        input.checked = true;
+  for (const list of [libraryList, sharedLibraryList]) {
+    list.querySelectorAll("input").forEach((input) => {
+      if (showCheckbox) {
+        input.removeAttribute("hidden");
+        if (
+          librariesToCheckIds.includes(parseInt(input.value)) ||
+          librariesToCheckIds.includes(input.value)
+        ) {
+          input.checked = true;
+        } else {
+          input.checked = false;
+        }
       } else {
         input.checked = false;
+        input.setAttribute("hidden", "");
       }
-    } else {
-      input.checked = false;
-      input.setAttribute("hidden", "");
-    }
-  });
+    });
+  }
   // display the confirm button
   const confirmBtn = document.querySelector(".confirm-save-to-libraries-btn");
   const cancelBtn = document.querySelector(".cancel-save-to-libraries-btn");
@@ -43,6 +46,22 @@ function showSidebar() {
   const libraryContainer = document.querySelector("#library-links-container");
   if (!libraryContainer.classList.contains("show")) {
     libraryContainer.classList.add("show");
+  }
+  toggleSidebarDimming(true);
+}
+
+function toggleSidebarDimming(dim) {
+  const aside = document.querySelector("aside");
+  if (dim) {
+    // set the z-index of the sidebar to 2 above the dimmer
+    aside.style.zIndex = "2";
+    // dim the other areas
+    const dimmer = document.createElement("div");
+    dimmer.classList.add("dimmer");
+    document.body.appendChild(dimmer);
+  } else {
+    aside.style.zIndex = "0";
+    document.body.removeChild(document.querySelector(".dimmer"));
   }
 }
 
@@ -76,10 +95,15 @@ function confirmBtnOnClick() {
   const toSaveLibraryIds = newLibraryIds.filter(
     (id) => !oldLibraryIds.includes(id)
   );
-  batchRemove(selectedPaperId, toDeleteLibraryIds);
-  batchSave(selectedPaperId, toSaveLibraryIds);
+  if (toDeleteLibraryIds.length > 0) {
+    batchRemove(selectedPaperId, toDeleteLibraryIds);
+  }
+  if (toSaveLibraryIds.length > 0) {
+    batchSave(selectedPaperId, toSaveLibraryIds);
+  }
   toggleLibraryCheckBox(false);
   alert("Success!");
+  toggleSidebarDimming(false);
 }
 
 function getOldLibraryIds(paperId) {
@@ -96,7 +120,10 @@ function getOldLibraryIds(paperId) {
 
 function getNewLibraryIds() {
   const newLibraryIds = [];
-  libraryList.querySelectorAll("input").forEach((input) => {
+  const libraryLinksContainer = document.querySelector(
+    "#library-links-container"
+  );
+  libraryLinksContainer.querySelectorAll("input").forEach((input) => {
     if (input.checked) {
       newLibraryIds.push(Number(input.value));
     }
@@ -117,12 +144,18 @@ function managePaperOnClick(paperId) {
 
 function removePaperOnClick(paperId, libraryId) {
   if (libraryId) {
-    const libraryName = document.getElementById(`library-checkbox-${libraryId}`).title;
-    if (confirm(`Are you sure you want to remove this paper from ${libraryName}?`)) {
+    const libraryName = document.getElementById(
+      `library-checkbox-${libraryId}`
+    ).title;
+    if (
+      confirm(`Are you sure you want to remove this paper from ${libraryName}?`)
+    ) {
       removePaper(paperId, libraryId);
     }
   } else {
-    if (confirm("Are you sure you want to remove this paper from all libraries?")) {
+    if (
+      confirm("Are you sure you want to remove this paper from all libraries?")
+    ) {
       batchRemove(paperId, getOldLibraryIds(paperId));
     }
   }
@@ -142,11 +175,11 @@ function batchRemove(paperId, libraryIds) {
     }),
     headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
   })
-  .then(modifyPaperLibraryList(paperId, libraryIds))
-  .catch((err) => {
-    console.log(err);
-    alert("Error deleting paper!");
-  });
+    .then(modifyPaperLibraryList(paperId, libraryIds))
+    .catch((err) => {
+      console.log(err);
+      alert("Error deleting paper!");
+    });
 }
 
 function removePaper(paperId, libraryId) {
@@ -167,6 +200,7 @@ function removePaper(paperId, libraryId) {
 function cancelBtnOnClick() {
   selectedPaperId = "";
   toggleLibraryCheckBox(false);
+  toggleSidebarDimming(false);
 }
 
 // TODO: implement this

@@ -18,10 +18,9 @@
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-
-
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/autocompletion.css' %}">
   {% block css %}
   {% endblock %}
   <title>InfiniCite</title>
@@ -40,9 +39,25 @@
 
     <div id="myModal" class="modal">
       <div class="modal-content">
+
+        <div class ="toggle-level">
+          <div role="button" tabindex="0" id="semanticButton">
+            <i class="bi bi-option"></i>
+            Semantic Search
+          </div>
+
+          <div role="button" tabindex="0" id="semanticButton">
+            <i class="bi bi-option"></i>
+            Natural Language Search
+          </div>
+
+        </div>
+
+        <div class="searchbar-divider"> </div>
+
         <div class="search-level">
           <i class="bi bi-search icon"></i>
-          <input type="text" placeholder="Search...">
+          <input type="text" placeholder="Search..." id="query-field1">
         </div>
 
         <div class="searchbar-divider"> </div>
@@ -84,7 +99,7 @@
               <input type="text" placeholder="Search libraries..." id="searchBar-in">
 
               {% for library in libraries %}
-              <a class="dropdown-item" href="#" data-library-name="{{ library.name }}" library-id ="{{ library.id }}">
+              <a class="dropdown-item" href="#" data-library-name="{{ library.name }}" library-id="{{ library.id }}">
                 <i class="bi bi-folder"></i>
                 {{library.name}}
               </a>
@@ -103,7 +118,17 @@
             </div>
           </div>
 
+          <div role="button" tabindex="0" id="semanticButton">
+            <i class="bi bi-option"></i>
+            SemanticSearch
+          </div>
+
         </div>
+
+        <div class="autosearch-level">
+          <ul id="autocomplete-results1" class="autocomplete-active"></ul>
+        </div>
+
       </div>
     </div>
 
@@ -112,6 +137,7 @@
       {% endblock %}
     </main>
   </section>
+  <script src="{% static 'js/autocompletion.js' %}"></script>
   <script>
     const menuIconButton = document.querySelector("[data-menu-icon-btn]")
     // const sidebar = document.querySelector("[data-sidebar]")
@@ -213,6 +239,7 @@
     });
 
     var libraryID = null;
+    let libraryIDArray = []
 
     $(document).ready(function () {
       // Event listener for dropdown item click
@@ -230,7 +257,8 @@
         if (parentID === 'dropdownMenuButton') {
           $('#' + parentID).html('<i class="bi bi-file-earmark"></i>' + 'In: ' + selectedText);
           $('#' + parentID).addClass('active');
-          libraryID = $(this).attr('library-id')
+          libraryID = $(this).attr('library-id');
+          libraryIDArray.push(libraryID);
         }
       });
     });
@@ -245,43 +273,152 @@
       });
     });
 
-// Adding event listener to the search input in the search-level
-document.querySelector('.search-level input').addEventListener('keypress', function (e) {
-  if (e.key === 'Enter') {
-    // If Enter key is pressed
+    // Adding event listener to the search input in the search-level
+    document.querySelector('.search-level input').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        // If Enter key is pressed
 
-    const queryParam1 = document.querySelector('.search-level input').value; // Get value of the search input
-    const selectedSort = document.querySelector('#dropdownMenuButton1').innerText.trim(); // Get selected item in 'Sort'
+        const queryParam1 = document.querySelector('.search-level input').value; // Get value of the search input
+        const selectedSort = document.querySelector('#dropdownMenuButton1').innerText.trim(); // Get selected item in 'Sort'
+        const titleOnly = document.querySelector('#myButton').classList.contains('active'); // Get whether 'title only' is active
 
-    const titleOnly = document.querySelector('#myButton').classList.contains('active'); // Get whether 'title only' is active
+        // Prepare query params
+        const params = new URLSearchParams({
+          query: queryParam1,
+          sort_by: selectedSort,
+        });
+        // Prepare request body
+        const body = {
+          is_title_Only: titleOnly,
+          library_ids: libraryIDArray,
+        };
 
-    const body1 = {
-      is_title_Only: titleOnly,
-      library_ids: libraryID,
-    };
-    console.log(titleOnly);
-    console.log(libraryID);
-
-    const params = new URLSearchParams({
-      query: queryParam1,
-      sort_by: selectedSort,
-      is_title_Only: titleOnly,
-      library_ids: libraryID,
+        fetch(`/api/paper/search/?` + params, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+        })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      }
     });
-    console.log(queryParam1);
-    console.log(selectedSort);
 
-    fetch(`/api/paper/search/?` + params, {
-      method: 'GET',
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
-});
 
+    const debounce1 = (callback, delay) => {
+      let timerId;
+
+      return (...args) => {
+        clearTimeout(timerId);
+        timerId = setTimeout(() => {
+          callback.apply(this, args);
+        }, delay);
+      };
+    };
+
+    const inputField1 = document.querySelector('#query-field1');
+    const resultsList1 = document.querySelector('#autocomplete-results1');
+
+    const debounceAutocomplete1 = debounce1((event) => {
+
+      const queryParam1 = document.querySelector('.search-level input').value; // Get value of the search input
+        const selectedSort = document.querySelector('#dropdownMenuButton1').innerText.trim(); // Get selected item in 'Sort'
+        const titleOnly = document.querySelector('#myButton').classList.contains('active'); // Get whether 'title only' is active
+
+        // Prepare query params
+        const params = new URLSearchParams({
+          query: queryParam1,
+          sort_by: selectedSort,
+        });
+        // Prepare request body
+        const body = {
+          is_title_only: titleOnly,
+          library_ids: libraryIDArray,
+        };
+        console.log(params)
+        console.log(body)
+
+        fetch(`/api/paper/search/?` + params, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+        })
+        .then(response => response.json())
+        .then(data => {
+          resultsList1.innerHTML = '';
+
+          console.log(data);
+          // Check if data is an array
+          if (Array.isArray(data)) {
+
+            // Populate the results in the dropdown
+            data.forEach((result, index) => {
+
+              const li = document.createElement('li');
+              const paperTitle = document.createElement('div');
+              const authorsYear = document.createElement('div');
+              paperTitle.classList.add('paperTitle');
+              authorsYear.classList.add('authorsYear');
+
+              paperTitle.innerText = result._source.title;
+
+              const authors = result._source.authors.map(author => author.name).join(', ');
+              const year = new Date(result._source.publicationDate).getFullYear();
+              authorsYear.innerText = `${authors} (${year})`;
+
+              li.addEventListener('click', () => {
+                inputField1.value = result._source.title;
+                resultsList1.innerHTML = '';
+              });
+
+
+              li.appendChild(paperTitle);
+              li.appendChild(authorsYear);
+              resultsList1.appendChild(li);
+            });
+
+            // Show the results dropdown if there are suggestions
+            if (data.length > 0) {
+              //resultsList.style.display = 'block';
+            }
+          } else {
+            // Handle the case when data is not an array
+            console.error('Invalid response format');
+          }
+        });
+
+      // Call your autocomplete API here with the query
+      console.log(`Calling autocomplete API with query: ${queryParam1}`);
+    }, 300);
+
+    inputField1.addEventListener('input', debounceAutocomplete1);
+
+    // semantic search button
+    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('semanticButton').addEventListener('click', function() {
+      this.classList.toggle('active');
+
+      var btnGroups = document.getElementsByClassName('btn-group');
+      for (var i = 0; i < btnGroups.length; i++) {
+        if(btnGroups[i].style.display === 'none'){
+          btnGroups[i].style.display = '';
+        }else{
+          btnGroups[i].style.display = 'none';
+        }
+      }
+      
+      var otherButtons = document.querySelectorAll('#myButton, #authorButton');
+      for (var i = 0; i < otherButtons.length; i++) {
+        if(otherButtons[i].style.display === 'none'){
+          otherButtons[i].style.display = '';
+        }else{
+          otherButtons[i].style.display = 'none';
+        }
+      }
+    });
+  });
   </script>
   {% block js %}
   {% endblock %}

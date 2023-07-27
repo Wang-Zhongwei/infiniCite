@@ -19,10 +19,10 @@
       <div class="overline2">Main</div>
     </div>
 
-    <div class="link">
+    <a href="{%url 'paper:home_page' %}" class="link">
       <i class="bi bi-house icon"></i>
       <div class="label">Home</div>
-    </div>
+    </a>
 
     <div class="link">
       <i class="bi bi-search icon"></i>
@@ -161,7 +161,6 @@
                     <i class="bi bi-trash icon small"></i>
                     &nbsp; Delete
                   </div>
-                  <!-- TODO: duplicate papers along with library -->
                   <div class="dropdown-item library-option duplicate" onclick="handleDuplicateLibrary(event)">
                     <i class="bi bi-files icon small"></i>
                     &nbsp; Duplicate
@@ -177,6 +176,19 @@
           </a>
           {% endfor %}
         </div>
+        <div class="divider"></div>
+        <div class="shared-library-list">
+          {% for library in shared_libraries %}
+          <!-- TODO: add manage shared library options -->
+          <a href="{% url 'paper:library-paper-list' library_pk=library.id %}" class="link-block">
+            <div class="link3 shared-library-list">
+              <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
+              <i class="bi bi-globe-asia-australia icon small"></i>
+              <div class="label3"><label for="library-checkbox-{{library.id}}"></label>{{library.name}}</div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
         <div class="confirm-save-to-libraries-container">
           <div class="cancel-save-to-libraries-btn" title="cancel save paper" onclick="cancelBtnOnClick()" hidden>
             cancel
@@ -186,18 +198,6 @@
             confirm
           </button>
         </div>
-        <div class="divider"></div>
-        <div class="shared-library-list">
-          {% for library in shared_libraries %}
-          <!-- TODO: add manage shared library options -->
-          <div class="link3 shared-library-list">
-            <input type="checkbox" id="library-checkbox-{{library.id}}" value="{{library.id}}" hidden>
-            <i class="bi bi-globe-asia-australia icon small"></i>
-            <div class="label3"><label for="library-checkbox-{{library.id}}"></label>{{library.name}}</div>
-          </div>
-          {% endfor %}
-        </div>
-
         <script>
           // TODO: maybe refactor the four actions 
           // library rename action
@@ -254,7 +254,7 @@
           }
 
           // library share action
-          function handleLibraryShare(event) {
+          function handleShareLibrary(event) {
             event.preventDefault();
             const libraryId = event.target.closest('.link3').querySelector('input[type="checkbox"]').value;
             const email = prompt('Enter the email of the user you want to share the library with:');
