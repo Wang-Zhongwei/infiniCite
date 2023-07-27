@@ -13,7 +13,8 @@ class PaperService:
     queryset = Paper.objects.all()
     RECORDS_PER_PAGE = 10
     BASIC_PAPER_FIELDS = "paperId,title,abstract,year,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors"
-    FULL_PAPER_FIELDS = "paperId,title,abstract,year,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate,references"
+    NO_NESTED_FIELDS = "paperId,title,abstract,publicationTypes,referenceCount,citationCount,url,fieldsOfStudy,embedding,tldr,openAccessPdf,publicationDate"
+    FULL_PAPER_FIELDS = "paperId,title,abstract,publicationTypes,publicationVenue,referenceCount,citationCount,url,fieldsOfStudy,authors,embedding,tldr,openAccessPdf,publicationDate,references"
 
     author_service = AuthorService()
     publicationVenueService = PublicationVenueService()
@@ -22,48 +23,34 @@ class PaperService:
         try:
             paper = self.queryset.get(paperId=id)
             # if paper exists in database but not in full form
-            if paper.referenceCount is None:
+            if paper.publicationDate is None:
                 paper = self.get_external_paper_by_id(
-                    id, should_save=True
+                    id, including_nested_fields=True
                 )  # fetch full data and update database
+                paper.save()
         except Paper.DoesNotExist:
             try:
                 paper = self.get_external_paper_by_id(id)
+                paper.save()
             except SemanticAPIException:
                 return None
         return paper
+    
+    def assign_data_to_paper(self, paper, paper_data, including_nested_fields):
+        paper.url = paper_data["url"]
+        paper.title = paper_data["title"]
+        paper.abstract = paper_data["abstract"] if paper_data["abstract"] is not None else ""
+        paper.referenceCount = paper_data["referenceCount"]
+        paper.citationCount = paper_data["citationCount"]
+        paper.openAccessPdf = paper_data["openAccessPdf"]["url"] if paper_data["openAccessPdf"] is not None else ""
+        paper.embedding = paper_data["embedding"]["vector"] if paper_data["embedding"] is not None else []
+        paper.tldr = paper_data["tldr"]["text"] if paper_data["tldr"] is not None else ""
+        paper.publicationDate = paper_data["publicationDate"]
+        paper.publicationTypes = paper_data["publicationTypes"] if paper_data["publicationTypes"] is not None else []
+        paper.fieldsOfStudy = paper_data.get("fieldsOfStudy") if paper_data.get("fieldsOfStudy") else []
 
-    def get_external_paper_by_id(self, id, should_save=True):
-        response = requests.get(
-            os.path.join(self.BASE_URL, id), params={"fields": self.FULL_PAPER_FIELDS}
-        )
-
-        if response.status_code != 200:
-            # You might want to add more specific error handling here
-            raise SemanticAPIException(f"Semantic API returned status code {response.status_code}")
-
-        paper_data = response.json()
-        paper = self.queryset.update_or_create(
-            paperId=paper_data["paperId"],
-            url=paper_data["url"],
-            title=paper_data["title"],
-            abstract=paper_data["abstract"] if paper_data["abstract"] is not None else "",
-            referenceCount=paper_data["referenceCount"],
-            citationCount=paper_data["citationCount"],
-            openAccessPdf=paper_data["openAccessPdf"]["url"]
-            if paper_data["openAccessPdf"] is not None
-            else "",
-            embedding=paper_data["embedding"]["vector"]
-            if paper_data["embedding"] is not None
-            else [],
-            tldr=paper_data["tldr"]["text"] if paper_data["tldr"] is not None else "",
-            publicationDate=paper_data["publicationDate"],
-            publicationTypes=paper_data["publicationTypes"]
-            if paper_data["publicationTypes"] is not None
-            else [],
-            fieldsOfStudy=paper_data.get("fieldsOfStudy") if paper_data.get("fieldsOfStudy") else [],
-        )[0]
-        if should_save:
+        if including_nested_fields:
+            # references authors and publicationVenue
             references_data = list(
                 filter(lambda ref: ref["paperId"] is not None, paper_data.get("references", []))
             )
@@ -108,8 +95,28 @@ class PaperService:
                     publicationVenue_data
                 )
                 paper.publicationVenue = publicationVenue
+                
+        return paper
 
-            paper.save()
+    def get_external_paper_by_id(self, id, including_nested_fields=True):
+        if including_nested_fields:
+            response = requests.get(
+                os.path.join(self.BASE_URL, id), params={"fields": self.FULL_PAPER_FIELDS}
+            )
+        else:
+            response = requests.get(
+                os.path.join(self.BASE_URL, id), params={"fields": self.NO_NESTED_FIELDS}
+            )
+
+        if response.status_code != 200:
+            # You might want to add more specific error handling here
+            raise SemanticAPIException(f"Semantic API returned status code {response.status_code}")
+
+        paper_data = response.json()
+        paper = self.queryset.get_or_create(
+            paperId=paper_data["paperId"],
+        )[0]
+        return self.assign_data_to_paper(paper, paper_data, including_nested_fields)
         return paper
 
     def search_external_papers(self, query, page=1):
@@ -122,6 +129,14 @@ class PaperService:
         response = requests.get(os.path.join(self.BASE_URL, "search"), params=params)
         data = response.json()
         return data
+    
+    def get_papers_by_topic(self, topic, num=30, including_nested_fields=True):
+        if including_nested_fields:
+            fields = self.FULL_PAPER_FIELDS
+        else: 
+            fields = self.NO_NESTED_FIELDS
+        response = requests.get(os.path.join(self.BASE_URL, "search"), params={"query": topic, "limit": num, "fields": fields})
+        return response.json()["data"]
 
     def autocomplete(self, query):
         return requests.get(

@@ -40,7 +40,7 @@
     <div id="myModal" class="modal">
       <div class="modal-content">
 
-        <div class ="toggle-level">
+        <div class="toggle-level">
           <div role="button" tabindex="0" id="semanticButton" class="searchButton">
             <i class="bi bi-option"></i>
             Semantic Search
@@ -50,7 +50,6 @@
             <i class="bi bi-option"></i>
             Natural Language Search
           </div>
-
         </div>
 
         <div class="searchbar-divider"> </div>
@@ -64,20 +63,21 @@
 
         <div class="toggle-level">
           <div class="btn-group">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="sortByDropdownBtn"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="bi bi-arrow-down-up"></i>
               sort
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <a class="dropdown-item" href="#">Best matches</a>
+            <div class="dropdown-menu" aria-labelledby="sortByDropdownBtn">
+              <a class="dropdown-item" href="#">Title: A-Z </a>
+              <a class="dropdown-item" href="#">Title: Z-A</a>
               <a class="dropdown-item" href="#">Time: Newest first</a>
               <a class="dropdown-item" href="#">Time: Oldest first</a>
               <a class="dropdown-item" href="#">Citation</a>
             </div>
           </div>
 
-          <div role="button" tabindex="0" id="myButton">
+          <div role="button" tabindex="0" id="titleOnly">
             <i class="bi bi-fonts"></i>
             Title only
           </div>
@@ -104,7 +104,6 @@
                 {{library.name}}
               </a>
               {% endfor %}
-
             </div>
           </div>
 
@@ -158,8 +157,9 @@
       return cookieValue;
     }
     const csrftoken = getCookie('csrftoken');
-
-
+  </script>
+  <script>
+    // smart search
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("searchButton");
 
@@ -187,16 +187,16 @@
     });
 
     // control title only and author button 
-    const mybutton = document.getElementById('myButton');
-    mybutton.addEventListener('click', function () {
+    const titleOnly = document.getElementById('titleOnly');
+    titleOnly.addEventListener('click', function () {
       this.classList.toggle('active');
-      console.log('mybutton is activated')
+      console.log('Title only button is activated')
     });
 
-    const authorbutton = document.getElementById('authorButton');
-    authorbutton.addEventListener('click', function () {
+    const authorButton = document.getElementById('authorButton');
+    authorButton.addEventListener('click', function () {
       this.classList.toggle('active');
-      console.log('mybutton is activated')
+      console.log('Author button is activated')
     });
 
     $(document).ready(function () {
@@ -221,7 +221,7 @@
         console.log(test);
       });
 
-      const authorbutton = document.getElementsByClassName('');
+      const authorButton = document.getElementsByClassName('');
       // Show the date picker when the button is clicked
       $('#dateButton').click(function () {
         this.classList.toggle('visible');
@@ -235,7 +235,7 @@
     });
 
     var libraryID = null;
-    let libraryIDArray = []
+    let libraryIds = []
 
     $(document).ready(function () {
       // Event listener for dropdown item click
@@ -254,7 +254,7 @@
           $('#' + parentID).html('<i class="bi bi-file-earmark"></i>' + 'In: ' + selectedText);
           $('#' + parentID).addClass('active');
           libraryID = $(this).attr('library-id');
-          libraryIDArray.push(libraryID);
+          libraryIds.push(libraryID);
         }
       });
     });
@@ -274,19 +274,19 @@
       if (e.key === 'Enter') {
         // If Enter key is pressed
 
-        const queryParam1 = document.querySelector('.search-level input').value; // Get value of the search input
-        const selectedSort = document.querySelector('#dropdownMenuButton1').innerText.trim(); // Get selected item in 'Sort'
-        const titleOnly = document.querySelector('#myButton').classList.contains('active'); // Get whether 'title only' is active
+        const query = document.querySelector('.search-level input').value; // Get value of the search input
+        const sortBy = document.querySelector('#sortByDropdownBtn').innerText.trim(); // Get selected item in 'Sort'
+        const isTitleOnly = document.querySelector('#titleOnly').classList.contains('active'); // Get whether 'title only' is active
 
         // Prepare query params
         const params = new URLSearchParams({
-          query: queryParam1,
-          sort_by: selectedSort,
+          query: query,
+          sort_by: sortBy,
         });
         // Prepare request body
         const body = {
-          is_title_Only: titleOnly,
-          library_ids: libraryIDArray,
+          is_title_only: isTitleOnly,
+          library_ids: libraryIds,
         };
 
         fetch(`/api/paper/search/?` + params, {
@@ -302,45 +302,59 @@
       }
     });
 
-
-    const debounce1 = (callback, delay) => {
-      let timerId;
-
-      return (...args) => {
-        clearTimeout(timerId);
-        timerId = setTimeout(() => {
-          callback.apply(this, args);
-        }, delay);
-      };
-    };
-
     const inputField1 = document.querySelector('#query-field1');
     const resultsList1 = document.querySelector('#autocomplete-results1');
 
-    const debounceAutocomplete1 = debounce1((event) => {
-
+    const debounceElasticAutocomplete = debounce((event) => {
       const queryParam1 = document.querySelector('.search-level input').value; // Get value of the search input
-        const selectedSort = document.querySelector('#dropdownMenuButton1').innerText.trim(); // Get selected item in 'Sort'
-        const titleOnly = document.querySelector('#myButton').classList.contains('active'); // Get whether 'title only' is active
+      const selectedSort = document.querySelector('#sortByDropdownBtn').innerText.trim(); // Get selected item in 'Sort'
+      const titleOnly = document.querySelector('#titleOnly').classList.contains('active'); // Get whether 'title only' is active
+      let sortBy = 'citationCount';
+      let order = 'desc';
+      switch (selectedSort) {
+        case 'Title: A-Z':
+          sortBy = 'title';
+          order = 'asc';
+          break;
+        case 'Title: Z-A':
+          sortBy = 'title';
+          order = 'desc';
+          break;
+        case 'Time: Newest first':
+          sortBy = 'publicationDate';
+          order = 'desc';
+          break;
+        case 'Time: Oldest first':
+          sortBy = 'publicationDate';
+          order = 'asc';
+          break;
+        case 'Citation':
+          sortBy = 'citationCount';
+          order = 'desc';
+          break;
+        default:
+          break;
+      }
 
-        // Prepare query params
-        const params = new URLSearchParams({
-          query: queryParam1,
-          sort_by: selectedSort,
-        });
-        // Prepare request body
-        const body = {
-          is_title_only: titleOnly,
-          library_ids: libraryIDArray,
-        };
-        console.log(params)
-        console.log(body)
+      // Prepare query params
+      const params = new URLSearchParams({
+        query: queryParam1,
+        sort_by: sortBy,
+        order: order,
+      });
+      // Prepare request body
+      const body = {
+        is_title_only: titleOnly,
+        library_ids: libraryIds,
+      };
+      console.log(params)
+      console.log(body)
 
-        fetch(`/api/paper/search/?` + params, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
-        })
+      fetch(`/api/paper/search/?` + params, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken }
+      })
         .then(response => response.json())
         .then(data => {
           resultsList1.innerHTML = '';
@@ -387,46 +401,46 @@
 
       // Call your autocomplete API here with the query
       console.log(`Calling autocomplete API with query: ${queryParam1}`);
-    }, 300);
+    }, 500);
 
-    inputField1.addEventListener('input', debounceAutocomplete1);
+    inputField1.addEventListener('input', debounceElasticAutocomplete);
 
     // semantic search button
-    document.addEventListener('DOMContentLoaded', function() {
-    var buttons = document.getElementsByClassName('searchButton');
-    for (var j = 0; j < buttons.length; j++) {
-        buttons[j].addEventListener('click', function() {
-            var wasActive = this.classList.contains('active');
+    document.addEventListener('DOMContentLoaded', function () {
+      var buttons = document.getElementsByClassName('searchButton');
+      for (var j = 0; j < buttons.length; j++) {
+        buttons[j].addEventListener('click', function () {
+          var wasActive = this.classList.contains('active');
 
-            // Remove 'active' class from all buttons
-            for (var k = 0; k < buttons.length; k++) {
-                buttons[k].classList.remove('active');
-            }
-            // If the button wasn't active before, add 'active' class to it
-            if (!wasActive) {
-                this.classList.add('active');
-            }
+          // Remove 'active' class from all buttons
+          for (var k = 0; k < buttons.length; k++) {
+            buttons[k].classList.remove('active');
+          }
+          // If the button wasn't active before, add 'active' class to it
+          if (!wasActive) {
+            this.classList.add('active');
+          }
 
-            var btnGroups = document.getElementsByClassName('btn-group');
-            for (var i = 0; i < btnGroups.length; i++) {
-                if(!this.classList.contains('active')){
-                    btnGroups[i].style.display = '';
-                }else{
-                    btnGroups[i].style.display = 'none';
-                }
+          var btnGroups = document.getElementsByClassName('btn-group');
+          for (var i = 0; i < btnGroups.length; i++) {
+            if (!this.classList.contains('active')) {
+              btnGroups[i].style.display = '';
+            } else {
+              btnGroups[i].style.display = 'none';
             }
-            
-            var otherButtons = document.querySelectorAll('#myButton, #authorButton');
-            for (var i = 0; i < otherButtons.length; i++) {
-                if(!this.classList.contains('active')){
-                    otherButtons[i].style.display = '';
-                }else{
-                    otherButtons[i].style.display = 'none';
-                }
+          }
+
+          var otherButtons = document.querySelectorAll('#myButton, #authorButton');
+          for (var i = 0; i < otherButtons.length; i++) {
+            if (!this.classList.contains('active')) {
+              otherButtons[i].style.display = '';
+            } else {
+              otherButtons[i].style.display = 'none';
             }
+          }
         });
-    }
-});
+      }
+    });
 
   </script>
   {% block js %}

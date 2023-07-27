@@ -434,6 +434,7 @@ class LibraryPaperViewSet(viewsets.ViewSet):
 
     def _get_auth_params_from_request(self, request):
         library_ids = request.data.get("library_ids", None)
+        # only superuser can search all libraries
         is_superuser = request.user.is_superuser
 
         if not library_ids and not is_superuser:
@@ -448,7 +449,6 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             )
         return {
             "library_ids": library_ids,
-            "is_superuser": is_superuser,
         }
 
     def _get_params_from_request(self, request):
@@ -461,7 +461,7 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         is_fuzzy = body.get("is_fuzzy", True)
         is_title_only = body.get("is_title_only", False)
         _from = body.get("from", 0)
-        size = body.get("size", 20)
+        size = body.get("size", 10)
 
         if sort_by not in VALID_SORT_BYS:
             sort_by = "citationCount"  # default ordering
@@ -562,7 +562,6 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         _from = params.get("from")
 
         library_ids = params.get("library_ids")
-        is_superuser = params.get("is_superuser")
 
         query_config = {
             "_source": {
@@ -585,7 +584,7 @@ class LibraryPaperViewSet(viewsets.ViewSet):
                                 },
                             },
                         }
-                        if not is_superuser
+                        if library_ids
                         else {"match_all": {"boost": 0.0}},
                     ],
                     "should": [],
