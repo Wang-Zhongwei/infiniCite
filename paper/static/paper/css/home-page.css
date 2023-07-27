@@ -11,7 +11,7 @@
 }
 
 .abstract {
-  color: #2e3743;
+  color: #ddd;
   font-size: 16px;
   line-height: 24px;
   margin-top: 2px;
@@ -20,11 +20,9 @@
 .paper {
   text-align: justify;
   /* Spread the text evenly across the line */
-  margin-top: 15px;
-  margin-bottom: 15px;
   padding: 25px 35px;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: rgb(55, 54, 54, 0.8);
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   /* Separate the children containers */
@@ -33,7 +31,6 @@
 }
 
 .libraries {
-  background: linear-gradient(225deg, transparent 50%, #d9dadb 0), linear-gradient(45deg, #fff, #fff), linear-gradient(135deg, #fff, #fff), linear-gradient(225deg, transparent, #fff 0);
   background-position: 100% 0, 0 0, 100% 100%, 100% 0;
   background-repeat: no-repeat;
   background-size: 0 0, 0 0, 0 0, 100% 100%;
@@ -53,16 +50,35 @@
   line-height: 24px;
   margin: 0;
   padding: 0;
-  color: #2e3743;
+  color: #ddd
 }
 
 .libraries h3 {
   font-family: Roboto, Helvetica Neue, Arial, sans-serif;
   border: none;
-  color: #2e3743;
+  color: #ddd;
   font-size: 14px;
   font-weight: 500;
   margin: 16px 0;
   padding: 0;
-  border-bottom: 1px solid #e0e0e0;
+  margin-top: 30px;
+}
+
+.paper-options-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.type-tag {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  margin-right: 0.5em;
+  font-size: 0.8em;
+  color: #ccc;
+  background-color: #338;
+  border-radius: 4px;
 }
