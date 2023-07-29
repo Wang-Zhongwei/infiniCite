@@ -6,6 +6,6 @@ include
 lib
 share
 pyvenv.cfg
-*.log
+*.log*
 .DS_Store
 PythonImportHelper*

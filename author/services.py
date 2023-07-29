@@ -13,24 +13,8 @@ class AuthorService:
     BASIC_AUTHOR_FIELDS = "authorId,name"
     RECORDS_PER_PAGE = 15
 
-    def get_author_or_create(
-        self, author_data, should_save=True, is_simple_author=True
-    ):
-        if is_simple_author:
-            author = self.queryset.get_or_create(
-                authorId=author_data["authorId"],
-                name=author_data["name"],
-            )[0]
-        else:
-            try:
-                author = self.get_external_author_by_id(
-                    author_data["authorId"], should_save
-                )
-            except SemanticAPIException:
-                return None
-        return author
 
-    def get_external_author_by_id(self, id, should_save=True):
+    def get_external_author_by_id(self, id):
         if not id:
             raise ValueError("Author ID cannot be empty")
 
@@ -50,8 +34,10 @@ class AuthorService:
 
         author = self.queryset.get_or_create(
             authorId=author_data["authorId"],
-            name=author_data["name"],
         )[0]
+
+        if "name" in author_data:
+            author.name = author_data["name"]
 
         if "affiliations" in author_data:
             author.affiliations = author_data["affiliations"]
@@ -64,9 +50,6 @@ class AuthorService:
 
         if "hIndex" in author_data:
             author.hIndex = author_data["hIndex"]
-
-        if should_save:
-            author.save()
 
         return author
 

@@ -8,7 +8,7 @@ from paper.exceptions import SemanticAPIException
 from paper.models import Paper
 
 
-class PaperService:
+class AuthorService:
     BASE_URL = "http://api.semanticscholar.org/graph/v1/paper"
     queryset = Paper.objects.all()
     RECORDS_PER_PAGE = 10
@@ -35,19 +35,27 @@ class PaperService:
             except SemanticAPIException:
                 return None
         return paper
-    
+
     def assign_data_to_paper(self, paper, paper_data, including_nested_fields):
         paper.url = paper_data["url"]
         paper.title = paper_data["title"]
         paper.abstract = paper_data["abstract"] if paper_data["abstract"] is not None else ""
         paper.referenceCount = paper_data["referenceCount"]
         paper.citationCount = paper_data["citationCount"]
-        paper.openAccessPdf = paper_data["openAccessPdf"]["url"] if paper_data["openAccessPdf"] is not None else ""
-        paper.embedding = paper_data["embedding"]["vector"] if paper_data["embedding"] is not None else []
+        paper.openAccessPdf = (
+            paper_data["openAccessPdf"]["url"] if paper_data["openAccessPdf"] is not None else ""
+        )
+        paper.embedding = (
+            paper_data["embedding"]["vector"] if paper_data["embedding"] is not None else []
+        )
         paper.tldr = paper_data["tldr"]["text"] if paper_data["tldr"] is not None else ""
         paper.publicationDate = paper_data["publicationDate"]
-        paper.publicationTypes = paper_data["publicationTypes"] if paper_data["publicationTypes"] is not None else []
-        paper.fieldsOfStudy = paper_data.get("fieldsOfStudy") if paper_data.get("fieldsOfStudy") else []
+        paper.publicationTypes = (
+            paper_data["publicationTypes"] if paper_data["publicationTypes"] is not None else []
+        )
+        paper.fieldsOfStudy = (
+            paper_data.get("fieldsOfStudy") if paper_data.get("fieldsOfStudy") else []
+        )
 
         if including_nested_fields:
             # references authors and publicationVenue
@@ -95,7 +103,7 @@ class PaperService:
                     publicationVenue_data
                 )
                 paper.publicationVenue = publicationVenue
-                
+
         return paper
 
     def get_external_paper_by_id(self, id, including_nested_fields=True):
@@ -117,7 +125,6 @@ class PaperService:
             paperId=paper_data["paperId"],
         )[0]
         return self.assign_data_to_paper(paper, paper_data, including_nested_fields)
-        return paper
 
     def search_external_papers(self, query, page=1):
         params = {
@@ -129,13 +136,16 @@ class PaperService:
         response = requests.get(os.path.join(self.BASE_URL, "search"), params=params)
         data = response.json()
         return data
-    
+
     def get_papers_by_topic(self, topic, num=30, including_nested_fields=True):
         if including_nested_fields:
             fields = self.FULL_PAPER_FIELDS
-        else: 
+        else:
             fields = self.NO_NESTED_FIELDS
-        response = requests.get(os.path.join(self.BASE_URL, "search"), params={"query": topic, "limit": num, "fields": fields})
+        response = requests.get(
+            os.path.join(self.BASE_URL, "search"),
+            params={"query": topic, "limit": num, "fields": fields},
+        )
         return response.json()["data"]
 
     def autocomplete(self, query):

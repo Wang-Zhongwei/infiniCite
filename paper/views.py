@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from paper.serializers import LibrarySerializer
 
 
-from paper.services import PaperService
+from paper.services import AuthorService
 from author.services import AuthorService
 from user.models import Account
 
@@ -31,7 +31,7 @@ from django.shortcuts import get_object_or_404
 from .models import Library
 
 VALID_SORT_BYS = ["title", "publicationDate", "citationCount", "referenceCount"]
-paper_service = PaperService()
+paper_service = AuthorService()
 author_service = AuthorService()
 
 
@@ -277,7 +277,7 @@ class LibraryPaperViewSet(viewsets.ViewSet):
 
     serializer_class = LibrarySerializer
 
-    paper_service = PaperService()
+    paper_service = AuthorService()
 
     @check_library_access("edit")
     def create(self, request, *args, **kwargs):
@@ -377,7 +377,11 @@ class LibraryPaperViewSet(viewsets.ViewSet):
             params = self._get_params_from_llm(prompt)
         except NoFunctionCallError as e:
             return Response(
-                {"error": str(e), "summary": "Sorry this does not seem like a query. Try changing how you frame your question?"}, status=status.HTTP_400_BAD_REQUEST
+                {
+                    "error": str(e),
+                    "summary": "Sorry this does not seem like a query. Try changing how you frame your question?",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
             )  # TODO: prompt user to modify input
 
         params.update(self._get_auth_params_from_request(request))
@@ -385,10 +389,13 @@ class LibraryPaperViewSet(viewsets.ViewSet):
         hits = self._perform_search(params, is_semantic=False)
 
         summary = self.summarize_results(prompt, hits)
-        return Response({
-            "summary": summary,
-            "source": hits,
-        }, status=status.HTTP_200_OK)
+        return Response(
+            {
+                "summary": summary,
+                "source": hits,
+            },
+            status=status.HTTP_200_OK,
+        )
 
     def summarize_results(self, prompt, results):
         messages = [

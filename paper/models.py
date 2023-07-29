@@ -7,7 +7,7 @@ from user.models import Account
 class Paper(models.Model):
     paperId= models.CharField(max_length=255, primary_key=True)
     url = models.URLField(blank=True, null=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=511)
     abstract = models.TextField(blank=True, null=True)
     fieldsOfStudy = ArrayField(models.CharField(max_length=255), blank=True, default=list)
     referenceCount = models.IntegerField(null=True)

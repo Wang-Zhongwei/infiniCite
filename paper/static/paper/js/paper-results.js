@@ -71,7 +71,7 @@ function batchSave(paperId, libraryIds) {
     body: JSON.stringify({
       libraryIds: libraryIds,
     }),
-    headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
+    headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken},
   })
     .then(modifyPaperLibraryList(paperId, libraryIds))
     .catch((err) => {
