@@ -20,7 +20,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--batch_size",
             type=int,
-            help="Number of papers to update at a time. Default is 16.",
+            help="Number of papers to update at a time.",
         )
 
     def handle(self, *args, **kwargs):
@@ -31,7 +31,7 @@ class Command(BaseCommand):
             if including_nested_fields:
                 batch_size = 16
             else:
-                batch_size = 64
+                batch_size = 32
 
         if including_nested_fields:
             incomplete_items_ids = self.paper_service.queryset.filter(
