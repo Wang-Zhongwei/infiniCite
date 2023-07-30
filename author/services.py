@@ -52,6 +52,10 @@ class AuthorService:
             author.hIndex = author_data["hIndex"]
 
         return author
+    
+    def save_external_author_by_id(self, id):
+        author = self.get_external_author_by_id(id)
+        author.save()
 
     def search_external_authors(self, query, page):
         params = {

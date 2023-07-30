@@ -1,5 +1,5 @@
+import json
 import os
-
 import requests
 from author.models import Author
 from author.services import AuthorService, PublicationVenueService
@@ -125,6 +125,57 @@ class AuthorService:
             paperId=paper_data["paperId"],
         )[0]
         return self.assign_data_to_paper(paper, paper_data, including_nested_fields)
+
+    def save_external_paper_by_id(self, id, including_nested_fields=True):
+        paper = self.get_external_paper_by_id(id, including_nested_fields)
+        paper.save()
+
+    def get_external_papers_by_ids(self, ids, including_nested_fields=True):
+        if including_nested_fields:
+            params = {"fields": self.FULL_PAPER_FIELDS}
+        else:
+            params = {"fields": self.NO_NESTED_FIELDS}
+
+        payload = json.dumps({"ids": ids})
+        headers = {"Content-Type": "application/json"}
+        response = requests.post(
+            os.path.join(self.BASE_URL, "batch"),
+            params=params,
+            data=payload,
+            headers=headers,
+        )
+        if response.status_code != 200:
+            # You might want to add more specific error handling here
+            raise SemanticAPIException(f"Semantic API returned status code {response.status_code}")
+
+        papers_data = response.json()
+        papers = []
+        for paper_data in papers_data:
+            paper = self.queryset.get_or_create(
+                paperId=paper_data["paperId"],
+            )[0]
+            self.assign_data_to_paper(paper, paper_data, including_nested_fields)
+            papers.append(paper)
+        return papers
+
+    def save_external_papers_by_ids(self, ids, including_nested_fields=True):
+        papers = self.get_external_papers_by_ids(ids, including_nested_fields)
+        self.queryset.bulk_update(
+            papers,
+            fields=[
+                "url",
+                "title",
+                "abstract",
+                "referenceCount",
+                "citationCount",
+                "openAccessPdf",
+                "embedding",
+                "tldr",
+                "publicationDate",
+                "publicationTypes",
+                "fieldsOfStudy",
+            ],
+        )
 
     def search_external_papers(self, query, page=1):
         params = {

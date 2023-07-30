@@ -11,11 +11,11 @@ class Command(BaseCommand):
     author_service = AuthorService()
     
     def handle(self, *args: Any, **options: Any) -> str | None:
-        incomplete_authors = Author.objects.filter(citationCount__isnull=True)
+        incomplete_authors = Author.objects.filter(citationCount__isnull=True).values("authorId", "name")
         for author in incomplete_authors:
             try:
-                author = self.author_service.get_external_author_by_id(author.authorId)
+                author = self.author_service.get_external_author_by_id(author["authorId"])
                 author.save()
-                self.stdout.write(f"Successfully updated author {author.name}")
+                self.stdout.write(f"Successfully updated author {author['name']}")
             except SemanticAPIException:
-                self.stdout.write(f"Failed to update author {author.name}")
+                self.stdout.write(f"Failed to update author {author['name']}")

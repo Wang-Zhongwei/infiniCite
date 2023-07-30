@@ -1,10 +1,8 @@
 from django.core.management.base import BaseCommand
-from django.conf import settings
-
+import paper
 from paper.exceptions import SemanticAPIException
 from paper.services import AuthorService
 from paper.models import Paper
-import time
 
 
 class Command(BaseCommand):
@@ -16,25 +14,38 @@ class Command(BaseCommand):
             "--including_nested_fields",
             action="store_true",
             default=False,
-            help="Whether to save references",
+            help="Whether to save references. Default is False.",
+        )
+        parser.add_argument(
+            "--batch_size",
+            type=int,
+            default=16,
+            help="Number of papers to update at a time. Default is 16.",
         )
 
     def handle(self, *args, **kwargs):
         # Query all incomplete items. Replace with your actual check for completeness
         including_nested_fields = kwargs["including_nested_fields"]
-        if including_nested_fields:
-            incomplete_items = Paper.objects.filter(references__isnull=True)
-        else:
-            incomplete_items = Paper.objects.filter(publicationDate__isnull=True)
+        batch_size = kwargs["batch_size"]
 
-        for item in incomplete_items:
+        if including_nested_fields:
+            incomplete_items_ids = Paper.objects.filter(references__isnull=True).values_list("paperId", flat=True)
+        else:
+            incomplete_items_ids = Paper.objects.filter(publicationDate__isnull=True).values_list("paperId", flat=True)
+
+        for i in range(0, len(incomplete_items_ids), batch_size):
+            paper_ids = incomplete_items_ids[i:i+batch_size]
             try:
-                paper = self.paper_service.get_external_paper_by_id(
-                    item.paperId, including_nested_fields
-                )
-                paper.save()
-                print(f"Updated {item.title}")
+                self.paper_service.save_external_papers_by_ids(paper_ids, including_nested_fields)
+                print(f"Successfully updated {len(paper_ids)} papers")
             except SemanticAPIException:
-                print(f"Failed to update {item.title}")
-                continue
-            time.sleep(0.5)
+                print(f"Failed to update {len(paper_ids)} papers")
+                continue 
+
+        paper_ids = incomplete_items_ids[len(incomplete_items_ids) - len(incomplete_items_ids) % batch_size:]
+        try:
+            self.paper_service.save_external_papers_by_ids(paper_ids, including_nested_fields)
+            print(f"Successfully updated {len(paper_ids)} papers")
+        except SemanticAPIException:
+            print(f"Failed to update {len(paper_ids)} papers")
+        
