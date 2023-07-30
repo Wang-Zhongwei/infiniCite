@@ -1,11 +1,11 @@
 from django.core.management.base import BaseCommand
 from paper.models import Paper
-from paper.services import AuthorService
+from paper.services import PaperService
 
 
 class Command(BaseCommand):
     help = "Fetch papers by topic"
-    paperService = AuthorService()
+    paperService = PaperService()
 
     def add_arguments(self, parser):
         parser.add_argument("topic", type=str, help="The topic to fetch papers for")

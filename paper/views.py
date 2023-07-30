@@ -1,17 +1,14 @@
-from email.errors import MessageError
 from django.http import HttpResponseForbidden, JsonResponse
-from numpy import size
+from elasticsearch_dsl import tokenizer
 import requests
 import json
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from rest_framework import status, viewsets
 from rest_framework.response import Response
-from paper.serializers import LibrarySerializer
-
-
-from paper.services import AuthorService
 from author.services import AuthorService
+from paper.serializers import LibrarySerializer
+from paper.services import PaperService
 from user.models import Account
 
 from .exceptions import *
@@ -21,9 +18,9 @@ from .forms import SearchForm
 from .models import Library, Paper
 from .serializers import LibrarySerializer, PaperSerializer
 from infiniCite.settings import ELASTICSEARCH_CLIENT as es
-from infiniCite.settings import MODEL as model
-from infiniCite.settings import TOKENIZER as tokenizer
 from infiniCite.settings import OPENAI_CLIENT as oa
+from infiniCite.specter import tokenizer, model
+
 
 from functools import wraps
 from django.http import HttpResponseForbidden
@@ -31,7 +28,7 @@ from django.shortcuts import get_object_or_404
 from .models import Library
 
 VALID_SORT_BYS = ["title", "publicationDate", "citationCount", "referenceCount"]
-paper_service = AuthorService()
+paper_service = PaperService()
 author_service = AuthorService()
 
 
@@ -274,10 +271,8 @@ class LibraryViewSet(viewsets.ModelViewSet):
 class LibraryPaperViewSet(viewsets.ViewSet):
     queryset = Paper.objects.all()
     library_queryset = Library.objects.all()
-
     serializer_class = LibrarySerializer
-
-    paper_service = AuthorService()
+    paper_service = PaperService()
 
     @check_library_access("edit")
     def create(self, request, *args, **kwargs):
